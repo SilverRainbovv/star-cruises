@@ -1,0 +1,53 @@
+@import url(parent-styles.css);
+
+html {
+    background-color: #eee;
+}
+body {
+    background-color: #eee;
+}
+
+.registration-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 3% 1% 1%;
+    margin: 100px auto 100px;
+    max-width: 25%;
+    max-height: 70%;
+    background: white;
+    box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+    align-items: center;
+}
+
+.registration-form input {
+    margin: 3% 5% 0;
+    height: 2em;
+    width: 70%;
+    border-style: none;
+    border-bottom: 1px solid black;
+}
+
+.registration-form button {
+    margin: 5% 0 0;
+    height: 3em;
+    width: 40%;
+    background-color: #E3D4BF;
+    border-style: none;
+    border-radius: 4%;
+    cursor: pointer;
+}
+
+.registration-form button:hover { background: #B09F86; }
+
+.registration-form p {
+    margin-top: 8%;
+    font-size: 0.8em;
+}
+
+.registration-form a {
+    font-size: 0.8em;
+    text-decoration: none;
+    color: #634E2E;
+    margin-bottom: 8%;
+}

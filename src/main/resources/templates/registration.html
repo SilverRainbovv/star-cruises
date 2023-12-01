@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{registration.title}"/>
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
 </head>
 <body>
     <form action="/registration" method="post">
-        <div class="registration-data">
+        <div class="registration-form">
             <span>Registration</span>
             <input name="email" type="email" id="email" th:placeholder="#{registration.email}" required>
             <input name="password" type="password" id="password" th:placeholder="#{registration.password}" required>

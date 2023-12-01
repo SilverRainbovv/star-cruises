@@ -4,3 +4,11 @@ spring:
     username: postgres
     password: newton123
     driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        show-sql: true
+        format-sql: true;
+  messages:
+    basename: localization
+    encoding: UTF-8

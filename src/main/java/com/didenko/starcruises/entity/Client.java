@@ -1,26 +1,24 @@
 package com.didenko.starcruises.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
-@SuperBuilder
-@EqualsAndHashCode(callSuper = false)
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Client extends User{
+public class Client {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     private String firstname;
@@ -29,4 +27,8 @@ public class Client extends User{
 
     @Column(name = "birth_date")
     private LocalDate birthdate;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

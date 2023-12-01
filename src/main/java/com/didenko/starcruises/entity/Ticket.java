@@ -12,6 +12,7 @@ import lombok.*;
 @Entity
 public class Ticket {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

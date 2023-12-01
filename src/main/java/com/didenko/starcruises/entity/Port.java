@@ -1,8 +1,6 @@
 package com.didenko.starcruises.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 public class Port {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

@@ -1,8 +1,6 @@
 package com.didenko.starcruises.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ import java.util.List;
 @Entity
 public class Ship {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

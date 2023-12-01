@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @Entity
 public class Seat {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

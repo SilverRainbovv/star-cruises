@@ -40,11 +40,11 @@ CREATE TABLE users (
 --changeset didenko:6
 CREATE TABLE client (
                         id BIGSERIAL PRIMARY KEY ,
-                        user_id BIGINT REFERENCES users(id) UNIQUE NOT NULL ,
+                        user_id BIGINT REFERENCES users(id) NOT NULL UNIQUE ,
                         firstname VARCHAR(64) NOT NULL ,
                         lastname VARCHAR(64) NOT NULL ,
                         birth_date DATE NOT NULL
-) INHERITS (users);
+);
 
 --changeset didenko:7
 CREATE TABLE ticket (

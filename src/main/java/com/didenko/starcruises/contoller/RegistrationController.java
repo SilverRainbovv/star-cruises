@@ -33,12 +33,8 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/registration";
         }
-
-
         registrationService.register(clientDto);
 
         return "redirect:/login";
     }
-
-
 }

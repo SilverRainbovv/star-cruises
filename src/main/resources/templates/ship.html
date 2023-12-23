@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Ship</title>
+</head>
+<body>
+<form action="/ships/ship" th:object="${shipCreateEditDto}" method="post">
+    <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name">
+    <table>
+        <thead>
+        <tr>
+<!--            <th hidden="hidden">#</th>-->
+            <th>Class</th>
+            <th>Seats</th>
+            <th>Price</th>
+            <th><button type="submit" name="addSeat">Add seat</button></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="seat,rowStat : ${shipCreateEditDto.seats}">
+            <td>
+                <select th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}">
+                    <option th:each="seatClass : ${seatClasses}"
+                            th:value="${seatClass}"
+                            th:text="${seatClass.name()}">
+                    </option>
+                </select>
+            </td>
+            <td>
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatNumber}">
+            </td>
+            <td>
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

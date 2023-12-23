@@ -26,6 +26,10 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private Vacancy vacancy;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "seat_class")
+    private SeatClass seatClass;
+
     @ManyToOne
     private Ship ship;
 

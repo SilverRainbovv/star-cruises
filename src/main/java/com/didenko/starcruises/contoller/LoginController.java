@@ -36,7 +36,7 @@ public class LoginController {
             if (userReadDto.getRole().equals(Role.ADMIN)){
                 return "redirect:/admin";
             } else {
-                return "redirect:/client";
+                   return "redirect:/client";
             }
         }
     }

@@ -22,7 +22,7 @@ public class Cruise {
     @ManyToOne
     private Ship ship;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cruise")
     @Builder.Default
     private List<Port> ports = new ArrayList<>();
 

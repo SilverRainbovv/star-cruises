@@ -26,12 +26,13 @@ public class ShipController {
 
     @PostMapping( value = "/ship")
     public void createShip(@ModelAttribute ShipCreateEditDto shipCreateEditDto){
-        System.out.println();
+        shipService.save(shipCreateEditDto);
     }
 
     @RequestMapping(value="/ship", params={"addSeat"})
-    public String addSeat(@ModelAttribute ShipCreateEditDto shipCreateEditDto, BindingResult bindingResult) {
+    public String addSeat(@ModelAttribute ShipCreateEditDto shipCreateEditDto, BindingResult bindingResult, Model model) {
         shipCreateEditDto.addSeat(new SeatCreateDto());
+        model.addAttribute("seatClasses", SeatClass.values());
         if (bindingResult.hasErrors()){
             System.out.println();
         }

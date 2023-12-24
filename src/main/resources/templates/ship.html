@@ -6,14 +6,15 @@
 </head>
 <body>
 <form action="/ships/ship" th:object="${shipCreateEditDto}" method="post">
-    <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name">
+    <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name" required>
     <table>
         <thead>
         <tr>
 <!--            <th hidden="hidden">#</th>-->
             <th>Class</th>
-            <th>Seats</th>
             <th>Price</th>
+            <th>First Seat Number</th>
+            <th>Last Seat Number</th>
             <th><button type="submit" name="addSeat">Add seat</button></th>
         </tr>
         </thead>
@@ -21,17 +22,19 @@
         <tr th:each="seat,rowStat : ${shipCreateEditDto.seats}">
             <td>
                 <select th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}">
-                    <option th:each="seatClass : ${seatClasses}"
+                    <option th:each="seatClass: ${seatClasses}"
                             th:value="${seatClass}"
-                            th:text="${seatClass.name()}">
-                    </option>
+                            th:text="${seatClass.name}"></option>
                 </select>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatNumber}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}">
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}">
+            </td>
+            <td>
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}">
             </td>
         </tr>
         </tbody>

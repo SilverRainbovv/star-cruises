@@ -10,7 +10,7 @@ CREATE TABLE ship (
 CREATE TABLE seat (
                       id BIGSERIAL PRIMARY KEY ,
                       ship_id BIGINT REFERENCES ship(id) ON DELETE CASCADE NOT NULL,
-                      number VARCHAR(8) NOT NULL ,
+                      number INT NOT NULL ,
                       price NUMERIC(9, 2) NOT NULL ,
                       vacancy VARCHAR (16) NOT NULL
 );

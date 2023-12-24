@@ -19,7 +19,7 @@ public class Seat {
     @Id
     private Long id;
 
-    private String number;
+    private Integer number;
 
     private BigDecimal price;
 
@@ -33,4 +33,8 @@ public class Seat {
     @ManyToOne
     private Ship ship;
 
+    public void setShip(Ship ship) {
+        this.ship = ship;
+        ship.addSeat(this);
+    }
 }

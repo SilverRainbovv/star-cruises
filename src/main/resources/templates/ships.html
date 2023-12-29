@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Ship</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Ship Name</th>
+        <th>Passenger Capacity</th>
+        <th>Scheduled Cruises</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ship : ${ships}">
+        <td th:text="${ship.name}"></td>
+        <td th:text="${ship.passengerCapacity}"></td>
+        <td th:text="${ship.scheduledCruises}"></td>
+        <td><a th:href="@{|/ships/ship/${ship.id}|}">Edit Ship</a></td>
+        <td><a th:href="@{|/cruises/ship/${ship.id}|}">Edit Cruises</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

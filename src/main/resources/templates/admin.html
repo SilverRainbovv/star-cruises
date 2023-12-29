@@ -1,13 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
 </head>
 <body>
-    <button><a href="cruise">Manage Cruises</a></button>
-    <button><a href="cruise-new">Add Cruise</a></button>
-    <button><a href="ships">Manage Ships</a></button>
-    <button><a href="ship">Add Ship</a></button>
+    <button><a href="/cruises">Manage Cruises</a></button>
+    <button><a href="/cruise">Add Cruise</a></button>
+    <button><a href="/ships">Manage Ships</a></button>
+    <button><a href="/ships/ship">Add Ship</a></button>
+
+<table>
+    <caption>Cruises</caption>
+    <thead>
+    <tr>
+        <th>Ship</th>
+        <th>First Port</th>
+        <th>First Port Date</th>
+        <th>Intermediate Ports</th>
+        <th>Last Port</th>
+        <th>Last Port Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cruise : ${cruises}">
+        <td th:value="${cruise.firstPort}"></td>
+        <td th:value="${cruise.firstPortDate}"></td>
+        <td th:value="${cruise.intermediatePorts}"></td>
+        <td th:value="${cruise.lastPort}"></td>
+        <td th:value="${cruise.lastPortDate}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

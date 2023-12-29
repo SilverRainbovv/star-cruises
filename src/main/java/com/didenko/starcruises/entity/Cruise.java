@@ -22,8 +22,17 @@ public class Cruise {
     @ManyToOne
     private Ship ship;
 
-    @OneToMany(mappedBy = "cruise")
+    @OneToMany(mappedBy = "cruise", cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<Port> ports = new ArrayList<>();
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
+        ship.addCruise(this);
+    }
+
+    public void addPort(Port port){
+        ports.add(port);
+    }
 
 }

@@ -15,9 +15,11 @@ public class CruiseReadDtoMapper implements Mapper<Cruise, CruiseReadDto> {
     @Override
     public CruiseReadDto mapFrom(Cruise object) {
         List< Port> ports = object.getPorts();
-        ports.sort(Comparator.comparing(Port::getVisitDate));
-        Port firstPort = ports.remove(0);
-        Port lastPort = ports.remove(ports.size() - 1);
+//        if (ports != null && !ports.isEmpty()) {
+            ports.sort(Comparator.comparing(Port::getVisitDate));
+            Port firstPort = ports.remove(0);
+            Port lastPort = ports.remove(ports.size() - 1);
+//        }
 
         return CruiseReadDto.builder()
                 .id(object.getId())

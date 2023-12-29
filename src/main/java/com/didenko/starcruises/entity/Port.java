@@ -25,4 +25,8 @@ public class Port {
     @ManyToOne
     private Cruise cruise;
 
+    public void setCruise(Cruise cruise) {
+        this.cruise = cruise;
+        cruise.addPort(this);
+    }
 }

@@ -10,7 +10,6 @@
     <table>
         <thead>
         <tr>
-<!--            <th hidden="hidden">#</th>-->
             <th>Class</th>
             <th>Price</th>
             <th>First Seat Number</th>
@@ -28,13 +27,13 @@
                 </select>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}" required>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" required>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
             </td>
         </tr>
         </tbody>

@@ -30,7 +30,7 @@ public class Seat {
     @Column(name = "seat_class")
     private SeatClass seatClass;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Ship ship;
 
     public void setShip(Ship ship) {

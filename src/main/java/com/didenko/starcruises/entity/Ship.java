@@ -21,15 +21,19 @@ public class Ship {
 
     private String name;
 
-    @OneToMany(mappedBy = "ship",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "ship", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<Seat> seats = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "ship")
     @Builder.Default
     private List<Cruise> cruises = new ArrayList<>();
 
     public void addSeat(Seat seat){
         this.seats.add(seat);
+    }
+
+    public void addCruise(Cruise cruise){
+        cruises.add(cruise);
     }
 }

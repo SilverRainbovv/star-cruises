@@ -14,6 +14,8 @@ public class CruiseCreateEditDto {
 
     private String ship;
 
+    private String description;
+
     private List<PortCreateEditDto> ports;
 
     public void addPort(PortCreateEditDto portCreateEditDto){

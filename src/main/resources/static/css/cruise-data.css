@@ -1,0 +1,85 @@
+@import url(parent-styles.css);
+
+.data-area {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+    justify-content: center;
+    margin-bottom: 1%;
+}
+
+.data-el {
+    display: flex;
+    flex-direction: row;
+    margin: 1%;
+    background-color: white;
+    border-radius: 20px;
+
+}
+
+.cruise-image {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    width: 25%; 
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    margin: .5% 2%;
+    width: 55%;
+    justify-content: space-around;
+}
+
+.price {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 20px 20px 0;
+    width: 20%;
+    align-items: center;
+    background-color: #EBD8B2;
+    text-align: center;
+}
+
+.price-data {
+    margin: 8% 0 2% 5%
+}
+
+.price button {
+    margin: 10% 0;
+    font-size: 1.5em;
+    width: 70%;
+    border-radius: 5px;    
+}
+
+.ship-logo {
+    width: 30px;
+    height: 25px;
+}
+
+.text-medium-bold {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.text-big {
+    font-size: 2.0em;
+}
+
+.text-medium {
+    font-size: 1.4em;
+}
+
+.text-med-big {
+    font-size: 1.6em;
+}
+
+.large-bold {
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+.text-normal {
+    font-size: 1.2em;
+}

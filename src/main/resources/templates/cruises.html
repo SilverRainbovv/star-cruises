@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Find a cruise</title>
+    <link rel="stylesheet" th:href="@{/css/cruises.css}">
+    <link rel="stylesheet" th:href="@{/css/cruise-data.css}">
 </head>
 <body>
-
+<div class="header">
+    <img th:src="@{images/logo.png}"/>
+    <div class="header-mid-section">
+        <div class="link"><a th:href="@{/ships}">SHIPS</a></div>
+        <!--        <div class="link"><a th:href="@{}">DESTINATIONS</a></div>-->
+        <div class="link"><a th:href="@{/cruises}">CRUISES</a></div>
+        <div class="link"><a th:href="@{/bookings}">MY BOOKINGS</a></div>
+    </div>
+    <div><a href="">SIGN IN</a></div>
+</div>
+<form action="">
+    <div class="search_row">
+        <div class="search-el">Ship</div>
+        <div class="search-el"><label for="departure_port">Departure Port</label></div>
+        <div class="search-el"><label for="departure_after">Departure After</label></div>
+        <div class="search-el"><label for="nights">Nights</label></div>
+        <div class="search-el"></div>
+    </div>
+    <div class="search_row">
+        <div class="search-el">
+            <select class="search-el" id="ship" name="ship">
+                <option th:each="ship : ${ships}"
+                        th:value="${ship}"
+                        th:text="${ship.name}"></option>
+            </select>
+        </div>
+        <div class="search-el">
+            <input class="search-el" type="text" id="departure_port" name="departure_port"
+                   placeholder="Departure port">
+        </div>
+        <div class="search-el">
+            <input class="search-el" type="date" name="departure_after">
+        </div>
+        <div class="search-el">
+            <select class="search-el" name="nights">
+                <option th:each="option : ${cruiseSearchDurationOptions}"
+                        th:value="${option}"
+                        th:text="${option.nights}"></option>
+            </select>
+        </div>
+        <div class="search-el">
+            <button class="search-el">Search</button>
+        </div>
+    </div>
+</form>
+<div class="middle-line">
+    <div>Search Results:</div>
+    <div class="sort-section">
+        <span>Sort By:</span>
+        <select class="search-el" name="sortBy">
+            <option th:each="sortOption : ${cruiseSortOptions}"
+            th:value="${sortOption}"
+            th:text="${sortOption.option}"></option>
+        </select>
+    </div>
+</div>
+<div class="data-area" th:each="cruise : ${cruises}">
+    <div class="data-el">
+        <img class="cruise-image" src="venice.jpg" alt="">
+        <div class="description">
+            <span class="text-medium-bold" th:text="|${cruise.duration} Nights|"></span>
+            <span class="text-big" th:text="${cruise.description}"></span>
+            <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
+                <span class="text-medium" th:text="${cruise.shipName}"></span></span>
+            <span><span class="text-medium-bold">Trip from:</span> <span class="text-normal" th:text="${cruise.firstPort}"></span></span>
+            <span><span class="text-medium-bold">Visiting: </span><span class="text-normal" th:text="${cruise.intermediatePorts}"></span></span>
+        </div>
+        <div class="price">
+            <div class="price-data">
+                <div class="text-med-big">Starting from</div>
+                <div class="large-bold" th:text="|${cruise.startingPrice}$|"></div>
+                <div class="text-mid-align">Per person</div>
+                <button>Book</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

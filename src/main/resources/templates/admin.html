@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
 </head>
 <body>
-    <button><a href="/cruises">Manage Cruises</a></button>
-    <button><a href="/cruise">Add Cruise</a></button>
+    <button><a href="/cruises/cruise">Add Cruise</a></button>
     <button><a href="/ships">Manage Ships</a></button>
     <button><a href="/ships/ship">Add Ship</a></button>
 
@@ -24,11 +24,12 @@
     </thead>
     <tbody>
     <tr th:each="cruise : ${cruises}">
-        <td th:value="${cruise.firstPort}"></td>
-        <td th:value="${cruise.firstPortDate}"></td>
-        <td th:value="${cruise.intermediatePorts}"></td>
-        <td th:value="${cruise.lastPort}"></td>
-        <td th:value="${cruise.lastPortDate}"></td>
+        <td th:value="${cruise.shipName}" th:text="${cruise.shipName}"></td>
+        <td th:value="${cruise.firstPort}" th:text="${cruise.firstPort}"></td>
+        <td th:value="${cruise.firstPortDate}" th:text="${cruise.firstPortDate}"></td>
+        <td th:value="${cruise.intermediatePorts}" th:text="${cruise.intermediatePorts}"></td>
+        <td th:value="${cruise.lastPort}" th:text="${cruise.lastPort}"></td>
+        <td th:value="${cruise.lastPortDate}" th:text="${cruise.lastPortDate}"></td>
     </tr>
     </tbody>
 </table>

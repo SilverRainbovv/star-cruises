@@ -19,6 +19,8 @@ public class Cruise {
     @Id
     private Long id;
 
+    private String description;
+
     @ManyToOne
     private Ship ship;
 

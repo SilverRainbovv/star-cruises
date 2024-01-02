@@ -15,7 +15,9 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminPage(Model model){
 
-        model.addAttribute("cruises", cruiseService.allCruises());
+        var cruises = cruiseService.allCruises();
+        model.addAttribute("cruises", cruises);
+//        model.addAttribute("cruises", cruiseService.allCruises());
 
         return "admin";
     }

@@ -11,6 +11,10 @@ public class CruiseReadDto {
 
     private Long id;
 
+    private String description;
+
+    private Integer duration;
+
     private String shipName;
 
     private String firstPort;
@@ -22,4 +26,6 @@ public class CruiseReadDto {
     private LocalDate lastPortDate;
 
     private String intermediatePorts;
+
+    private String startingPrice;
 }

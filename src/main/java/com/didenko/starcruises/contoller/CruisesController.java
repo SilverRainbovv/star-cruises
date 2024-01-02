@@ -2,6 +2,8 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
+import com.didenko.starcruises.entity.CruiseSearchDurationOptions;
+import com.didenko.starcruises.entity.CruiseSortOptions;
 import com.didenko.starcruises.service.CruiseService;
 import com.didenko.starcruises.service.ShipService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,9 @@ public class CruisesController {
     public String cruisesPage(Model model){
 
         model.addAttribute("cruises", cruiseService.allCruises());
+        model.addAttribute("ships", shipService.findAll());
+        model.addAttribute("cruiseSearchDurationOptions", CruiseSearchDurationOptions.values());
+        model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());
 
         return "cruises";
     }

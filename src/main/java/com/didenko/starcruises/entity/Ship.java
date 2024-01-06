@@ -6,6 +6,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
+
 @EqualsAndHashCode(exclude = {"seats", "cruises"})
 @ToString(exclude = {"seats", "cruises"})
 @Data
@@ -21,7 +23,7 @@ public class Ship {
 
     private String name;
 
-    @OneToMany(mappedBy = "ship", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "ship", fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
     @Builder.Default
     private List<Seat> seats = new ArrayList<>();
 
@@ -31,6 +33,10 @@ public class Ship {
 
     public void addSeat(Seat seat){
         this.seats.add(seat);
+    }
+
+    public void removeSeats(List<Seat> seats){
+        this.seats.removeAll(seats);
     }
 
     public void addCruise(Cruise cruise){

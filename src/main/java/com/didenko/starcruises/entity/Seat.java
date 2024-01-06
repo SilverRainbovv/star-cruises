@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 
-@EqualsAndHashCode(exclude = "ship")
+@EqualsAndHashCode(of = {"seatGroup", "number", "price", "seatClass"})
 @ToString(exclude = "ship")
 @Data
 @Builder
@@ -18,6 +18,9 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
+    @Column(name = "seat_group")
+    private Integer seatGroup;
 
     private Integer number;
 

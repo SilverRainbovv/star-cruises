@@ -12,15 +12,17 @@ public class ShipCreateEditDto {
 
     private String name;
 
+    private String previousName;
+
     public ShipCreateEditDto() {
         seats = new ArrayList<>();
-        addSeat(new SeatCreateDto());
+        addSeat(new SeatCreateEditDto());
     }
 
     @Builder.Default
-    private List<SeatCreateDto> seats = new ArrayList<>();
+    private List<SeatCreateEditDto> seats = new ArrayList<>();
 
-    public void addSeat(SeatCreateDto seatCreateDto){
+    public void addSeat(SeatCreateEditDto seatCreateDto){
         this.seats.add(seatCreateDto);
     }
 

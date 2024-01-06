@@ -16,7 +16,7 @@ public class CruiseCreateEditDtoMapper implements Mapper<CruiseCreateEditDto, Cr
     @Override
     public Cruise mapFrom(CruiseCreateEditDto cruiseDto) {
 
-        Ship ship = shipRepository.findByName(cruiseDto.getShip());
+        Ship ship = shipRepository.findByName(cruiseDto.getShip()).get();
         Cruise cruise = new Cruise();
 
         cruiseDto.getPorts().stream().map(portCreateEditDtoMapper::mapFrom)

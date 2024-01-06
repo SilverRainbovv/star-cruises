@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SeatCreateDto {
+public class SeatCreateEditDto {
 
     private Integer index;
+
+    private Integer seatGroup;
 
     private SeatClass seatClass;
 

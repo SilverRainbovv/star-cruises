@@ -1,6 +1,6 @@
 package com.didenko.starcruises.contoller;
 
-import com.didenko.starcruises.dto.SeatCreateDto;
+import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.service.ShipService;
@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RequestMapping("ships")
@@ -24,6 +26,17 @@ public class ShipController {
         return "/ships";
     }
 
+    @GetMapping("/ship/{id}")
+    public String editShipPage(@PathVariable Long id, Model model){
+
+        Optional<ShipCreateEditDto> ship = shipService.findById(id);
+
+        model.addAttribute("shipCreateEditDto", ship.get());
+        model.addAttribute("seatClasses", SeatClass.values());
+
+        return "/ship";
+    }
+
     @GetMapping("/ship")
     public String createShipPage(Model model){
         model.addAttribute("shipCreateEditDto", new ShipCreateEditDto());
@@ -33,16 +46,18 @@ public class ShipController {
     }
 
     @PostMapping( value = "/ship")
-    public String createShip(@ModelAttribute ShipCreateEditDto shipCreateEditDto){
+    public String saveShip(@ModelAttribute ShipCreateEditDto shipCreateEditDto){
+
         shipService.save(shipCreateEditDto);
 
         return "redirect:/ships";
     }
 
     @RequestMapping(value="/ship", params={"addSeat"})
-    public String addSeat(@ModelAttribute ShipCreateEditDto shipCreateEditDto, BindingResult bindingResult,
+    public String addSeat(@ModelAttribute ShipCreateEditDto shipCreateEditDto,
+                          BindingResult bindingResult,
                           Model model) {
-        shipCreateEditDto.addSeat(new SeatCreateDto());
+        shipCreateEditDto.addSeat(new SeatCreateEditDto());
 
         model.addAttribute("seatClasses", SeatClass.values());
         if (bindingResult.hasErrors()){

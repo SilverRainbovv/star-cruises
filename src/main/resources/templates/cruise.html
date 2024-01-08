@@ -18,6 +18,7 @@
         <tr>
             <th>Port Name</th>
             <th>Port Visit Date</th>
+            <th></th>
             <th><button type="submit" name="addPort">Add Port</button></th>
         </tr>
         </thead>
@@ -28,6 +29,9 @@
             </td>
             <td>
                 <input type="date" th:field="${cruiseCreateEditDto.ports[__${rowStat.index}__].visitDate}">
+            </td>
+            <td>
+                <button type="submit" name="removePort" th:value="${rowStat.index}">Remove Port</button>
             </td>
         </tr>
         </tbody>

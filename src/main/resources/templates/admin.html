@@ -20,6 +20,7 @@
         <th>Intermediate Ports</th>
         <th>Last Port</th>
         <th>Last Port Date</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
         <td th:value="${cruise.intermediatePorts}" th:text="${cruise.intermediatePorts}"></td>
         <td th:value="${cruise.lastPort}" th:text="${cruise.lastPort}"></td>
         <td th:value="${cruise.lastPortDate}" th:text="${cruise.lastPortDate}"></td>
+        <td>
+            <button><a th:href="@{|/cruises/cruise/${cruise.id}|}">Edit</a></button>
+        </td>
     </tr>
     </tbody>
 </table>

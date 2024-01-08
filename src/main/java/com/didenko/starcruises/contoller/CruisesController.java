@@ -2,18 +2,20 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
+import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.CruiseSearchDurationOptions;
 import com.didenko.starcruises.entity.CruiseSortOptions;
+import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.service.CruiseService;
 import com.didenko.starcruises.service.ShipService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RequestMapping("cruises")
@@ -43,12 +45,41 @@ public class CruisesController {
         return "cruise";
     }
 
+    @GetMapping("cruise/{cruiseId}")
+    public String editCruisePage(@PathVariable("cruiseId") Long cruiseId, Model model){
+
+        Optional<CruiseCreateEditDto> cruise = cruiseService.findById(cruiseId);
+
+        if(cruise.isEmpty()){
+            return "redirect:/cruise";
+        }
+
+        model.addAttribute("cruiseCreateEditDto", cruise.get());
+        model.addAttribute("ships", shipService.findAll());
+
+        return "cruise";
+    }
+
     @RequestMapping(value = "/cruise", params={"addPort", "ship"})
     public String createCruise(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
                             Model model){
 
         cruiseCreateEditDto.addPort(new PortCreateEditDto());
         model.addAttribute("ships", shipService.findAll());
+
+        if (bindingResult.hasErrors()){
+            System.out.println();
+        }
+        return "/cruise";
+    }
+
+    @RequestMapping(value = "/cruise", params = {"removePort", "ship"})
+    public String removeSeats(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
+                              Model model, HttpServletRequest request){
+        Integer rowId = Integer.valueOf(request.getParameter("removePort"));
+        cruiseCreateEditDto.getPorts().remove(rowId.intValue());
+        model.addAttribute("seatClasses", SeatClass.values());
+
 
         if (bindingResult.hasErrors()){
             System.out.println();

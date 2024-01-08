@@ -36,7 +36,6 @@ public class ShipService {
         Ship updatedShip = createEditDoMapper.mapFrom(shipCreateEditDto);
         ship.setName(ship.getName());
         compareSeats(ship.getSeats(), updatedShip.getSeats(), ship);
-//        seats.forEach(seat -> seat.setShip(ship));
         ship.setCruises(updatedShip.getCruises());
         ship.setName(updatedShip.getName());
         shipRepository.save(ship);
@@ -50,7 +49,6 @@ public class ShipService {
     public void compareSeats (List<Seat> oldSeats, List<Seat> newSeats, Ship ship){
         List<Seat> toBeRemoved = oldSeats.stream().filter(seat -> !newSeats.contains(seat)).toList();
         List<Seat> toBeInserted = newSeats.stream().filter(seat -> !oldSeats.contains(seat)).toList();
-//        List<Seat> remainingSeats = newSeats.stream().filter(oldSeats::contains).toList();
 
         seatRepository.deleteAll(toBeRemoved);
         ship.removeSeats(toBeRemoved);

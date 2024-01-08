@@ -16,7 +16,10 @@
             <th>Price</th>
             <th>First Seat Number</th>
             <th>Last Seat Number</th>
-            <th><button type="submit" name="addSeat">Add seat</button></th>
+            <th></th>
+            <th>
+                <button type="submit" name="addSeat">Add seat</button>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +42,9 @@
             </td>
             <td>
                 <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
+            </td>
+            <td>
+                <button type="submit" name="removeSeats" th:value="${rowStat.index}">Remove Seat Group</button>
             </td>
         </tr>
         </tbody>

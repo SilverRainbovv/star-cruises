@@ -4,6 +4,7 @@ import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.service.ShipService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,11 +55,24 @@ public class ShipController {
     }
 
     @RequestMapping(value="/ship", params={"addSeat"})
-    public String addSeat(@ModelAttribute ShipCreateEditDto shipCreateEditDto,
+    public String addSeats(@ModelAttribute ShipCreateEditDto shipCreateEditDto,
                           BindingResult bindingResult,
                           Model model) {
         shipCreateEditDto.addSeat(new SeatCreateEditDto());
 
+        model.addAttribute("seatClasses", SeatClass.values());
+        if (bindingResult.hasErrors()){
+            System.out.println();
+        }
+        return "/ship";
+    }
+
+    @RequestMapping(value = "/ship", params = "removeSeats")
+    public String removeSeats(@ModelAttribute ShipCreateEditDto shipCreateEditDto,
+                              BindingResult bindingResult,
+                              Model model, HttpServletRequest request){
+        Integer rowId = Integer.valueOf(request.getParameter("removeSeats"));
+        shipCreateEditDto.getSeats().remove(rowId.intValue());
         model.addAttribute("seatClasses", SeatClass.values());
         if (bindingResult.hasErrors()){
             System.out.println();

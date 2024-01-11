@@ -7,12 +7,9 @@ import com.didenko.starcruises.entity.Ship;
 import com.didenko.starcruises.repository.ShipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 @Component

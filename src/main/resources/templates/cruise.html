@@ -5,21 +5,28 @@
     <title>Add Cruise</title>
 </head>
 <body>
-<form action="/cruises/cruise" th:object="${cruiseCreateEditDto}" method="post">
+<form action="/cruises/cruise" th:object="${cruiseCreateEditDto}" enctype="multipart/form-data" method="post">
     <select name="ship">
         <option th:each="ship : ${ships}"
-        th:value="${ship.name}"
+                th:value="${ship.name}"
                 th:text="${ship.name}">
         </option>
     </select>
-    <input type="text" th:field="${cruiseCreateEditDto.description}" name="description" placeholder="Cruise description">
+    <input type="text" th:field="${cruiseCreateEditDto.id}" name="id" hidden="hidden">
+    <input type="text" th:field="${cruiseCreateEditDto.description}" name="description"
+           placeholder="Cruise description">
+    <label for="image" th:if="${cruiseCreateEditDto.image == null}">
+        <input type="file" name="image" id="image">
+    </label>
     <table>
         <thead>
         <tr>
             <th>Port Name</th>
             <th>Port Visit Date</th>
             <th></th>
-            <th><button type="submit" name="addPort">Add Port</button></th>
+            <th>
+                <button type="submit" name="addPort">Add Port</button>
+            </th>
         </tr>
         </thead>
         <tbody>

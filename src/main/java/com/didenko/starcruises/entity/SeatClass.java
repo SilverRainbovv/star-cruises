@@ -1,5 +1,8 @@
 package com.didenko.starcruises.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum SeatClass {
     INTERIOR("Interior"), OUTSIDE_VIEW("Outside view"), BALCONY("Balcony"), SUITE("Suite");
 

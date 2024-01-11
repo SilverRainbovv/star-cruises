@@ -5,6 +5,10 @@
     <title>Add Ship</title>
 </head>
 <body>
+<div>
+    <button><a href="/admin">Admin</a></button>
+
+</div>
 <table>
     <thead>
     <tr>
@@ -21,7 +25,6 @@
         <td th:text="${ship.passengerCapacity}"></td>
         <td th:text="${ship.scheduledCruises}"></td>
         <td><a th:href="@{|/ships/ship/${ship.id}|}">Edit Ship</a></td>
-        <td><a th:href="@{|/cruises/ship/${ship.id}|}">Edit Cruises</a></td>
     </tr>
     </tbody>
 </table>

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -48,6 +49,13 @@ public class CruiseService {
         uploadImage(cruiseDto.getImage());
 
         cruiseRepository.save(cruise);
+    }
+
+    public Optional<byte[]> findCruiseImage(Long id){
+        return cruiseRepository.findById(id)
+                .map(Cruise::getImage)
+                .filter(StringUtils::hasText)
+                .flatMap(imageService::get);
     }
 
     @SneakyThrows

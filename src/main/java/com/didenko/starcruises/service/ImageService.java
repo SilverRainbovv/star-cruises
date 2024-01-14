@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.*;
 
@@ -24,6 +25,15 @@ public class ImageService {
             Files.createDirectories(fullPath.getParent());
             Files.write(fullPath, content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
         }
+    }
+
+    @SneakyThrows
+    public Optional<byte[]> get(String imagePath){
+        Path fullPath = Path.of(path, imagePath);
+
+        return Files.exists(fullPath)
+                ? Optional.of(Files.readAllBytes(fullPath))
+                : Optional.empty();
     }
 
 

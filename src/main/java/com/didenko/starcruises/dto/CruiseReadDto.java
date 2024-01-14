@@ -28,4 +28,6 @@ public class CruiseReadDto {
     private String intermediatePorts;
 
     private String startingPrice;
+
+    private String image;
 }

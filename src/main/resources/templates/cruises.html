@@ -65,7 +65,7 @@
 </div>
 <div class="data-area" th:each="cruise : ${cruises}">
     <div class="data-el">
-        <img class="cruise-image" src="venice.jpg" alt="">
+        <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
         <div class="description">
             <span class="text-medium-bold" th:text="|${cruise.duration} Nights|"></span>
             <span class="text-big" th:text="${cruise.description}"></span>

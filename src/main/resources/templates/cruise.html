@@ -15,7 +15,10 @@
     <input type="text" th:field="${cruiseCreateEditDto.id}" name="id" hidden="hidden">
     <input type="text" th:field="${cruiseCreateEditDto.description}" name="description"
            placeholder="Cruise description">
-    <label for="image" th:if="${cruiseCreateEditDto.image == null}">
+    <div>
+        <img th:src="@{|/api/v1/cruises/image/${cruiseCreateEditDto.id}|}" alt="Cruise Image" style="width: 300px">
+    </div>
+    <label for="image" th:if="${cruiseCreateEditDto.image == null ||cruiseCreateEditDto.image.isEmpty()}">
         <input type="file" name="image" id="image">
     </label>
     <table>

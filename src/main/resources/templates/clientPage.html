@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Page</title>
+</head>
+<body>
+    <div th:text="|Firstname:  ${client.firstname}|"></div>
+    <div th:text="|Lastname:  ${client.lastname}|"></div>
+    <div th:text="|Email:  ${client.user.email}|"></div>
+
+    <div>My documents:</div>
+    <input type="file" name="document">
+
+    <div>My bookings:</div>
+
+
+
+</body>
+</html>

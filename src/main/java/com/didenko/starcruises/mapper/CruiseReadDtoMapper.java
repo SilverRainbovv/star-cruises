@@ -4,7 +4,6 @@ import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.entity.Seat;
-import com.didenko.starcruises.service.ShipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +42,7 @@ public class CruiseReadDtoMapper implements Mapper<Cruise, CruiseReadDto> {
                 .lastPortDate(lastPort.getVisitDate())
                 .intermediatePorts(ports.stream().map(Port::getName).collect(Collectors.joining(", ")))
                 .startingPrice(lowestPrice.get().toString())
+                .image(object.getImage())
                 .build();
     }
 }

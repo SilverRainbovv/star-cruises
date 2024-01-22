@@ -5,15 +5,65 @@
     <title>Client Page</title>
 </head>
 <body>
-    <div th:text="|Firstname:  ${client.firstname}|"></div>
-    <div th:text="|Lastname:  ${client.lastname}|"></div>
-    <div th:text="|Email:  ${client.user.email}|"></div>
+<form method="post" action="/client" th:object="${clientReadDto}" enctype="multipart/form-data">
+    <input type="text" th:field="${clientReadDto.id}" name="id" hidden="hidden">
+    <label for="firstname">Firstname
+        <input th:field="${clientReadDto.firstname}" readonly id="firstname">
+    </label>
+    <label for="firstname">Lastname
+        <input th:field="${clientReadDto.lastname}" readonly id="lastname">
+    </label>
+    <label for="firstname">Email
+        <input th:field="${clientReadDto.email}" readonly id="email">
+    </label>
+    <table>
+        <thead>
+        <tr>
+            <th>Document Name</th>
+            <th>Document State</th>
+            <th></th>
+            <th>
+                <button type="submit" name="addDocument">Add Document</button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="document, rowStat : ${clientReadDto.clientDocumentDtos}">
+            <td>
+                <input type="text" th:field="${clientReadDto.clientDocumentDtos[__${rowStat.index}__].name}">
+            </td>
+            <td>
+                <div th:value="${document.state}" th:text="${document.state}"></div>
+            </td>
+            <td>
+                <input type="file" th:field="${clientReadDto.clientDocumentDtos[__${rowStat.index}__].multipartFile}">
+            </td>
+            <td>
+                <button type="submit" name="removeDocument" th:value="${rowStat.index}">Remove Document</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">Update</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th><!--EMPTY FOR DOCUMENT LOGO--></th>
+        <th>Document name</th>
+        <th><!--EMPTY FOR DOCUMENT REMOVAL BUTTON--></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <img th:src="@{/images/document-logo.png}" style="width: 30px" alt="Document logo"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <div>My documents:</div>
-    <input type="file" name="document">
-
-    <div>My bookings:</div>
-
+<div>My bookings:</div>
 
 
 </body>

@@ -2,7 +2,6 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
-import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.CruiseSearchDurationOptions;
 import com.didenko.starcruises.entity.CruiseSortOptions;
 import com.didenko.starcruises.entity.SeatClass;
@@ -61,8 +60,8 @@ public class CruisesController {
     }
 
     @RequestMapping(value = "/cruise", params={"addPort", "ship"})
-    public String createCruise(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
-                            Model model){
+    public String addport(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
+                          Model model){
 
         cruiseCreateEditDto.addPort(new PortCreateEditDto());
         model.addAttribute("ships", shipService.findAll());
@@ -74,8 +73,8 @@ public class CruisesController {
     }
 
     @RequestMapping(value = "/cruise", params = {"removePort", "ship"})
-    public String removeSeats(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
-                              Model model, HttpServletRequest request){
+    public String removePort(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto, BindingResult bindingResult,
+                             Model model, HttpServletRequest request){
         Integer rowId = Integer.valueOf(request.getParameter("removePort"));
         cruiseCreateEditDto.getPorts().remove(rowId.intValue());
         model.addAttribute("seatClasses", SeatClass.values());
@@ -88,7 +87,7 @@ public class CruisesController {
     }
 
     @PostMapping(value = "cruise")
-    public String createCruise(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto){
+    public String saveCruise(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto){
 
         cruiseService.save(cruiseCreateEditDto);
 

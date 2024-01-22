@@ -3,28 +3,45 @@ package com.didenko.starcruises.dto;
 import com.didenko.starcruises.validator.Client;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+@Builder
+@Data
+@AllArgsConstructor
 @Client
-@Value(staticConstructor = "of")
 public class ClientCreateEditDto {
+
+    public ClientCreateEditDto(){
+        documentDtos = new ArrayList<>();
+    }
 
     @Email
     @NotNull
-    String email;
+    private String email;
 
     @NotNull
-    String password;
+    private String password;
 
     @NotNull
-    String firstname;
+    private String firstname;
 
     @NotNull
-    String lastname;
+    private String lastname;
 
     @NotNull
-    LocalDate birthdate;
+    private LocalDate birthdate;
+
+    private List<ClientDocumentDto> documentDtos;
+
+    public void addDocument(ClientDocumentDto clientDocumentDto){
+        documentDtos.add(clientDocumentDto);
+    }
 
 }

@@ -55,13 +55,13 @@ public class CruiseService {
         return cruiseRepository.findById(id)
                 .map(Cruise::getImage)
                 .filter(StringUtils::hasText)
-                .flatMap(imageService::get);
+                .flatMap(imageService::getCruiseImage);
     }
 
     @SneakyThrows
     private void uploadImage(MultipartFile image) {
         if (image != null && !image.isEmpty())
-            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+            imageService.uploadCrusieImage(image.getOriginalFilename(), image.getInputStream());
     }
 
     public Optional<CruiseCreateEditDto> findById(Long cruiseId) {

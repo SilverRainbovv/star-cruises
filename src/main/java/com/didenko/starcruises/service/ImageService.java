@@ -1,5 +1,7 @@
 package com.didenko.starcruises.service;
 
+import com.didenko.starcruises.entity.ClientDocument;
+import com.didenko.starcruises.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import static java.nio.file.StandardOpenOption.*;
 @RequiredArgsConstructor
 @Service
 public class ImageService {
+
+    private final DocumentRepository documentRepository;
 
     private final String cruiseImagePath = "D:\\Intellij Projects\\star-cruises\\images";
     private final String clientDocumentPath = "D:\\Intellij Projects\\star-cruises\\client-documents";
@@ -54,6 +58,20 @@ public class ImageService {
         return Files.exists(fullPath)
                 ? Optional.of(Files.readAllBytes(fullPath))
                 : Optional.empty();
+    }
+
+    public void deleteClientDocumentById(Long documentId){
+        documentRepository.deleteById(documentId);
+    }
+    @SneakyThrows
+    public void deleteClientDocument(ClientDocument document){
+        Path fullPath = Path.of(clientDocumentPath, document.getName());
+        Files.deleteIfExists(fullPath);
+        documentRepository.delete(document);
+    }
+
+    public Optional<ClientDocument> findClientDocumentById(Long documentId){
+        return documentRepository.findById(documentId);
     }
 
 

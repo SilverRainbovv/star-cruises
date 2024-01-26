@@ -9,13 +9,16 @@ import com.didenko.starcruises.mapper.UserReadDtoMapper;
 import com.didenko.starcruises.repository.ClientRepository;
 import com.didenko.starcruises.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class LoginService {
+public class LoginService implements UserDetailsService {
 
     private final LoginRepository loginRepository;
     private final ClientRepository clientRepository;
@@ -35,5 +38,14 @@ public class LoginService {
                     .map(clientReadDtoMapper::mapFrom);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+       var a = loginRepository.findByEmail(username);
+
+       return a
+               .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

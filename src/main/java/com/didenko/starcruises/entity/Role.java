@@ -1,7 +1,13 @@
 package com.didenko.starcruises.entity;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-    CLIENT, ADMIN
+public enum Role implements GrantedAuthority {
 
+    CLIENT, ADMIN;
+
+    @Override
+    public String getAuthority() {
+        return this.name();
+    }
 }

@@ -22,10 +22,10 @@ public class Ticket {
     @OneToOne
     private Seat seat;
 
-    @OneToOne
+    @JoinColumn(name = "client_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
     @Enumerated(EnumType.STRING)
     private TicketState state;
-
 }

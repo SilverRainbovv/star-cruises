@@ -45,6 +45,9 @@
                 <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}">
             </td>
             <td>
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}">
+            </td>
+            <td>
                 <div th:if="${shipCreateEditDto.seats.size > 1}">
                     <button type="submit" name="removeSeats" th:value="${rowStat.index}">Remove Seat Group</button>
                 </div>

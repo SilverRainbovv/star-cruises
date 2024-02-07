@@ -24,10 +24,13 @@ public class Seat {
 
     private Integer number;
 
+    @Column(name = "number_of_persons")
+    private Integer numberOfPersons;
+
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
-    private Vacancy vacancy;
+    private SeatVacancy vacancy;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "seat_class")

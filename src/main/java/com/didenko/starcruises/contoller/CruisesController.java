@@ -1,19 +1,26 @@
 package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
+import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
-import com.didenko.starcruises.entity.CruiseSearchDurationOptions;
-import com.didenko.starcruises.entity.CruiseSortOptions;
-import com.didenko.starcruises.entity.SeatClass;
+import com.didenko.starcruises.dto.SeatReadDto;
+import com.didenko.starcruises.entity.*;
+import com.didenko.starcruises.repository.SeatRepository;
 import com.didenko.starcruises.service.CruiseService;
+import com.didenko.starcruises.service.SeatService;
 import com.didenko.starcruises.service.ShipService;
+import com.didenko.starcruises.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,6 +30,8 @@ public class CruisesController {
 
     private final CruiseService cruiseService;
     private final ShipService shipService;
+    private final SeatService seatService;
+    private final TicketService ticketService;
 
     @GetMapping
     public String cruisesPage(Model model){
@@ -33,6 +42,21 @@ public class CruisesController {
         model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());
 
         return "cruises";
+    }
+
+    @GetMapping("/{cruiseId}/book")
+    public String bookingPage(@PathVariable("cruiseId") Long cruiseId, Model model){
+
+        Optional<CruiseReadDto> cruise = cruiseService.findReadDtoById(cruiseId);
+        List<SeatReadDto> seats = seatService.findSeatsByCruiseId(cruiseId);
+
+        if (cruise.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        model.addAttribute("cruise", cruise.get());
+        model.addAttribute("seats", seats);
+
+        return "/booking";
     }
 
     @GetMapping("cruise")
@@ -47,7 +71,7 @@ public class CruisesController {
     @GetMapping("cruise/{cruiseId}")
     public String editCruisePage(@PathVariable("cruiseId") Long cruiseId, Model model){
 
-        Optional<CruiseCreateEditDto> cruise = cruiseService.findById(cruiseId);
+        Optional<CruiseCreateEditDto> cruise = cruiseService.findEditDtoById(cruiseId);
 
         if(cruise.isEmpty()){
             return "redirect:/cruise";
@@ -93,6 +117,13 @@ public class CruisesController {
 
         return "redirect:/cruises";
 
+    }
+
+    @GetMapping(value = "/{cruiseId}/book/{seatGroup}")
+    public void bookSeat(@PathVariable("cruiseId") Long cruiseId, @PathVariable("seatGroup") Integer seatGroup,
+                         @AuthenticationPrincipal User curentUser){
+
+        ticketService.createTicket(curentUser.getId(), cruiseId, seatGroup);
     }
 
 }

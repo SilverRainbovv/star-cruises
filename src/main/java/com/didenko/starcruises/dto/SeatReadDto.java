@@ -6,23 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SeatCreateEditDto {
-
-    private Integer seatGroup;
+@Data
+public class SeatReadDto {
 
     private SeatClass seatClass;
 
-    private String seatPrice;
+    private Long freeSeatsAvailable;
 
-    private Integer firstSeatNumber;
-
-    private Integer lastSeatNumber;
+    private BigDecimal price;
 
     private Integer numberOfPersons;
 
+    private Integer seatGroup;
 }

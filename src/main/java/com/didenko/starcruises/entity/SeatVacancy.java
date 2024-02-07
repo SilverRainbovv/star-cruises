@@ -1,5 +1,5 @@
 package com.didenko.starcruises.entity;
 
-public enum Vacancy {
+public enum SeatVacancy {
     VACANT, BOOKED
 }

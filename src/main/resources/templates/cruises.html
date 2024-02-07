@@ -79,7 +79,7 @@
                 <div class="text-med-big">Starting from</div>
                 <div class="large-bold" th:text="|${cruise.startingPrice}$|"></div>
                 <div class="text-mid-align">Per person</div>
-                <button>Book</button>
+                <a th:href="@{|/cruises/${cruise.id}/book|}"><button>Book</button></a>
             </div>
         </div>
     </div>

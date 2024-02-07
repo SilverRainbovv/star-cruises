@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Cruise</title>
+    <link rel="stylesheet" th:href="@{/css/booking.css}">
+    <link rel="stylesheet" th:href="@{/css/cruise-data.css}">
+</head>
+<body>
+<div class="header">
+    <img th:src="@{/images/logo.png}"/>
+    <div class="header-mid-section">
+        <div class="link"><a href="">SHIPS</a></div>
+        <div class="link"><a href="">DESTINATIONS</a></div>
+        <div class="link"><a href="">CRUISES</a></div>
+        <div class="link"><a href="">MY CRUISES</a></div>
+    </div>
+    <div><a href="">SIGN IN</a></div>
+</div>
+<div class="cruise-description">
+    <!-- TODO Add Cruise Description Area -->
+    <span class="text-cruise-name" th:text="${cruise.description}"/>
+    <span class="text-medium-bold" th:text="|Trip from: ${cruise.firstPort}|"/>
+    <span class="text-medium-bold" th:text="|Visiting: ${cruise.intermediatePorts}|"/>
+</div>
+<br>
+<div class="seat-options" th:each="seat : ${seats}">
+    <div class="option">
+        <div class="description-area">
+            <div>RESERVED <!-- TODO find icon for seat --></div>
+            <div th:text="|Number of Persons: ${seat.numberOfPersons}|"/>
+            <div th:text="|Class: ${seat.seatClass}|"/>
+            <div th:text="|Price: ${seat.price}|"/>
+        </div>
+        <div class="booking-area">
+            <div th:text="|Seats remaining: ${seat.freeSeatsAvailable}|"/>
+            <a th:href="@{|/cruises/${cruiseId}/book/${seat.seatGroup}|}"><button>Book</button></a>
+        </div>
+    </div>
+</body>
+</html>

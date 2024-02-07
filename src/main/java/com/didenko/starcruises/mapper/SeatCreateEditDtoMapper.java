@@ -3,7 +3,7 @@ package com.didenko.starcruises.mapper;
 import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.SeatClass;
-import com.didenko.starcruises.entity.Vacancy;
+import com.didenko.starcruises.entity.SeatVacancy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -19,8 +19,9 @@ public class SeatCreateEditDtoMapper {
                 .seatGroup(seatDto.getSeatGroup())
                 .number(seatNumber)
                 .price(new BigDecimal(seatDto.getSeatPrice()))
-                .vacancy(Vacancy.VACANT)
+                .vacancy(SeatVacancy.VACANT)
                 .seatClass(seatDto.getSeatClass())
+                .numberOfPersons(seatDto.getNumberOfPersons())
                 .build();
     }
 
@@ -39,6 +40,7 @@ public class SeatCreateEditDtoMapper {
                     .seatPrice(seatList.get(0).getPrice().toString())
                     .firstSeatNumber(seatList.stream().mapToInt(Seat::getNumber).min().getAsInt())
                     .lastSeatNumber(seatList.stream().mapToInt(Seat::getNumber).max().getAsInt())
+                    .numberOfPersons(seatList.get(0).getNumberOfPersons())
                     .build());
         });
 

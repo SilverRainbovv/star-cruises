@@ -9,8 +9,8 @@ import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
 
-@ToString(exclude = {"documents"})
-@EqualsAndHashCode(exclude = {"documents"})
+@ToString(exclude = {"documents", "tickets"})
+@EqualsAndHashCode(exclude = {"documents", "tickets"})
 @Builder
 @Data
 @NoArgsConstructor
@@ -33,6 +33,10 @@ public class Client {
 
     @Column(name = "birth_date")
     private LocalDate birthdate;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
+    private List<Ticket> tickets = new ArrayList<>();
 
     public void setUser(User user) {
         this.user = user;

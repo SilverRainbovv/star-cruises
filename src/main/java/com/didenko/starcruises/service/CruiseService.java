@@ -10,9 +10,11 @@ import com.didenko.starcruises.repository.CruiseRepository;
 import com.didenko.starcruises.repository.PortRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -64,8 +66,14 @@ public class CruiseService {
             imageService.uploadCrusieImage(image.getOriginalFilename(), image.getInputStream());
     }
 
-    public Optional<CruiseCreateEditDto> findById(Long cruiseId) {
+    public Optional<CruiseCreateEditDto> findEditDtoById(Long cruiseId) {
         return cruiseRepository.findById(cruiseId).map(cruiseCreateEditDtoMapper::mapFrom);
+    }
+
+    public Optional<CruiseReadDto> findReadDtoById(Long cruiseId){
+        Optional<Cruise> cruise = cruiseRepository.findById(cruiseId);
+        return cruise.map(mapper::mapFrom);
+
     }
 
     public void comparePorts(List<Port> oldPorts, List<Port> newPorts, Cruise cruise) {
@@ -75,5 +83,9 @@ public class CruiseService {
         portRepository.deleteAll(toBeRemoved);
         cruise.removePorts(toBeRemoved);
         toBeInserted.forEach(port -> port.setCruise(cruise));
+    }
+
+    public Optional<Cruise> findCruiseEntityById(Long cruiseId) {
+        return cruiseRepository.findById(cruiseId);
     }
 }

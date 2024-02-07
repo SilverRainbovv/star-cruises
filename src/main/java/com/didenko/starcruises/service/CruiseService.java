@@ -10,11 +10,9 @@ import com.didenko.starcruises.repository.CruiseRepository;
 import com.didenko.starcruises.repository.PortRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

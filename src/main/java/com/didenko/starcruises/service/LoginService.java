@@ -25,27 +25,25 @@ public class LoginService implements UserDetailsService {
     private final UserReadDtoMapper userReadDtoMapper;
     private final ClientReadDtoMapper clientReadDtoMapper;
 
-   public Optional<UserReadDto> attemptLogin(UserLoginDto loginDto) {
-        Optional<User> maybeUser = loginRepository
-                .findUserByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
-
-        if (maybeUser.isPresent()) {
-            User user = maybeUser.get();
-
-            return user.getRole().equals(Role.ADMIN)
-                    ? Optional.of(userReadDtoMapper.mapFrom(user))
-                    : clientRepository.findByUserEmail(user.getEmail())
-                    .map(clientReadDtoMapper::mapFrom);
-        }
-        return Optional.empty();
+//   public Optional<UserReadDto> attemptLogin(UserLoginDto loginDto) {
+//        Optional<User> maybeUser = loginRepository
+//                .findUserByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
+//
+//        if (maybeUser.isPresent()) {
+//            User user = maybeUser.get();
+//
+//            return user.getRole().equals(Role.ADMIN)
+//                    ? Optional.of(userReadDtoMapper.mapFrom(user))
+//                    : clientRepository.findByUserEmail(user.getEmail())
+//                    .map(clientReadDtoMapper::mapFrom);
+//        }
+//        return Optional.empty();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-       var a = loginRepository.findByEmail(username);
-
-       return a
+       return loginRepository.findByEmail(username)
                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

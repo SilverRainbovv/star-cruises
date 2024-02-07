@@ -74,5 +74,11 @@ public class ImageService {
         return documentRepository.findById(documentId);
     }
 
+    public Optional<byte[]> getClientDocumentById(Long documentId){
+        return documentRepository.findById(documentId)
+                .map(ClientDocument::getName)
+                .flatMap(this::getClientDocument);
+    }
+
 
 }

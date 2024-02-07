@@ -17,6 +17,8 @@ public class ClientDocumentDto {
 
     private String name;
 
+    private String documentNumber;
+
     private ClientDocumentState state;
 
     private MultipartFile multipartFile;

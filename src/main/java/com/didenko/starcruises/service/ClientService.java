@@ -25,8 +25,12 @@ public class ClientService {
     private final ClientReadDtoMapper clientReadDtoMapper;
     private final ImageService imageService;
 
-    public Optional<ClientReadDto> findById(Long clientId) {
+    public Optional<ClientReadDto> findClientReadDtoById(Long clientId) {
         return clientRepository.findById(clientId).map(clientReadDtoMapper::mapFrom);
+    }
+
+    public Optional<Client> findClientEntityById(Long clientId){
+        return clientRepository.findById(clientId);
     }
 
     @Transactional(readOnly = false)

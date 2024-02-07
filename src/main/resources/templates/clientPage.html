@@ -28,7 +28,7 @@
         <thead>
         <tr>
             <th><!--EMPTY FOR DOCUMENT LOGO--></th>
-            <th>Document Name</th>
+            <th>Document Number</th>
             <th>Document State</th>
             <th><!--EMPTY FOR DOCUMENT REMOVAL BUTTON--></th>
         </tr>
@@ -38,7 +38,8 @@
             <td>
                 <img th:src="@{/images/document-logo.png}" style="width: 30px" alt="Document logo"/>
             </td>
-            <td th:text="${document.name}"></td>
+            <td> <a th:href="@{|/document/${document.id}|}" th:text="${document.id}"></a></td>
+            <td th:text="${document.getDocumentNumber}"></td>
             <td th:text="${document.state}"></td>
             <td><a th:href="@{|/document/delete/${document.id}|}">Delete</a></td>
         </tr>

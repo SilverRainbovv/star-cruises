@@ -28,6 +28,9 @@ public class ClientDocument {
     @Enumerated(EnumType.STRING)
     private ClientDocumentState state;
 
+    @Column(name = "number")
+    private String documentNumber;
+
     public void setClient(Client client) {
         this.client = client;
         client.addDocument(this);

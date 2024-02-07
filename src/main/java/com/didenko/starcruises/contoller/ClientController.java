@@ -1,9 +1,11 @@
 package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.*;
+import com.didenko.starcruises.entity.User;
 import com.didenko.starcruises.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,10 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    @GetMapping("/{clientId}")
-    public String clientPage(@PathVariable("clientId") Long clientId, Model model){
+    @GetMapping
+    public String clientPage(@AuthenticationPrincipal User user, Model model){
 
-        model.addAttribute("clientReadDto", clientService.findById(clientId)
+        model.addAttribute("clientReadDto", clientService.findClientReadDtoById(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 
         return "clientPage";
@@ -29,6 +31,6 @@ public class ClientController {
     public String updateClient(@ModelAttribute ClientReadDto clientReadDto){
         clientService.update(clientReadDto);
 
-        return "redirect:/client/" + clientReadDto.getId();
+        return "redirect:/client";
     }
 }

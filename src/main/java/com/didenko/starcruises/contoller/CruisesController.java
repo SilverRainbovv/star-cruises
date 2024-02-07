@@ -5,7 +5,6 @@ import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
 import com.didenko.starcruises.dto.SeatReadDto;
 import com.didenko.starcruises.entity.*;
-import com.didenko.starcruises.repository.SeatRepository;
 import com.didenko.starcruises.service.CruiseService;
 import com.didenko.starcruises.service.SeatService;
 import com.didenko.starcruises.service.ShipService;

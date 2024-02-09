@@ -38,7 +38,7 @@
             <td>
                 <img th:src="@{/images/document-logo.png}" style="width: 30px" alt="Document logo"/>
             </td>
-            <td> <a th:href="@{|/document/${document.id}|}" th:text="${document.id}"></a></td>
+            <td><a th:href="@{|/document/${document.id}|}" th:text="${document.id}"></a></td>
             <td th:text="${document.getDocumentNumber}"></td>
             <td th:text="${document.state}"></td>
             <td><a th:href="@{|/document/delete/${document.id}|}">Delete</a></td>
@@ -47,7 +47,45 @@
     </table>
 </form>
 
-<div>My bookings:</div>
+<div th:if="${canBook} == false" th:text="|Please add document and wait for verification before paying|"></div>
+<div>My Tickets:</div>
+<table>
+    <thead>
+    <tr>
+        <th>Ship</th>
+        <th>Cruise</th>
+        <th>Number of persons</th>
+        <th>Class</th>
+        <th>Price</th>
+        <th>State</th>
+        <th><!--EMPTY FOR PAY BUTTON--></th>
+        <th><!--EMPTY FOR CANCEL BUTTON--></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ticket : ${tickets}">
+        <td th:text="${ticket.ship}"/>
+        <td th:text="${ticket.cruise}"/>
+        <td th:text="${ticket.numberOfPersons}"/>
+        <td th:text="${ticket.seatClass}"/>
+        <td th:text="${ticket.price}"/>
+        <td th:text="${ticket.ticketState}"/>
+
+        <td>
+            <div th:if="${canBook} == true">
+                <div th:if="${ticket.isCanceled() != true}">
+                    <a th:href="@{|/ticket/pay/${ticket.ticketId}|}">Pay</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div th:if="${ticket.isCanceled() != true}">
+                <a th:href="@{|/ticket/cancel/${ticket.ticketId}|}">Cancel</a>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
 </body>

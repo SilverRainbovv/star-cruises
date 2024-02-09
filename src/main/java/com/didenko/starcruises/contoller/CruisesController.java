@@ -119,10 +119,12 @@ public class CruisesController {
     }
 
     @GetMapping(value = "/{cruiseId}/book/{seatGroup}")
-    public void bookSeat(@PathVariable("cruiseId") Long cruiseId, @PathVariable("seatGroup") Integer seatGroup,
+    public String bookSeat(@PathVariable("cruiseId") Long cruiseId, @PathVariable("seatGroup") Integer seatGroup,
                          @AuthenticationPrincipal User curentUser){
 
         ticketService.createTicket(curentUser.getId(), cruiseId, seatGroup);
+
+        return "redirect:/user";
     }
 
 }

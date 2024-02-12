@@ -2,7 +2,6 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.*;
 import com.didenko.starcruises.entity.ClientDocumentState;
-import com.didenko.starcruises.entity.TicketState;
 import com.didenko.starcruises.entity.User;
 import com.didenko.starcruises.service.ClientService;
 import com.didenko.starcruises.service.TicketService;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RequestMapping("/client")
 @RequiredArgsConstructor

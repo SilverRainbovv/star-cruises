@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>Client</th>
+        <th>Document</th>
+        <th><!-- EMPTY FOR APPROVE BUTTON--></th>
+        <th><!-- EMPTY FOR REJECT BUTTON--></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="document : ${documents}">
+        <td th:text="|${document.client.lastname} ${document.client.firstname}|"/>
+        <td><a th:href="@{|/document/${document.id}|}" th:text="${document.name}" target="_blank"></a></td>
+        <td><a th:href="@{|/document/approve/${document.id}|}"><button>Approve</button></a></td>
+        <td><a th:href="@{|/document/reject/${document.id}|}"><button>Reject</button></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

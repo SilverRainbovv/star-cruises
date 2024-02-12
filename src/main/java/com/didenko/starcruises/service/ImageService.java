@@ -1,7 +1,7 @@
 package com.didenko.starcruises.service;
 
 import com.didenko.starcruises.entity.ClientDocument;
-import com.didenko.starcruises.repository.DocumentRepository;
+import com.didenko.starcruises.repository.ClientDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import static java.nio.file.StandardOpenOption.*;
 @Service
 public class ImageService {
 
-    private final DocumentRepository documentRepository;
+    private final ClientDocumentRepository clientDocumentRepository;
 
-    private final String cruiseImagePath = "D:\\Intellij Projects\\star-cruises\\images";
-    private final String clientDocumentPath = "D:\\Intellij Projects\\star-cruises\\client-documents";
+    private final String cruiseImagePath = "E:\\Programming\\Intellij Projects\\star-cruises\\images";
+    private final String clientDocumentPath = "E:\\Programming\\Intellij Projects\\star-cruises\\client-documents";
 
     @SneakyThrows
     public void uploadCrusieImage(String imagePath, InputStream content){
@@ -61,21 +61,21 @@ public class ImageService {
     }
 
     public void deleteClientDocumentById(Long documentId){
-        documentRepository.deleteById(documentId);
+        clientDocumentRepository.deleteById(documentId);
     }
     @SneakyThrows
     public void deleteClientDocument(ClientDocument document){
         Path fullPath = Path.of(clientDocumentPath, document.getName());
         Files.deleteIfExists(fullPath);
-        documentRepository.delete(document);
+        clientDocumentRepository.delete(document);
     }
 
     public Optional<ClientDocument> findClientDocumentById(Long documentId){
-        return documentRepository.findById(documentId);
+        return clientDocumentRepository.findById(documentId);
     }
 
     public Optional<byte[]> getClientDocumentById(Long documentId){
-        return documentRepository.findById(documentId)
+        return clientDocumentRepository.findById(documentId)
                 .map(ClientDocument::getName)
                 .flatMap(this::getClientDocument);
     }

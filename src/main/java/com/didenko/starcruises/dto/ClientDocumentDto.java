@@ -1,10 +1,9 @@
 package com.didenko.starcruises.dto;
 
 import com.didenko.starcruises.entity.ClientDocumentState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -15,12 +14,12 @@ public class ClientDocumentDto {
 
     private Long id;
 
-    private String name;
-
-    private String documentNumber;
+    @NotBlank
+    private String documentName;
 
     private ClientDocumentState state;
 
+    @NotNull
     private MultipartFile multipartFile;
 
 }

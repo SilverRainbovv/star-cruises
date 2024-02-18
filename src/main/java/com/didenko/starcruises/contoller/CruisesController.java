@@ -1,9 +1,6 @@
 package com.didenko.starcruises.contoller;
 
-import com.didenko.starcruises.dto.CruiseCreateEditDto;
-import com.didenko.starcruises.dto.CruiseReadDto;
-import com.didenko.starcruises.dto.PortCreateEditDto;
-import com.didenko.starcruises.dto.SeatReadDto;
+import com.didenko.starcruises.dto.*;
 import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.service.CruiseService;
 import com.didenko.starcruises.service.SeatService;
@@ -19,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +31,20 @@ public class CruisesController {
     private final TicketService ticketService;
 
     @GetMapping
-    public String cruisesPage(Model model){
+    public String cruisesPage(Model model, @RequestParam(value = "ship_name", required = false) String shipName,
+                              @RequestParam(value = "departure_port", required = false) String departurePort,
+                              @RequestParam(value = "departure_after", required = false) LocalDate departureAfter,
+                              @RequestParam(value = "nights", required = false) CruiseSearchDurationOptions nights,
+                              @RequestParam(value = "sortBy", required = false) CruiseSortOptions sortOption){
+
+        List<ShipReadDto> shipReadDtos = shipService.findAll();
+
+        model.addAttribute("searchOptions",
+                new SearchOptions(shipName == null || shipName.isEmpty() ? shipReadDtos.stream().findFirst().get().getName() : shipName,
+                        departurePort, departureAfter, nights, sortOption));
 
         model.addAttribute("cruises", cruiseService.allCruises());
-        model.addAttribute("ships", shipService.findAll());
+        model.addAttribute("ships", shipReadDtos);
         model.addAttribute("cruiseSearchDurationOptions", CruiseSearchDurationOptions.values());
         model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());
 

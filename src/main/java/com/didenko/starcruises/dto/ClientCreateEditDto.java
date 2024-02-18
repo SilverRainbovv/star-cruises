@@ -1,12 +1,11 @@
 package com.didenko.starcruises.dto;
 
 import com.didenko.starcruises.validator.Client;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,20 +21,21 @@ public class ClientCreateEditDto {
         documentDtos = new ArrayList<>();
     }
 
+    @NotBlank
     @Email
-    @NotNull
     private String email;
 
-    @NotNull
+    @NotBlank
     private String password;
 
-    @NotNull
+    @Size(min = 3, max = 64)
+    @NotBlank
     private String firstname;
 
-    @NotNull
+    @Size(min = 3, max = 64)
+    @NotBlank
     private String lastname;
 
-    @NotNull
     private LocalDate birthdate;
 
     private List<ClientDocumentDto> documentDtos;
@@ -43,5 +43,4 @@ public class ClientCreateEditDto {
     public void addDocument(ClientDocumentDto clientDocumentDto){
         documentDtos.add(clientDocumentDto);
     }
-
 }

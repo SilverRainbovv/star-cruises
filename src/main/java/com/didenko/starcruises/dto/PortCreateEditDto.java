@@ -1,5 +1,7 @@
 package com.didenko.starcruises.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +15,10 @@ import java.time.LocalDate;
 @Data
 public class PortCreateEditDto {
 
+    @NotBlank
     private String name;
 
+    @Future
     private String visitDate;
 
 }

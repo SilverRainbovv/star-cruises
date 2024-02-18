@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -47,7 +49,14 @@ public class ShipController {
     }
 
     @PostMapping( value = "/ship")
-    public String saveShip(@ModelAttribute ShipCreateEditDto shipCreateEditDto){
+    public String saveShip(@ModelAttribute @Validated ShipCreateEditDto shipCreateEditDto, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("shipCreateEditDto", shipCreateEditDto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/ships/ship";
+        }
 
         shipService.save(shipCreateEditDto);
 

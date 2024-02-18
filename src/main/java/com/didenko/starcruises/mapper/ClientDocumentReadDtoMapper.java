@@ -11,8 +11,7 @@ public class ClientDocumentReadDtoMapper implements Mapper<ClientDocument, Clien
     public ClientDocumentDto mapFrom(ClientDocument object) {
         return ClientDocumentDto.builder()
                 .id(object.getId())
-                .documentNumber(object.getDocumentNumber())
-                .name(object.getName())
+                .documentName(object.getName())
                 .state(object.getState())
                 .build();
     }
@@ -20,7 +19,6 @@ public class ClientDocumentReadDtoMapper implements Mapper<ClientDocument, Clien
     public ClientDocument mapFrom(ClientDocumentDto clientDocumentDto){
         return ClientDocument.builder()
                 .name(clientDocumentDto.getMultipartFile().getOriginalFilename())
-                .documentNumber(clientDocumentDto.getDocumentNumber())
                 .state(clientDocumentDto.getState() == null ? ClientDocumentState.PENDING : clientDocumentDto.getState())
                 .build();
     }

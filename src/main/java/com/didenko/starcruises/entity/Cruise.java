@@ -8,6 +8,8 @@ import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
 
+
+
 @EqualsAndHashCode(exclude = {"ship", "ports"})
 @ToString(exclude = {"ship", "ports"})
 @Data

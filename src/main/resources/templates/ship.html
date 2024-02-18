@@ -17,7 +17,7 @@
             <th>Price</th>
             <th>First Seat Number</th>
             <th>Last Seat Number</th>
-            <th></th>
+            <th>Cabin Capacity</th>
             <th>
                 <button type="submit" name="addSeat">Add seat</button>
             </th>
@@ -36,16 +36,16 @@
                 </select>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}" required>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" >
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" required>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
             </td>
             <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}">
+                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}" required>
             </td>
             <td>
                 <div th:if="${shipCreateEditDto.seats.size > 1}">
@@ -55,6 +55,9 @@
         </tr>
         </tbody>
     </table>
+    <div th:if="${errors}">
+        <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}"/>
+    </div>
     <button type="submit">Save</button>
 </form>
 </body>

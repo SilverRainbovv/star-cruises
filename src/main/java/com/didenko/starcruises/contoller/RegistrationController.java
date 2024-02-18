@@ -25,7 +25,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registration(@Validated @ModelAttribute ClientCreateEditDto clientDto,
+    public String registration(@ModelAttribute @Validated ClientCreateEditDto clientDto,
                                BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){

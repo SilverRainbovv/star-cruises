@@ -17,52 +17,56 @@
     </div>
     <div><a href="">SIGN IN</a></div>
 </div>
-<form action="">
+<form th:action="@{'/cruises'}" method="get">
     <div class="search_row">
         <div class="search-el">Ship</div>
-        <div class="search-el"><label for="departure_port">Departure Port</label></div>
-        <div class="search-el"><label for="departure_after">Departure After</label></div>
-        <div class="search-el"><label for="nights">Nights</label></div>
-        <div class="search-el"></div>
+        <div class="search-el">Departure Port</div>
+        <div class="search-el">Departure After</div>
+        <div class="search-el">Nights</div>
+        <div class="search-el"><!-- EMPTY SPACE TO BE EQUAL TO THE NEXT ROW --></div>
     </div>
     <div class="search_row">
         <div class="search-el">
-            <select class="search-el" id="ship" name="ship">
+            <select class="search-el" id="ship_name" name="ship_name">
                 <option th:each="ship : ${ships}"
-                        th:value="${ship}"
-                        th:text="${ship.name}"></option>
+                        th:value="${ship.name}"
+                        th:text="${ship.name}"
+                        th:selected="${ship.name} == ${searchOptions.shipName}"></option>
             </select>
         </div>
         <div class="search-el">
             <input class="search-el" type="text" id="departure_port" name="departure_port"
-                   placeholder="Departure port">
+                   th:value="${searchOptions.departurePort}" placeholder="Departure port">
         </div>
         <div class="search-el">
-            <input class="search-el" type="date" name="departure_after">
+            <input class="search-el" type="date" name="departure_after" id="departure_after"
+                   th:value="${searchOptions.departureAfter}">
         </div>
         <div class="search-el">
-            <select class="search-el" name="nights">
+            <select class="search-el" name="nights" id="nights">
                 <option th:each="option : ${cruiseSearchDurationOptions}"
                         th:value="${option}"
-                        th:text="${option.nights}"></option>
+                        th:text="${option.nights}"
+                        th:selected="${option} == ${searchOptions.nights}"></option>
             </select>
         </div>
         <div class="search-el">
             <button class="search-el">Search</button>
         </div>
     </div>
-</form>
-<div class="middle-line">
-    <div>Search Results:</div>
-    <div class="sort-section">
-        <span>Sort By:</span>
-        <select class="search-el" name="sortBy">
-            <option th:each="sortOption : ${cruiseSortOptions}"
-            th:value="${sortOption}"
-            th:text="${sortOption.option}"></option>
-        </select>
+    <div class="middle-line">
+        <div>Search Results:</div>
+        <div class="sort-section">
+            <span>Sort By:</span>
+            <select class="search-el" name="sortBy">
+                <option th:each="sortOption : ${cruiseSortOptions}"
+                        th:value="${sortOption}"
+                        th:text="${sortOption.option}"
+                th:selected="${sortOption} == ${searchOptions.sortOption}"></option>
+            </select>
+        </div>
     </div>
-</div>
+</form>
 <div class="data-area" th:each="cruise : ${cruises}">
     <div class="data-el">
         <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
@@ -71,15 +75,19 @@
             <span class="text-big" th:text="${cruise.description}"></span>
             <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
                 <span class="text-medium" th:text="${cruise.shipName}"></span></span>
-            <span><span class="text-medium-bold">Trip from:</span> <span class="text-normal" th:text="${cruise.firstPort}"></span></span>
-            <span><span class="text-medium-bold">Visiting: </span><span class="text-normal" th:text="${cruise.intermediatePorts}"></span></span>
+            <span><span class="text-medium-bold">Trip from:</span> <span class="text-normal"
+                                                                         th:text="${cruise.firstPort}"></span></span>
+            <span><span class="text-medium-bold">Visiting: </span><span class="text-normal"
+                                                                        th:text="${cruise.intermediatePorts}"></span></span>
         </div>
         <div class="price">
             <div class="price-data">
                 <div class="text-med-big">Starting from</div>
                 <div class="large-bold" th:text="|${cruise.startingPrice}$|"></div>
                 <div class="text-mid-align">Per person</div>
-                <a th:href="@{|/cruises/${cruise.id}/book|}"><button>Book</button></a>
+                <a th:href="@{|/cruises/${cruise.id}/book|}">
+                    <button>Book</button>
+                </a>
             </div>
         </div>
     </div>

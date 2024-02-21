@@ -3,28 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Client Page</title>
+    <link th:href="@{/css/client-page.css}" rel="stylesheet">
+    <link th:href="@{/css/cruises.css}" rel="stylesheet">
 </head>
 <body>
-<form method="post" action="/client" th:object="${clientReadDto}" enctype="multipart/form-data">
-    <input type="text" th:field="${clientReadDto.id}" name="id" hidden="hidden" readonly>
-    <br>
-    <label for="firstname">Firstname
-        <input th:field="${clientReadDto.firstname}" readonly id="firstname">
-    </label>
-    <br>
-    <label for="firstname">Lastname
-        <input th:field="${clientReadDto.lastname}" readonly id="lastname">
-    </label>
-    <br>
-    <label for="firstname">Email
-        <input th:field="${clientReadDto.email}" readonly id="email">
-    </label>
-    <br>
-    <label for="newDocument">Add document
-        <input type="file" th:field="${clientReadDto.newDocument}" id="newDocument">
-    </label>
-    <button type="submit">Save</button>
-    <table>
+<div class="header">
+    <img th:src="@{images/logo.png}"/>
+    <div class="header-mid-section">
+        <div class="link"><a th:href="@{/ships}">SHIPS</a></div>
+        <!--        <div class="link"><a th:href="@{}">DESTINATIONS</a></div>-->
+        <div class="link"><a th:href="@{/cruises}">CRUISES</a></div>
+        <div class="link"><a th:href="@{/bookings}">MY BOOKINGS</a></div>
+    </div>
+    <div><a href="">SIGN IN</a></div>
+</div>
+<form class="client-page-form" method="post" action="/client" th:object="${clientReadDto}" enctype="multipart/form-data">
+    <div class="client-info">
+        <div th:text="|Firstname: ${clientReadDto.firstname}|"/>
+        <div th:text="|Lastname: ${clientReadDto.lastname}|"/>
+        <div th:text="|Email: ${clientReadDto.email}|"/>
+        <input type="text" th:field="${clientReadDto.id}" name="id" hidden="hidden" readonly>
+        <div>Add document
+            <input type="file" th:field="${clientReadDto.newDocument}" id="newDocument">
+        </div>
+        <button type="submit">Save</button>
+    </div>
+    <table class="document-table">
         <thead>
         <tr>
             <th><!--EMPTY FOR DOCUMENT LOGO--></th>
@@ -36,24 +40,25 @@
         <tbody>
         <tr th:each="document : ${clientReadDto.clientDocumentDtos}">
             <td>
-                <img th:src="@{/images/document-logo.png}" style="width: 30px" alt="Document logo"/>
+                <img class="logo" th:src="@{/images/document-logo.png}" alt="Document logo"/>
             </td>
             <td><a th:href="@{|/document/${document.id}|}" th:text="${document.documentName}"></a></td>
             <td th:text="${document.state}"></td>
-            <td><a th:href="@{|/document/delete/${document.id}|}">Delete</a></td>
+            <td><a th:href="@{|/document/delete/${document.id}|}">
+                <button>Delete</button>
+            </a></td>
         </tr>
         </tbody>
     </table>
 </form>
-
 <div th:if="${canBook} == false" th:text="|Please add document and wait for verification before paying|"></div>
-<div>My Tickets:</div>
-<table>
+<table class="ticket-table">
+    <caption>My Tickets</caption>
     <thead>
     <tr>
         <th>Ship</th>
         <th>Cruise</th>
-        <th>Number of persons</th>
+        <th>Persons</th>
         <th>Class</th>
         <th>Price</th>
         <th>State</th>
@@ -73,19 +78,18 @@
         <td>
             <div th:if="${canBook} == true">
                 <div th:if="${ticket.ticketState == T(com.didenko.starcruises.entity.TicketState).NOT_PAID}">
-                    <a th:href="@{|/ticket/pay/${ticket.ticketId}|}">Pay</a>
+                    <a th:href="@{|/ticket/pay/${ticket.ticketId}|}"><button>Pay</button></a>
                 </div>
             </div>
         </td>
         <td>
             <div th:if="${ticket.isCanceled() != true}">
-                <a th:href="@{|/ticket/cancel/${ticket.ticketId}|}">Cancel</a>
+                <a th:href="@{|/ticket/cancel/${ticket.ticketId}|}"><button>Cancel</button></a>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
-
 
 </body>
 </html>

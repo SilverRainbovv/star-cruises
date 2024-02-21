@@ -50,4 +50,5 @@ form {
 
 button:hover{
     background-color: #4F709C ;
+    cursor: pointer;
 }

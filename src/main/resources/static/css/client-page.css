@@ -1,0 +1,52 @@
+@import url(header.css);
+
+.client-page-form {
+    margin-left: 5%;
+}
+
+.client-info {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.client-info div {
+    margin: 1.5%;
+}
+
+.client-info button {
+    margin: 1%;
+    width: 30%;
+}
+
+.document-table {
+    margin-top: 1.5%;
+    width: 50%;
+}
+
+.ticket-table {
+    margin-top: 1.5%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    width: 80%;
+}
+
+tbody td{
+    text-align: center;
+
+}
+
+.logo {
+    width: 30px;
+}
+
+a {
+    color: #4F709C;
+    text-decoration: none;
+}
+
+a :hover {
+    cursor: pointer;
+    color: #4F709C;
+    text-decoration: none;
+}

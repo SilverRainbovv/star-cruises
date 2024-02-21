@@ -13,9 +13,9 @@ public class UserController {
 
     @GetMapping
     public String redirectSuccessfulLogin(@AuthenticationPrincipal User user){
-        return user.getRole().equals(Role.ADMIN)
+        return  user == null ? "redirect:/login"
+                : user.getRole().equals(Role.ADMIN)
                 ? "redirect:/admin"
                 : "redirect:/client";
     }
-
 }

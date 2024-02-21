@@ -3,6 +3,7 @@ package com.didenko.starcruises.service;
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.entity.Cruise;
+import com.didenko.starcruises.entity.CruiseSortOptions;
 import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,28 @@ public class CruiseService {
     private final CruiseCreateEditDtoMapper cruiseCreateEditDtoMapper;
     private final ImageService imageService;
 
-    public List<CruiseReadDto> allCruises() {
+    public List<CruiseReadDto> findAllCruises(CruiseSortOptions sortOption) {
+        List<CruiseReadDto> cruises = cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
+
+        sortOption = sortOption == null ? CruiseSortOptions.DEPARTURE_EARLIEST : sortOption;
+
+        return switch (sortOption) {
+            case DEPARTURE_EARLIEST ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate)).toList();
+            case DEPARTURE_LATEST ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate).reversed()).toList();
+            case PRICE_ASCENDING ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice)).toList();
+            case PRICE_DESCENDING ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice).reversed()).toList();
+            case DURATION_ASCENDING ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration)).toList();
+            case DURATION_DESCENDING ->
+                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration).reversed()).toList();
+        };
+    }
+
+    public List<CruiseReadDto> findAllCruises() {
         return cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
     }
 
@@ -43,7 +66,7 @@ public class CruiseService {
 
         cruise.setShip(updatedCruise.getShip());
         cruise.setDescription(updatedCruise.getDescription());
-        cruise.setImage(updatedCruise.getImage());
+        cruise.setImage(updatedCruise.getImage() == null ? cruise.getImage() : updatedCruise.getImage());
         comparePorts(cruise.getPorts(), updatedCruise.getPorts(), cruise);
 
         uploadImage(cruiseDto.getImage());

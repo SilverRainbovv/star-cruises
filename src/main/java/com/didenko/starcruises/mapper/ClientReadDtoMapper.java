@@ -8,6 +8,7 @@ import com.didenko.starcruises.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,7 +36,10 @@ public class ClientReadDtoMapper implements Mapper<Client, ClientReadDto> {
     public ClientReadDto mapFrom(Client object) {
         User user = object.getUser();
 
-        List<ClientDocumentDto> documentReadDtos = object.getDocuments().stream().map(documentReadDtoMapper::mapFrom).toList();
+        List<ClientDocumentDto> documentReadDtos = object.getDocuments().stream()
+                .map(documentReadDtoMapper::mapFrom)
+                .sorted(Comparator.comparing(doc -> doc.getState().getOrder()))
+                .toList();
 
         ClientReadDto clientReadDto = new ClientReadDto(
                 user.getId(),

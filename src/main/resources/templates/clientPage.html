@@ -72,7 +72,7 @@
 
         <td>
             <div th:if="${canBook} == true">
-                <div th:if="${ticket.isCanceled() != true}">
+                <div th:if="${ticket.ticketState == T(com.didenko.starcruises.entity.TicketState).NOT_PAID}">
                     <a th:href="@{|/ticket/pay/${ticket.ticketId}|}">Pay</a>
                 </div>
             </div>

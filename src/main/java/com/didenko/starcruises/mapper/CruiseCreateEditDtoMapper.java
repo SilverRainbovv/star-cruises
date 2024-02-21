@@ -31,6 +31,7 @@ public class CruiseCreateEditDtoMapper implements Mapper<CruiseCreateEditDto, Cr
         cruiseDto.getPorts().stream().map(portCreateEditDtoMapper::mapFrom)
                 .forEach(port -> port.setCruise(cruise));
         cruise.setShip(ship);
+        cruise.setDescription(cruiseDto.getDescription());
 
         return cruise;
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -51,7 +52,9 @@ public class TicketService {
     public List<TicketReadDto> findTicketsByUserId(Long userId){
 
         return ticketRepository.findTicketsByClientUserId(userId)
-                .stream().map(ticketReadDtoMapper::mapFrom).toList();
+                .stream().map(ticketReadDtoMapper::mapFrom)
+                .sorted(Comparator.comparing(ticket -> ticket.getTicketState().getOrder()))
+                .toList();
     }
     @Transactional(readOnly = false)
 

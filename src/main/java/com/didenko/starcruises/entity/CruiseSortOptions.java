@@ -1,5 +1,7 @@
 package com.didenko.starcruises.entity;
 
+import lombok.Builder;
+
 public enum CruiseSortOptions {
 
     DEPARTURE_EARLIEST("Departure earliest"),

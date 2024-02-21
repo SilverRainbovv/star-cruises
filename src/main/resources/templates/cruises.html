@@ -71,7 +71,7 @@
     <div class="data-el">
         <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
         <div class="description">
-            <span class="text-medium-bold" th:text="|${cruise.duration} Nights|"></span>
+            <span class="text-medium-bold" th:text="|${cruise.duration} Nights    Departure Date: ${cruise.firstPortDate}|"></span>
             <span class="text-big" th:text="${cruise.description}"></span>
             <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
                 <span class="text-medium" th:text="${cruise.shipName}"></span></span>

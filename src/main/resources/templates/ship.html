@@ -6,9 +6,15 @@
 </head>
 <body>
 
-<form action="/ships/ship" th:object="${shipCreateEditDto}" method="post">
+<form action="/ships/ship" th:object="${shipCreateEditDto}" method="post" enctype="multipart/form-data">
     <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name" required>
     <input type="text" th:field="${shipCreateEditDto.previousName}" name="previousName" hidden="hidden">
+    <div>
+        <img th:src="@{|/api/v1/ship/image/${shipCreateEditDto.id}|}" alt="Ship Image" style="width: 300px">
+    </div>
+    <label for="image" th:if="${shipCreateEditDto.image == null ||shipCreateEditDto.image.isEmpty()}">
+        <input type="file" name="image" id="image">
+    </label>
     <table>
         <thead>
         <tr>

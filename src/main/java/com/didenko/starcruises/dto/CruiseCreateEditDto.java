@@ -32,7 +32,6 @@ public class CruiseCreateEditDto {
     @Size(min = 2)
     private List<PortCreateEditDto> ports;
 
-    @NotEmpty
     private MultipartFile image;
 
     public void addPort(PortCreateEditDto portCreateEditDto){

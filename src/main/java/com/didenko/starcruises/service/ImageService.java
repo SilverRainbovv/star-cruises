@@ -19,12 +19,23 @@ public class ImageService {
 
     private final ClientDocumentRepository clientDocumentRepository;
 
-    private final String cruiseImagePath = "E:\\Programming\\Intellij Projects\\star-cruises\\images";
-    private final String clientDocumentPath = "E:\\Programming\\Intellij Projects\\star-cruises\\client-documents";
+    private final String cruiseImagePath = "E:\\Programming\\Intellij Projects\\star-cruises\\images\\cruise-images";
+    private final String clientDocumentPath = "E:\\Programming\\Intellij Projects\\star-cruises\\images\\client-documents";
+    private final String shipImagePath = "E:\\Programming\\Intellij Projects\\star-cruises\\images\\ship-images";
 
     @SneakyThrows
     public void uploadCrusieImage(String imagePath, InputStream content){
         Path fullPath = Path.of(cruiseImagePath, imagePath);
+
+        try(content) {
+            Files.createDirectories(fullPath.getParent());
+            Files.write(fullPath, content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
+        }
+    }
+
+    @SneakyThrows
+    public void uploadShipImage(String imagePath, InputStream content){
+        Path fullPath = Path.of(shipImagePath, imagePath);
 
         try(content) {
             Files.createDirectories(fullPath.getParent());
@@ -45,6 +56,15 @@ public class ImageService {
     @SneakyThrows
     public Optional<byte[]> getCruiseImage(String imagePath){
         Path fullPath = Path.of(cruiseImagePath, imagePath);
+
+        return Files.exists(fullPath)
+                ? Optional.of(Files.readAllBytes(fullPath))
+                : Optional.empty();
+    }
+
+    @SneakyThrows
+    public Optional<byte[]> getShipImage(String imagePath){
+        Path fullPath = Path.of(shipImagePath, imagePath);
 
         return Files.exists(fullPath)
                 ? Optional.of(Files.readAllBytes(fullPath))

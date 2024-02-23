@@ -15,4 +15,5 @@ public class ShipReadDto {
 
     private Integer passengerCapacity;
 
+    private String image;
 }

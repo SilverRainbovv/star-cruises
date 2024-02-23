@@ -42,14 +42,16 @@ public class ClientService {
 
             MultipartFile newDocument = clientReadDto.getNewDocument().get();
 
-            ClientDocument clientDocument = ClientDocument.builder()
-                    .state(ClientDocumentState.PENDING)
-                    .name(newDocument.getOriginalFilename())
-                    .build();
+            if (!newDocument.isEmpty()) {
+                ClientDocument clientDocument = ClientDocument.builder()
+                        .state(ClientDocumentState.PENDING)
+                        .name(newDocument.getOriginalFilename())
+                        .build();
 
-            clientDocument.setClient(client);
+                clientDocument.setClient(client);
 
-            uploadDocument(newDocument);
+                uploadDocument(newDocument);
+            }
 
             clientRepository.save(client);
         }

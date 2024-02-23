@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,6 +25,10 @@ public class ShipCreateEditDtoMapper implements Mapper<ShipCreateEditDto, Ship> 
         Ship ship = Ship.builder()
                 .name(shipDto.getName())
                 .build();
+
+        Optional.ofNullable(shipDto.getImage())
+                .filter(file -> !file.isEmpty())
+                .ifPresent(image -> ship.setImage(image.getOriginalFilename()));
 
         List<SeatCreateEditDto> seatDtos = shipDto.getSeats();
 
@@ -42,6 +47,7 @@ public class ShipCreateEditDtoMapper implements Mapper<ShipCreateEditDto, Ship> 
         });
 
         return ShipCreateEditDto.builder()
+                .id(ship.getId())
                 .name(ship.getName())
                 .previousName(ship.getName())
                 .seats(seatCreateDtoList)

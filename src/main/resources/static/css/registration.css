@@ -1,10 +1,10 @@
 @import url(parent-styles.css);
 
 html {
-    background-color: #eee;
+    background-color: #F5F6F8;
 }
 body {
-    background-color: #eee;
+    background-color: #F5F6F8;
 }
 
 .registration-form {
@@ -32,13 +32,13 @@ body {
     margin: 5% 0 0;
     height: 3em;
     width: 40%;
-    background-color: #E3D4BF;
+    background-color: #DBE2EF;
     border-style: none;
     border-radius: 4%;
     cursor: pointer;
 }
 
-.registration-form button:hover { background: #B09F86; }
+.registration-form button:hover { background: #4F709C; }
 
 .registration-form p {
     margin-top: 8%;
@@ -48,6 +48,6 @@ body {
 .registration-form a {
     font-size: 0.8em;
     text-decoration: none;
-    color: #634E2E;
+    color: #4F709C;
     margin-bottom: 8%;
 }

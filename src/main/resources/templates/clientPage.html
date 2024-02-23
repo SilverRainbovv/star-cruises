@@ -44,9 +44,7 @@
             </td>
             <td><a th:href="@{|/document/${document.id}|}" th:text="${document.documentName}"></a></td>
             <td th:text="${document.state}"></td>
-            <td><a th:href="@{|/document/delete/${document.id}|}">
-                <button>Delete</button>
-            </a></td>
+            <td><button><a th:href="@{|/document/delete/${document.id}|}">Delete</a></button></td>
         </tr>
         </tbody>
     </table>

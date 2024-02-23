@@ -13,6 +13,7 @@ public class ShipReadDtoMapper implements Mapper<Ship, ShipReadDto> {
                 .name(object.getName())
                 .passengerCapacity(object.getSeats().size())
                 .scheduledCruises(object.getCruises().size())
+                .image(object.getImage())
                 .build();
     }
 }

@@ -31,6 +31,8 @@ public class Ship {
     @Builder.Default
     private List<Cruise> cruises = new ArrayList<>();
 
+    private String image;
+
     public void addSeat(Seat seat){
         this.seats.add(seat);
     }

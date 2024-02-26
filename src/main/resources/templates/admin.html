@@ -6,11 +6,7 @@
     <link th:href="@{/css/admin.css}" rel="stylesheet">
 </head>
 <body>
-    <button><a href="/cruises/cruise">Add Cruise</a></button>
-    <button><a href="/ships">Manage Ships</a></button>
-    <button><a href="/ships/ship">Add Ship</a></button>
-    <button><a href="/document">Manage Documents</a></button>
-
+    <div th:insert="~{header :: admin-header}"></div>
 <table>
     <caption>Cruises</caption>
     <thead>

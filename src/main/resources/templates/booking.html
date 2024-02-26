@@ -7,16 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/cruise-data.css}">
 </head>
 <body>
-<div class="header">
-    <img th:src="@{/images/logo.png}"/>
-    <div class="header-mid-section">
-        <div class="link"><a href="">SHIPS</a></div>
-        <div class="link"><a href="">DESTINATIONS</a></div>
-        <div class="link"><a href="">CRUISES</a></div>
-        <div class="link"><a href="">MY CRUISES</a></div>
-    </div>
-    <div><a href="">SIGN IN</a></div>
-</div>
+<div th:insert="~{header :: client-header}"></div>
 <div class="cruise-description">
     <!-- TODO Add Cruise Description Area -->
     <span class="text-cruise-name" th:text="${cruise.description}"/>

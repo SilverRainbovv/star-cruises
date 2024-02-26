@@ -5,7 +5,7 @@
     <title>Add Ship</title>
 </head>
 <body>
-
+<div th:insert="~{header :: admin-header}"></div>
 <form action="/ships/ship" th:object="${shipCreateEditDto}" method="post" enctype="multipart/form-data">
     <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name" required>
     <input type="text" th:field="${shipCreateEditDto.previousName}" name="previousName" hidden="hidden">

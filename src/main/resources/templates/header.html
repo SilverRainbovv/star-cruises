@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="client-header">
+        <div class="header">
+            <img th:src="@{images/logo.png}"/>
+            <div class="header-mid-section">
+                <div class="link"><a th:href="@{/ships}">SHIPS</a></div>
+                <div class="link"><a th:href="@{/cruises}">CRUISES</a></div>
+                <div class="link"><a th:href="@{/user}">MY BOOKINGS</a></div>
+            </div>
+            <div th:if="${!#authentication.authorities.contains(T(com.didenko.starcruises.entity.Role).CLIENT)}"><a href="/login">LOG IN</a></div>
+            <div th:if="${#authentication.authorities.contains(T(com.didenko.starcruises.entity.Role).CLIENT)}"><a href="/logout">LOG OUT</a></div>
+        </div>
+    </div>
+
+    <div th:fragment="admin-header">
+        <div class="header">
+            <img th:src="@{images/logo.png}"/>
+            <div class="header-mid-section">
+                <div class="link"><a href="/admin">ADMIN</a></div>
+                <div class="link"><a href="/cruises/cruise">ADD CRUISE</a></div>
+                <div class="link"><a href="/ships">MANAGE SHIPS</a></div>
+                <div class="link"><a href="/ships/ship">ADD SHIP</a></div>
+                <div class="link"><a href="/document">MANAGE DOCUMENTS</a></div>
+            </div>
+            <div th:if="${!#authentication.authorities.contains(T(com.didenko.starcruises.entity.Role).ADMIN)}"><a href="/login">LOG IN</a></div>
+            <div th:if="${#authentication.authorities.contains(T(com.didenko.starcruises.entity.Role).ADMIN)}"><a href="/logout">LOG OUT</a></div>
+        </div>
+    </div>
+
+</body>
+</html>

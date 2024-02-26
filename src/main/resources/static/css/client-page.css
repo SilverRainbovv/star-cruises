@@ -39,14 +39,3 @@ tbody td{
 .logo {
     width: 30px;
 }
-
-a {
-    color: #4F709C;
-    text-decoration: none;
-}
-
-a :hover {
-    cursor: pointer;
-    color: #4F709C;
-    text-decoration: none;
-}

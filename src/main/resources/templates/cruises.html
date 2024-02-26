@@ -7,16 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/cruise-data.css}">
 </head>
 <body>
-<div class="header">
-    <img th:src="@{images/logo.png}"/>
-    <div class="header-mid-section">
-        <div class="link"><a th:href="@{/ships}">SHIPS</a></div>
-        <!--        <div class="link"><a th:href="@{}">DESTINATIONS</a></div>-->
-        <div class="link"><a th:href="@{/cruises}">CRUISES</a></div>
-        <div class="link"><a th:href="@{/bookings}">MY BOOKINGS</a></div>
-    </div>
-    <div><a href="">SIGN IN</a></div>
-</div>
+<div th:insert="~{header :: client-header}"></div>
 <form th:action="@{'/cruises'}" method="get">
     <div class="search_row">
         <div class="search-el">Ship</div>

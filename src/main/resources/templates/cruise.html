@@ -5,6 +5,7 @@
     <title>Add Cruise</title>
 </head>
 <body>
+<div th:insert="~{header :: admin-header}"></div>
 <form action="/cruises/cruise" th:object="${cruiseCreateEditDto}" enctype="multipart/form-data" method="post">
     <select name="ship">
         <option th:each="ship : ${ships}"

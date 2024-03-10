@@ -4,81 +4,89 @@
     <meta charset="UTF-8">
     <title>Client Page</title>
     <link th:href="@{/css/client-page.css}" rel="stylesheet">
-    <link th:href="@{/css/cruises.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/cruises.css}" rel="stylesheet">-->
 </head>
 <body>
 <div th:insert="~{header :: client-header}"></div>
-<form class="client-page-form" method="post" action="/client" th:object="${clientReadDto}" enctype="multipart/form-data">
-    <div class="client-info">
-        <div th:text="|Firstname: ${clientReadDto.firstname}|"/>
-        <div th:text="|Lastname: ${clientReadDto.lastname}|"/>
-        <div th:text="|Email: ${clientReadDto.email}|"/>
-        <input type="text" th:field="${clientReadDto.id}" name="id" hidden="hidden" readonly>
-        <div>Add document
-            <input type="file" th:field="${clientReadDto.newDocument}" id="newDocument">
+<div class="page-body">
+    <form class="client-page-form" method="post" action="/client" th:object="${clientReadDto}"
+          enctype="multipart/form-data">
+        <div class="client-info">
+            <div th:text="|Firstname: ${clientReadDto.firstname}|"/>
+            <div th:text="|Lastname: ${clientReadDto.lastname}|"/>
+            <div th:text="|Email: ${clientReadDto.email}|"/>
+            <input type="text" th:field="${clientReadDto.id}" name="id" hidden="hidden" readonly>
+            <div>Add document
+                <input type="file" th:field="${clientReadDto.newDocument}" id="newDocument">
+            </div>
+            <button type="submit">Save</button>
         </div>
-        <button type="submit">Save</button>
-    </div>
-    <table class="document-table">
+        <table class="document-table">
+            <thead>
+            <tr>
+                <th><!--EMPTY FOR DOCUMENT LOGO--></th>
+                <th>Document</th>
+                <th>Document State</th>
+                <th><!--EMPTY FOR DOCUMENT REMOVAL BUTTON--></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="document : ${clientReadDto.clientDocumentDtos}">
+                <td>
+                    <img class="logo" th:src="@{/images/document-logo.png}" alt="Document logo"/>
+                </td>
+                <td><a th:href="@{|/document/${document.id}|}" th:text="${document.documentName}"></a></td>
+                <td th:text="${document.state}"></td>
+                <td>
+                    <button><a th:href="@{|/document/delete/${document.id}|}">Delete</a></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div th:if="${canBook} == false" th:text="|Please add document and wait for verification before paying|"></div>
+    <table class="ticket-table">
+        <caption>My Tickets</caption>
         <thead>
         <tr>
-            <th><!--EMPTY FOR DOCUMENT LOGO--></th>
-            <th>Document</th>
-            <th>Document State</th>
-            <th><!--EMPTY FOR DOCUMENT REMOVAL BUTTON--></th>
+            <th>Ship</th>
+            <th>Cruise</th>
+            <th>Persons</th>
+            <th>Class</th>
+            <th>Price</th>
+            <th>State</th>
+            <th><!--EMPTY FOR PAY BUTTON--></th>
+            <th><!--EMPTY FOR CANCEL BUTTON--></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="document : ${clientReadDto.clientDocumentDtos}">
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.ship}"/>
+            <td th:text="${ticket.cruise}"/>
+            <td th:text="${ticket.numberOfPersons}"/>
+            <td th:text="${ticket.seatClass}"/>
+            <td th:text="${ticket.price}"/>
+            <td th:text="${ticket.ticketState}"/>
+
             <td>
-                <img class="logo" th:src="@{/images/document-logo.png}" alt="Document logo"/>
+                <div th:if="${canBook} == true">
+                    <div th:if="${ticket.ticketState == T(com.didenko.starcruises.entity.TicketState).NOT_PAID}">
+                        <a th:href="@{|/ticket/pay/${ticket.ticketId}|}">
+                            <button>Pay</button>
+                        </a>
+                    </div>
+                </div>
             </td>
-            <td><a th:href="@{|/document/${document.id}|}" th:text="${document.documentName}"></a></td>
-            <td th:text="${document.state}"></td>
-            <td><button><a th:href="@{|/document/delete/${document.id}|}">Delete</a></button></td>
+            <td>
+                <div th:if="${ticket.isCanceled() != true}">
+                    <a th:href="@{|/ticket/cancel/${ticket.ticketId}|}">
+                        <button>Cancel</button>
+                    </a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
-</form>
-<div th:if="${canBook} == false" th:text="|Please add document and wait for verification before paying|"></div>
-<table class="ticket-table">
-    <caption>My Tickets</caption>
-    <thead>
-    <tr>
-        <th>Ship</th>
-        <th>Cruise</th>
-        <th>Persons</th>
-        <th>Class</th>
-        <th>Price</th>
-        <th>State</th>
-        <th><!--EMPTY FOR PAY BUTTON--></th>
-        <th><!--EMPTY FOR CANCEL BUTTON--></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="ticket : ${tickets}">
-        <td th:text="${ticket.ship}"/>
-        <td th:text="${ticket.cruise}"/>
-        <td th:text="${ticket.numberOfPersons}"/>
-        <td th:text="${ticket.seatClass}"/>
-        <td th:text="${ticket.price}"/>
-        <td th:text="${ticket.ticketState}"/>
-
-        <td>
-            <div th:if="${canBook} == true">
-                <div th:if="${ticket.ticketState == T(com.didenko.starcruises.entity.TicketState).NOT_PAID}">
-                    <a th:href="@{|/ticket/pay/${ticket.ticketId}|}"><button>Pay</button></a>
-                </div>
-            </div>
-        </td>
-        <td>
-            <div th:if="${ticket.isCanceled() != true}">
-                <a th:href="@{|/ticket/cancel/${ticket.ticketId}|}"><button>Cancel</button></a>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+</div>
 </body>
 </html>

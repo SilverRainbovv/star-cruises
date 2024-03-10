@@ -1,19 +1,21 @@
 @import url(header.css);
 
 table {
-    margin: 5%;
-    width: 80%;
+    margin-top: 1.5%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    width: 50%;
     border-collapse: collapse;
 }
 
-table, button {
-    font-size: 1.1em;
+.page-body {
+    font-size: 1.2em;
 }
 
 tbody td{
     text-align: center;
 }
 
-tbody tr:hover {
+ tbody tr:hover {
     background-color: #CAD4E0FF;
 }

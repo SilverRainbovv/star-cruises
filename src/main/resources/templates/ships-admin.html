@@ -6,26 +6,25 @@
     <link th:href="@{/css/ships-admin-style.css}" rel="stylesheet">
 </head>
 <body>
-<div th:insert="~{header :: client-header}"></div>
+<div th:insert="~{header :: admin-header}"></div>
 <div class="page-body">
     <table>
         <thead>
         <tr>
-            <th></th>
             <th>Ship Name</th>
             <th>Passenger Capacity</th>
             <th>Scheduled Cruises</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="ship : ${ships}">
-            <td><img th:src="@{|/api/v1/ship/image/${ship.id}|}" style="width: 200px"></td>
             <td th:text="${ship.name}"></td>
             <td th:text="${ship.passengerCapacity}"></td>
             <td th:text="${ship.scheduledCruises}"></td>
             <td>
-                <button><a th:href="@{|/cruises?ship_name=${ship.name}|}">View Cruises</a></button>
+                <button><a th:href="@{|/ships/ship/${ship.id}|}">Edit Ship</a></button>
             </td>
         </tr>
         </tbody>

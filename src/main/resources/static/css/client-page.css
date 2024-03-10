@@ -29,11 +29,23 @@
     margin-left: 5%;
     margin-bottom: 5%;
     width: 80%;
+    border-collapse: collapse;
 }
 
 tbody td{
     text-align: center;
+}
 
+.ticket-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(245,246,248,1) 0%, rgba(202,212,224,1) 15%, rgba(178,193,211,1) 50%, rgba(213,221,230,1) 85%, rgba(245,246,248,1) 100%);
+}
+
+.page-body {
+    font-size: 1.2em;
+}
+
+button,input {
+    font-size: 1em;
 }
 
 .logo {

@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Cruise</title>
+    <link th:href="@{/css/cruise-create-edit-page.css}" rel="stylesheet">
 </head>
 <body>
 <div th:insert="~{header :: admin-header}"></div>
 <form action="/cruises/cruise" th:object="${cruiseCreateEditDto}" enctype="multipart/form-data" method="post">
-    <select name="ship">
-        <option th:each="ship : ${ships}"
-                th:value="${ship.name}"
-                th:text="${ship.name}">
-        </option>
-    </select>
-    <input type="text" th:field="${cruiseCreateEditDto.id}" name="id" hidden="hidden">
-    <input type="text" th:field="${cruiseCreateEditDto.description}" name="description"
-           placeholder="Cruise description">
-    <div>
+    <div class="input-el">
         <img th:src="@{|/api/v1/cruises/image/${cruiseCreateEditDto.id}|}" alt="Cruise Image" style="width: 300px">
     </div>
-    <label for="image" th:if="${cruiseCreateEditDto.image == null ||cruiseCreateEditDto.image.isEmpty()}">
-        <input type="file" name="image" id="image">
-    </label>
+    <div class="input-el">
+        <label for="image" th:if="${cruiseCreateEditDto.image == null ||cruiseCreateEditDto.image.isEmpty()}">
+            <input type="file" name="image" id="image">
+        </label>
+    </div>
+    <div class="input-el">
+        <select name="ship">
+            <option th:each="ship : ${ships}"
+                    th:value="${ship.name}"
+                    th:text="${ship.name}">
+            </option>
+        </select>
+    </div>
+    <div class="input-el">
+        <input type="text" th:field="${cruiseCreateEditDto.id}" name="id" hidden="hidden">
+    </div>
+    <div class="input-el">
+        <input type="text" th:field="${cruiseCreateEditDto.description}" name="description" placeholder="Cruise description">
+    </div>
     <table>
         <thead>
         <tr>

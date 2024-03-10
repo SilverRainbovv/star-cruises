@@ -9,19 +9,8 @@ body {
     background-color: #F5F6F8;
 }
 
-select, input, button {
-    background-color: #DBE2EF;
-    color: #112D4E;
-    border-radius: 5px;
-}
-
 button:hover{
-    background-color: rgba(79, 112, 156, 0.77);
+    background-color: #4F709C ;
     cursor: pointer;
     border-radius: 5px;
-}
-
-a {
-    text-decoration: none;
-    color: #112D4E;
 }

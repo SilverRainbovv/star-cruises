@@ -20,12 +20,6 @@ form {
     margin-top: .5%;
 }
 
- select, input, button {
-    background-color: #DBE2EF;
-    color: #112D4E;
-    border-radius: 5px;
-}
-
 .search-el {
     width: 10em;
     text-align: center;
@@ -46,9 +40,4 @@ form {
     flex-direction: row;
     width: 30%;
     justify-content: flex-end;
-}
-
-button:hover{
-    background-color: #4F709C ;
-    cursor: pointer;
 }

@@ -3,68 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Ship</title>
+    <link th:href="@{/css/ship-create-edit-page.css}" rel="stylesheet">
 </head>
 <body>
 <div th:insert="~{header :: admin-header}"></div>
-<form action="/ships/ship" th:object="${shipCreateEditDto}" method="post" enctype="multipart/form-data">
-    <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name" required>
-    <input type="text" th:field="${shipCreateEditDto.previousName}" name="previousName" hidden="hidden">
-    <div>
-        <img th:src="@{|/api/v1/ship/image/${shipCreateEditDto.id}|}" alt="Ship Image" style="width: 300px">
-    </div>
-    <label for="image" th:if="${shipCreateEditDto.image == null ||shipCreateEditDto.image.isEmpty()}">
-        <input type="file" name="image" id="image">
-    </label>
-    <table>
-        <thead>
-        <tr>
-            <th>Seat Group</th>
-            <th>Class</th>
-            <th>Price</th>
-            <th>First Seat Number</th>
-            <th>Last Seat Number</th>
-            <th>Cabin Capacity</th>
-            <th>
-                <button type="submit" name="addSeat">Add seat</button>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="seat,rowStat : ${shipCreateEditDto.seats}">
-            <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatGroup}">
-            </td>
-            <td>
-                <select th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}">
-                    <option th:each="seatClass: ${seatClasses}"
-                            th:value="${seatClass}"
-                            th:text="${seatClass.name}"></option>
-                </select>
-            </td>
-            <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}" required>
-            </td>
-            <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" required>
-            </td>
-            <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
-            </td>
-            <td>
-                <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}" required>
-            </td>
-            <td>
-                <div th:if="${shipCreateEditDto.seats.size > 1}">
-                    <button type="submit" name="removeSeats" th:value="${rowStat.index}">Remove Seat Group</button>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${errors}">
-        <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}"/>
-    </div>
-    <button type="submit">Save</button>
-</form>
+<div class="input-el">
+    <form action="/ships/ship" th:object="${shipCreateEditDto}" method="post" enctype="multipart/form-data">
+        <div class="input-el" th:if="${shipCreateEditDto.image != null}">
+            <img th:src="@{|/api/v1/ship/image/${shipCreateEditDto.id}|}" style="width: 200px">
+        </div>
+        <div class="input-el">
+            <input type="text" th:field="${shipCreateEditDto.name}" name="name" placeholder="Ship Name" required>
+        </div>
+        <div class="input-el">
+            <input type="text" th:field="${shipCreateEditDto.previousName}" name="previousName" hidden="hidden">
+        </div>
+        <div class="input-el">
+            <label for="image" th:if="${shipCreateEditDto.image == null ||shipCreateEditDto.image.isEmpty()}">
+                <input type="file" name="image" id="image">
+            </label>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Seat Group</th>
+                <th>Class</th>
+                <th>Price</th>
+                <th>First Seat Number</th>
+                <th>Last Seat Number</th>
+                <th>Cabin Capacity</th>
+                <th>
+                    <button type="submit" name="addSeat">Add seat</button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="seat,rowStat : ${shipCreateEditDto.seats}">
+                <td>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatGroup}">
+                </td>
+                <td>
+                    <select th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}">
+                        <option th:each="seatClass: ${seatClasses}"
+                                th:value="${seatClass}"
+                                th:text="${seatClass.name}"></option>
+                    </select>
+                </td>
+                <td>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}" required>
+                </td>
+                <td>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" required>
+                </td>
+                <td>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
+                </td>
+                <td>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}" required>
+                </td>
+                <td>
+                    <div th:if="${shipCreateEditDto.seats.size > 1}">
+                        <button type="submit" name="removeSeats" th:value="${rowStat.index}">Remove Seat Group</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}"/>
+        </div>
+        <button type="submit">Save</button>
+    </form>
 </body>
 </html>

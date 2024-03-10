@@ -1,0 +1,16 @@
+@import url(header.css);
+
+form {
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 80%;
+}
+
+input , select, button{
+    font-size: 1.1em;
+}
+
+.input-el {
+    margin: 1%;
+}

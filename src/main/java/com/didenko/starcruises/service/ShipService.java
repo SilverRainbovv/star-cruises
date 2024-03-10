@@ -2,7 +2,6 @@ package com.didenko.starcruises.service;
 
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.dto.ShipReadDto;
-import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.Ship;
 import com.didenko.starcruises.mapper.ShipCreateEditDtoMapper;
@@ -76,5 +75,4 @@ public class ShipService {
         if (image != null && !image.isEmpty())
             imageService.uploadShipImage(image.getOriginalFilename(), image.getInputStream());
     }
-
 }

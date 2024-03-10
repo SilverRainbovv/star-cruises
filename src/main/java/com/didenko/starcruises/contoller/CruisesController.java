@@ -39,11 +39,16 @@ public class CruisesController {
 
         List<ShipReadDto> shipReadDtos = shipService.findAll();
 
-        model.addAttribute("searchOptions",
-                new SearchOptions(shipName == null || shipName.isEmpty() ? shipReadDtos.stream().findFirst().get().getName() : shipName,
-                        departurePort, departureAfter, nights, sortOption));
+        SearchOptions searchOptions =  new SearchOptions(
+                shipName == null || shipName.isEmpty() ? null : shipName,
+                departurePort,
+                departureAfter,
+                nights == null ? CruiseSearchDurationOptions.ANY : nights,
+                sortOption);
 
-        model.addAttribute("cruises", cruiseService.findAllCruises(sortOption));
+        model.addAttribute("searchOptions", searchOptions);
+
+        model.addAttribute("cruises", cruiseService.findAllCruisesWithSearchOptions(sortOption, searchOptions));
         model.addAttribute("ships", shipReadDtos);
         model.addAttribute("cruiseSearchDurationOptions", CruiseSearchDurationOptions.values());
         model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());

@@ -2,10 +2,13 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
+import com.didenko.starcruises.entity.Role;
 import com.didenko.starcruises.entity.SeatClass;
+import com.didenko.starcruises.entity.User;
 import com.didenko.starcruises.service.ShipService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +26,12 @@ public class ShipController {
     private final ShipService shipService;
 
     @GetMapping
-    public String shipsPage(Model model){
+    public String shipsPage(Model model, @AuthenticationPrincipal User user){
+
         model.addAttribute("ships", shipService.findAll());
 
-        return "/ships";
+        if (user == null) return "/ships-admin";
+        return user.getRole().equals(Role.ADMIN) ? "/ships-admin" : "ships";
     }
 
     @GetMapping("/ship/{id}")

@@ -5,6 +5,7 @@ import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.CruiseSortOptions;
 import com.didenko.starcruises.entity.Port;
+import com.didenko.starcruises.entity.SearchOptions;
 import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
 import com.didenko.starcruises.repository.CruiseRepository;
@@ -31,28 +32,44 @@ public class CruiseService {
     private final CruiseCreateEditDtoMapper cruiseCreateEditDtoMapper;
     private final ImageService imageService;
 
-    public List<CruiseReadDto> findAllCruises(CruiseSortOptions sortOption) {
-        List<CruiseReadDto> cruises = cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
+    public List<CruiseReadDto> findAllCruisesWithSearchOptions(CruiseSortOptions sortOption, SearchOptions searchOptions) {
+        List<Cruise> cruises = searchOptions.getShipName() == null
+                || searchOptions.getShipName().isEmpty()
+                || searchOptions.getShipName().equals("ANY")
+                ? cruiseRepository.findAll()
+                : cruiseRepository.findCruiseByShipName(searchOptions.getShipName());
+
+        List<CruiseReadDto> cruiseReadDtos = cruises.stream().map(mapper::mapFrom).toList();
+
+        List<CruiseReadDto> filteredCruises = cruiseReadDtos.stream()
+                .filter(cruise -> searchOptions.departurePortPredicate.test(cruise.getFirstPort()))
+                .filter(cruise -> cruise.getFirstPortDate().isAfter(searchOptions.getDepartureAfter()))
+                .filter(cruise -> searchOptions.getNights().predicate.test(cruise.getDuration()))
+                .toList();
 
         sortOption = sortOption == null ? CruiseSortOptions.DEPARTURE_EARLIEST : sortOption;
 
-        return switch (sortOption) {
+        return sortCruises(filteredCruises, sortOption);
+    }
+
+    private List<CruiseReadDto> sortCruises(List<CruiseReadDto> unsortedCruises, CruiseSortOptions cruiseSortOptions){
+        return switch (cruiseSortOptions) {
             case DEPARTURE_EARLIEST ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate)).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate)).toList();
             case DEPARTURE_LATEST ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate).reversed()).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate).reversed()).toList();
             case PRICE_ASCENDING ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice)).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice)).toList();
             case PRICE_DESCENDING ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice).reversed()).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice).reversed()).toList();
             case DURATION_ASCENDING ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration)).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration)).toList();
             case DURATION_DESCENDING ->
-                    cruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration).reversed()).toList();
+                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration).reversed()).toList();
         };
     }
 
-    public List<CruiseReadDto> findAllCruises() {
+    public List<CruiseReadDto> findAllCruisesWithSearchOptions() {
         return cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
     }
 

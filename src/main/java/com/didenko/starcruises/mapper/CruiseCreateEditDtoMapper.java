@@ -3,11 +3,13 @@ package com.didenko.starcruises.mapper;
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
 import com.didenko.starcruises.entity.Cruise;
+import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.entity.Ship;
 import com.didenko.starcruises.repository.ShipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +30,13 @@ public class CruiseCreateEditDtoMapper implements Mapper<CruiseCreateEditDto, Cr
                 .filter(file -> !file.isEmpty())
                 .ifPresent(image -> cruise.setImage(image.getOriginalFilename()));
 
-        cruiseDto.getPorts().stream().map(portCreateEditDtoMapper::mapFrom)
-                .forEach(port -> port.setCruise(cruise));
+        List<Port> ports = cruiseDto.getPorts().stream().map(portCreateEditDtoMapper::mapFrom).toList();
+                ports.forEach(port -> port.setCruise(cruise));
         cruise.setShip(ship);
         cruise.setDescription(cruiseDto.getDescription());
+        cruise.setFirstPort(ports.stream().min(Comparator.comparing(Port::getVisitDate)).get());
+        cruise.setLastPort(ports.stream().max(Comparator.comparing(Port::getVisitDate)).get());
+        cruise.setDuration(cruise.getFirstPort().getVisitDate().until(cruise.getLastPort().getVisitDate()).getDays());
 
         return cruise;
     }

@@ -20,26 +20,22 @@ public class CruiseReadDtoMapper implements Mapper<Cruise, CruiseReadDto> {
     @Override
     public CruiseReadDto mapFrom(Cruise object) {
 
-        Port firstPort;
-        Port lastPort;
         Optional<Object> lowestPrice = object.getShip().getSeats().stream()
                 .map(Seat::getPrice).min(BigDecimal::compareTo)
                 .map(BigDecimal::toString);
 
         List<Port> ports = object.getPorts();
         ports.sort(Comparator.comparing(Port::getVisitDate));
-        firstPort = ports.remove(0);
-        lastPort = ports.get(ports.size() - 1);
 
         return CruiseReadDto.builder()
                 .id(object.getId())
                 .description(object.getDescription())
                 .shipName(object.getShip().getName())
-                .duration(firstPort.getVisitDate().until(lastPort.getVisitDate()).getDays())
-                .firstPort(firstPort.getName())
-                .lastPort(lastPort.getName())
-                .firstPortDate(firstPort.getVisitDate())
-                .lastPortDate(lastPort.getVisitDate())
+                .duration(object.getDuration())
+                .firstPort(object.getFirstPort().getName())
+                .lastPort(object.getLastPort().getName())
+                .firstPortDate(object.getFirstPort().getVisitDate())
+                .lastPortDate(object.getLastPort().getVisitDate())
                 .intermediatePorts(ports.stream().map(Port::getName).collect(Collectors.joining(", ")))
                 .startingPrice(lowestPrice.get().toString())
                 .image(object.getImage())

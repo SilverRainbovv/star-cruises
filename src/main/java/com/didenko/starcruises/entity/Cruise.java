@@ -34,6 +34,14 @@ public class Cruise {
 
     private String image;
 
+    @OneToOne
+    private Port firstPort;
+
+    @OneToOne
+    private Port lastPort;
+
+    private Integer duration;
+
     public void setShip(Ship ship) {
         this.ship = ship;
         ship.addCruise(this);

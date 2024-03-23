@@ -3,16 +3,13 @@ package com.didenko.starcruises.contoller;
 import com.didenko.starcruises.entity.ClientDocument;
 import com.didenko.starcruises.entity.ClientDocumentState;
 import com.didenko.starcruises.service.ClientDocumentService;
-import com.didenko.starcruises.service.ClientService;
 import com.didenko.starcruises.service.ImageService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 

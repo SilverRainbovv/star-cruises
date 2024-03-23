@@ -2,12 +2,10 @@ package com.didenko.starcruises.contoller;
 
 import com.didenko.starcruises.dto.*;
 import com.didenko.starcruises.entity.*;
-import com.didenko.starcruises.service.CruiseService;
-import com.didenko.starcruises.service.SeatService;
-import com.didenko.starcruises.service.ShipService;
-import com.didenko.starcruises.service.TicketService;
+import com.didenko.starcruises.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -35,20 +33,23 @@ public class CruisesController {
                               @RequestParam(value = "departure_port", required = false) String departurePort,
                               @RequestParam(value = "departure_after", required = false) LocalDate departureAfter,
                               @RequestParam(value = "nights", required = false) CruiseSearchDurationOptions nights,
-                              @RequestParam(value = "sortBy", required = false) CruiseSortOptions sortOption){
+                              @RequestParam(value = "sortBy", required = false) CruiseSortOptions sortOption,
+                              Pageable pageable){
 
         List<ShipReadDto> shipReadDtos = shipService.findAll();
 
         SearchOptions searchOptions =  new SearchOptions(
-                shipName == null || shipName.isEmpty() ? null : shipName,
-                departurePort,
+                shipName == null || shipName.isEmpty() || shipName.equals("ANY") ? "" : shipName,
+                departurePort == null || departurePort.isEmpty() ? "" : departurePort,
                 departureAfter,
                 nights == null ? CruiseSearchDurationOptions.ANY : nights,
                 sortOption);
 
+        List<CruiseReadDto> cruises = cruiseService.findAllCruisesWithFilter(sortOption, searchOptions);
+
         model.addAttribute("searchOptions", searchOptions);
 
-        model.addAttribute("cruises", cruiseService.findAllCruisesWithSearchOptions(sortOption, searchOptions));
+        model.addAttribute("cruises", cruises);
         model.addAttribute("ships", shipReadDtos);
         model.addAttribute("cruiseSearchDurationOptions", CruiseSearchDurationOptions.values());
         model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());
@@ -134,8 +135,6 @@ public class CruisesController {
     @GetMapping(value = "/{cruiseId}/book/{seatGroup}")
     public String bookSeat(@PathVariable("cruiseId") Long cruiseId, @PathVariable("seatGroup") Integer seatGroup,
                          @AuthenticationPrincipal User curentUser){
-
-        ticketService.createTicket(curentUser.getId(), cruiseId, seatGroup);
 
         return "redirect:/user";
     }

@@ -19,7 +19,7 @@
     <div class="search_row">
         <div class="search-el">
             <select class="search-el" id="ship_name" name="ship_name">
-                <option value="ANY">Any Ship</option>
+                <option value="">Any Ship</option>
                 <option th:each="ship : ${ships}"
                         th:value="${ship.name}"
                         th:text="${ship.name}"

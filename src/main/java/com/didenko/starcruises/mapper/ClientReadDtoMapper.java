@@ -3,7 +3,6 @@ package com.didenko.starcruises.mapper;
 import com.didenko.starcruises.dto.ClientReadDto;
 import com.didenko.starcruises.dto.ClientDocumentDto;
 import com.didenko.starcruises.entity.Client;
-import com.didenko.starcruises.entity.ClientDocument;
 import com.didenko.starcruises.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

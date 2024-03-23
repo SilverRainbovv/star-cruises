@@ -25,7 +25,7 @@ public class TicketService {
     private final TicketReadDtoMapper ticketReadDtoMapper;
 
     @Transactional(readOnly = false)
-    public void createTicket(Long userId,Long cruiseId, Integer seatGroup){
+    public Ticket createTicket(Long userId,Long cruiseId, Integer seatGroup){
 
         Client client = clientService.findClientEntityById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -47,6 +47,8 @@ public class TicketService {
         seat.setVacancy(SeatVacancy.BOOKED);
 
         ticketRepository.save(ticket);
+
+        return ticket;
     }
 
     public List<TicketReadDto> findTicketsByUserId(Long userId){
@@ -68,4 +70,7 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
+    public Ticket findTicketsById(Long ticketId) {
+        return ticketRepository.findById(ticketId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }

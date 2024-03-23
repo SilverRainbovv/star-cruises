@@ -20,7 +20,7 @@ public class SearchOptions {
         this.departurePort = departurePort == null ? "": departurePort;
         this.departureAfter = departureAfter == null ? LocalDate.now() : departureAfter;
         this.nights = nights;
-        this.shipName = shipName;
+        this.shipName = shipName == null ? "" : shipName;
         this.sortOption = sortOption;
     }
 

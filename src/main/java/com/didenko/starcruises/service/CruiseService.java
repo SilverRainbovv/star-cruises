@@ -8,6 +8,7 @@ import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.entity.SearchOptions;
 import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
+import com.didenko.starcruises.querydsl.QPredicates;
 import com.didenko.starcruises.repository.CruiseRepository;
 import com.didenko.starcruises.repository.PortRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static com.didenko.starcruises.entity.QCruise.cruise;
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -32,24 +35,27 @@ public class CruiseService {
     private final CruiseCreateEditDtoMapper cruiseCreateEditDtoMapper;
     private final ImageService imageService;
 
-    public List<CruiseReadDto> findAllCruisesWithSearchOptions(CruiseSortOptions sortOption, SearchOptions searchOptions) {
-        List<Cruise> cruises = searchOptions.getShipName() == null
-                || searchOptions.getShipName().isEmpty()
-                || searchOptions.getShipName().equals("ANY")
-                ? cruiseRepository.findAll()
-                : cruiseRepository.findCruiseByShipName(searchOptions.getShipName());
 
-        List<CruiseReadDto> cruiseReadDtos = cruises.stream().map(mapper::mapFrom).toList();
+    public List<CruiseReadDto> findAllCruisesWithFilter(CruiseSortOptions sortOption,
+                                                        SearchOptions searchOptions) {
 
-        List<CruiseReadDto> filteredCruises = cruiseReadDtos.stream()
-                .filter(cruise -> searchOptions.departurePortPredicate.test(cruise.getFirstPort()))
-                .filter(cruise -> cruise.getFirstPortDate().isAfter(searchOptions.getDepartureAfter()))
-                .filter(cruise -> searchOptions.getNights().predicate.test(cruise.getDuration()))
-                .toList();
+        var predicates = QPredicates.builder()
+                .add(searchOptions.getDepartureAfter(), cruise.firstPort.visitDate::after)
+                .add(searchOptions.getNights(), dur -> cruise.duration.between(dur.minNights, dur.maxNights));
+
+        if (!searchOptions.getShipName().isBlank())
+            predicates.add(searchOptions.getShipName(), cruise.ship.name::containsIgnoreCase);
+
+        if (!searchOptions.getDeparturePort().isBlank())
+            predicates.add(searchOptions.getDeparturePort(), cruise.firstPort.name::containsIgnoreCase);
+
+       var builtPredicates = predicates.build();
+
+        List<CruiseReadDto> cruises = cruiseRepository.findAll(builtPredicates).stream().map(mapper::mapFrom).toList();
 
         sortOption = sortOption == null ? CruiseSortOptions.DEPARTURE_EARLIEST : sortOption;
 
-        return sortCruises(filteredCruises, sortOption);
+        return sortCruises(cruises, sortOption);
     }
 
     private List<CruiseReadDto> sortCruises(List<CruiseReadDto> unsortedCruises, CruiseSortOptions cruiseSortOptions){
@@ -69,7 +75,7 @@ public class CruiseService {
         };
     }
 
-    public List<CruiseReadDto> findAllCruisesWithSearchOptions() {
+    public List<CruiseReadDto> findAllCruises() {
         return cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
     }
 

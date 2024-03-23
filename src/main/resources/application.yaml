@@ -12,3 +12,6 @@ spring:
   messages:
     basename: localization
     encoding: UTF-8
+paypal:
+  clientId: 84yhrnqqnstxhwws
+  clientSecret: 1ed3b2fcc2f8883d6fe8155c2a71b682

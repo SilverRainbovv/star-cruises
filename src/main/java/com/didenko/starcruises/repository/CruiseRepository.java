@@ -14,7 +14,5 @@ import java.util.List;
 public interface CruiseRepository extends JpaRepository<Cruise, Long>,
         QuerydslPredicateExecutor<Cruise> {
 
-    Page<Cruise> findCruiseByShipName(String shipName, Pageable pageable);
-
     List<Cruise> findAll(Predicate predicate);
 }

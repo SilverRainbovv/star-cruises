@@ -2,7 +2,6 @@ package com.didenko.starcruises.mapper;
 
 import com.didenko.starcruises.dto.ClientDocumentDto;
 import com.didenko.starcruises.entity.ClientDocument;
-import com.didenko.starcruises.entity.ClientDocumentState;
 import org.springframework.stereotype.Component;
 
 @Component

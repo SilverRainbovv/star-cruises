@@ -3,7 +3,6 @@ package com.didenko.starcruises.mapper;
 import com.didenko.starcruises.dto.PortCreateEditDto;
 import com.didenko.starcruises.entity.Port;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
 

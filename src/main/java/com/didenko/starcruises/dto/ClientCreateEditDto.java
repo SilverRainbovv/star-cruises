@@ -16,10 +16,6 @@ import java.util.List;
 @Client
 public class ClientCreateEditDto {
 
-    public ClientCreateEditDto(){
-        documentDtos = new ArrayList<>();
-    }
-
     @NotBlank
     @Email
     private String email;
@@ -40,7 +36,4 @@ public class ClientCreateEditDto {
     @Builder.Default
     private List<ClientDocumentDto> documentDtos = new ArrayList<>();
 
-    public void addDocument(ClientDocumentDto clientDocumentDto){
-        documentDtos.add(clientDocumentDto);
-    }
 }

@@ -4,7 +4,6 @@ import com.didenko.starcruises.dto.ClientDocumentDto;
 import com.didenko.starcruises.entity.ClientDocument;
 import com.didenko.starcruises.entity.ClientDocumentState;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
@@ -24,11 +23,6 @@ class ClientDocumentReadDtoMapperTest {
     }
     private static final ClientDocument CLIENT_DOCUMENT = ClientDocument.builder()
             .name("doc")
-            .state(ClientDocumentState.APPROVED)
-            .build();
-    private static final ClientDocumentDto CLIENT_DOCUMENT_DTO_WITH_MULTIPART = ClientDocumentDto.builder()
-            .documentName("doc")
-            .multipartFile(MOCK_MULTIPART_FILE)
             .state(ClientDocumentState.APPROVED)
             .build();
     private static final ClientDocumentDto CLIENT_DOCUMENT_DTO = ClientDocumentDto.builder()

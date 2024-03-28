@@ -25,6 +25,13 @@ public class SeatCreateEditDtoMapper {
                 .build();
     }
 
+    /**
+     * receives list of Seat and seatClass from ShipCreateEditDtoMapper
+     * groups seats by their seat group and maps to SeatCreateEditDto type
+     * @param seats list os seats of specified seatclass
+     * @param seatClass specified in ShipCreateEditDtoMapper
+     * @return List< SeatCreateEditDto >
+     */
     public List<SeatCreateEditDto> mapFrom(List<Seat> seats, SeatClass seatClass){
 
         Map<Integer, List<Seat>> groupedBySeatGroup = seats.stream()

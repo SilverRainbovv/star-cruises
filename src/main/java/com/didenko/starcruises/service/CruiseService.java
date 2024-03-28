@@ -5,7 +5,7 @@ import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.CruiseSortOptions;
 import com.didenko.starcruises.entity.Port;
-import com.didenko.starcruises.entity.SearchOptions;
+import com.didenko.starcruises.entity.CruiseFilter;
 import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
 import com.didenko.starcruises.querydsl.QPredicates;
@@ -37,17 +37,17 @@ public class CruiseService {
 
 
     public List<CruiseReadDto> findAllCruisesWithFilter(CruiseSortOptions sortOption,
-                                                        SearchOptions searchOptions) {
+                                                        CruiseFilter cruiseFilter) {
 
         var predicates = QPredicates.builder()
-                .add(searchOptions.getDepartureAfter(), cruise.firstPort.visitDate::after)
-                .add(searchOptions.getNights(), dur -> cruise.duration.between(dur.minNights, dur.maxNights));
+                .add(cruiseFilter.getDepartureAfter(), cruise.firstPort.visitDate::after)
+                .add(cruiseFilter.getNights(), dur -> cruise.duration.between(dur.minNights, dur.maxNights));
 
-        if (!searchOptions.getShipName().isBlank())
-            predicates.add(searchOptions.getShipName(), cruise.ship.name::containsIgnoreCase);
+        if (!cruiseFilter.getShipName().isBlank())
+            predicates.add(cruiseFilter.getShipName(), cruise.ship.name::containsIgnoreCase);
 
-        if (!searchOptions.getDeparturePort().isBlank())
-            predicates.add(searchOptions.getDeparturePort(), cruise.firstPort.name::containsIgnoreCase);
+        if (!cruiseFilter.getDeparturePort().isBlank())
+            predicates.add(cruiseFilter.getDeparturePort(), cruise.firstPort.name::containsIgnoreCase);
 
        var builtPredicates = predicates.build();
 

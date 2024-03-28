@@ -29,6 +29,10 @@ public class ClientService {
         return clientRepository.findById(clientId).map(clientReadDtoMapper::mapFrom);
     }
 
+    /**
+     * Returns Client entity
+     * Used by TicketService to bind ticket to the existing client
+     */
     public Optional<Client> findClientEntityById(Long clientId){
         return clientRepository.findById(clientId);
     }
@@ -53,7 +57,7 @@ public class ClientService {
                 uploadDocument(newDocument);
             }
 
-            clientRepository.save(client);
+             clientRepository.save(client);
         }
     }
 

@@ -36,7 +36,9 @@ public class CruiseReadDtoMapper implements Mapper<Cruise, CruiseReadDto> {
                 .lastPort(object.getLastPort().getName())
                 .firstPortDate(object.getFirstPort().getVisitDate())
                 .lastPortDate(object.getLastPort().getVisitDate())
-                .intermediatePorts(ports.stream().map(Port::getName).collect(Collectors.joining(", ")))
+                .intermediatePorts(ports.stream().map(Port::getName)
+                        .skip(1L)
+                        .collect(Collectors.joining(", ")))
                 .startingPrice(lowestPrice.get().toString())
                 .image(object.getImage())
                 .build();

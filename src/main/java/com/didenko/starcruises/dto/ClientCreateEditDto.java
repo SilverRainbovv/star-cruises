@@ -37,7 +37,8 @@ public class ClientCreateEditDto {
 
     private LocalDate birthdate;
 
-    private List<ClientDocumentDto> documentDtos;
+    @Builder.Default
+    private List<ClientDocumentDto> documentDtos = new ArrayList<>();
 
     public void addDocument(ClientDocumentDto clientDocumentDto){
         documentDtos.add(clientDocumentDto);

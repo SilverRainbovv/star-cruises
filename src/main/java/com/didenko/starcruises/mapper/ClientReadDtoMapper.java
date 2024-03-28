@@ -16,21 +16,6 @@ public class ClientReadDtoMapper implements Mapper<Client, ClientReadDto> {
 
     private final ClientDocumentReadDtoMapper documentReadDtoMapper;
 
-    public Client mapFrom(ClientReadDto clientReadDto){
-
-        Client client = Client.builder()
-                .birthdate(clientReadDto.getBirthdate())
-                .lastname(clientReadDto.getLastname())
-                .firstname(clientReadDto.getFirstname())
-                .build();
-
-        clientReadDto.getClientDocumentDtos()
-                .stream().map(documentReadDtoMapper::mapFrom)
-                .forEach(document -> document.setClient(client));
-
-        return client;
-    }
-
     @Override
     public ClientReadDto mapFrom(Client object) {
         User user = object.getUser();

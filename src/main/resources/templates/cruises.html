@@ -23,23 +23,23 @@
                 <option th:each="ship : ${ships}"
                         th:value="${ship.name}"
                         th:text="${ship.name}"
-                        th:selected="${ship.name} == ${searchOptions.shipName}"></option>
+                        th:selected="${ship.name} == ${cruiseFilter.shipName}"></option>
             </select>
         </div>
         <div class="search-el">
             <input class="search-el" type="text" id="departure_port" name="departure_port"
-                   th:value="${searchOptions.departurePort}" placeholder="Departure port">
+                   th:value="${cruiseFilter.departurePort}" placeholder="Departure port">
         </div>
         <div class="search-el">
             <input class="search-el" type="date" name="departure_after" id="departure_after"
-                   th:value="${searchOptions.departureAfter}">
+                   th:value="${cruiseFilter.departureAfter}">
         </div>
         <div class="search-el">
             <select class="search-el" name="nights" id="nights">
                 <option th:each="option : ${cruiseSearchDurationOptions}"
                         th:value="${option}"
                         th:text="${option.nights}"
-                        th:selected="${option} == ${searchOptions.nights}"></option>
+                        th:selected="${option} == ${cruiseFilter.nights}"></option>
             </select>
         </div>
         <div class="search-el">
@@ -54,7 +54,7 @@
                 <option th:each="sortOption : ${cruiseSortOptions}"
                         th:value="${sortOption}"
                         th:text="${sortOption.option}"
-                th:selected="${sortOption} == ${searchOptions.sortOption}"></option>
+                th:selected="${sortOption} == ${cruiseFilter.sortOption}"></option>
             </select>
         </div>
     </div>
@@ -75,7 +75,7 @@
         <div class="price">
             <div class="price-data">
                 <div class="text-med-big">Starting from</div>
-                <div class="large-bold" th:text="|${cruise.startingPrice}$|"></div>
+                <div class="large-bold" th:text="${cruise.startingPrice}"></div>
                 <div class="text-mid-align">Per person</div>
                 <a th:href="@{|/cruises/${cruise.id}/book|}">
                     <button>Book</button>

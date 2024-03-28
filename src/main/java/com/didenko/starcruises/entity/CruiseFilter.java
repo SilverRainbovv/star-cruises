@@ -7,16 +7,16 @@ import java.util.function.Predicate;
 
 
 @Data
-public class SearchOptions {
+public class CruiseFilter {
 
     public Predicate<String> departurePortPredicate = port ->
             (this.departurePort == null || getDeparturePort().isEmpty()) || port.equals(getDeparturePort());
 
-    public SearchOptions(String shipName,
-                         String departurePort,
-                         LocalDate departureAfter,
-                         CruiseSearchDurationOptions nights,
-                         CruiseSortOptions sortOption){
+    public CruiseFilter(String shipName,
+                        String departurePort,
+                        LocalDate departureAfter,
+                        CruiseSearchDurationOptions nights,
+                        CruiseSortOptions sortOption){
         this.departurePort = departurePort == null ? "": departurePort;
         this.departureAfter = departureAfter == null ? LocalDate.now() : departureAfter;
         this.nights = nights;

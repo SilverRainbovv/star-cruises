@@ -15,12 +15,4 @@ public class  ClientDocumentReadDtoMapper implements Mapper<ClientDocument, Clie
                 .state(object.getState())
                 .build();
     }
-
-    public ClientDocument mapFrom(ClientDocumentDto clientDocumentDto){
-        return ClientDocument.builder()
-                .name(clientDocumentDto.getMultipartFile().getOriginalFilename())
-                .state(clientDocumentDto.getState() == null ? ClientDocumentState.PENDING : clientDocumentDto.getState())
-                .build();
-    }
-
 }

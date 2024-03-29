@@ -1,8 +1,10 @@
 package com.didenko.starcruises.dto;
 
 import com.didenko.starcruises.entity.Role;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class UserReadDto {
 

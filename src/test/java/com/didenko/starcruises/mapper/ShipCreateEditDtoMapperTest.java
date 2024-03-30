@@ -104,9 +104,7 @@ class ShipCreateEditDtoMapperTest {
     void mapFromEntity() {
         Mockito.doReturn(List.of(MAPPED_SEAT_DTO_GROUP_1, MAPPED_SEAT_DTO_GROUP_2)).when(seatMapper).mapFrom(SHIP.getSeats(), SeatClass.INTERIOR);
 
-        var expectedResult = MAPPED_SHIP_DTO;
-
-        assertEquals(expectedResult, mapper.mapFrom(SHIP));
+        assertEquals(MAPPED_SHIP_DTO, mapper.mapFrom(SHIP));
     }
 
     @Test

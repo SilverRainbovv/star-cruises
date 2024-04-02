@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SeatRepository extends JpaRepository<Seat, Long> {
-    List<Seat> findAllByShipId(Long id);
-
     @Query("select seats from Seat seats " +
             "join seats.ship ship " +
             "where ship.id = (select shi.id from Cruise c " +

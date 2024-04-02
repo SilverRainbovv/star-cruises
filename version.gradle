@@ -1,0 +1,11 @@
+ext {
+    versions = [
+            'testcontainers': '1.19.7',
+            'postgresql': '42.7.1',
+            'thymeleafsecurity': '3.1.2.RELEASE',
+            'paypal-rest-api-sdk': '1.14.0',
+            'paypal-rest-checkpout-sdk': '2.0.0',
+            'querydsl': '5.0.0:jakarta',
+            'jakarta.persistence-api': '3.1.0'
+    ]
+}

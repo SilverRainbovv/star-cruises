@@ -4,6 +4,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
+apply from: 'version.gradle'
+
 group = 'com.didenko'
 version = '0.0.2-SNAPSHOT'
 
@@ -34,6 +36,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:postgresql:1.19.7'
 
     implementation 'com.paypal.sdk:rest-api-sdk:1.14.0'
     implementation 'com.paypal.sdk:checkout-sdk:2.0.0'

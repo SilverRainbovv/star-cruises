@@ -5,4 +5,4 @@ ALTER TABLE seat
 ADD COLUMN seat_group INT;
 
 ALTER TABLE seat
-ADD UNIQUE (seat_group, number);
+ADD UNIQUE (ship_id ,seat_group, number);

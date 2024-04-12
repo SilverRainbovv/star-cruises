@@ -1,10 +1,7 @@
 package com.didenko.starcruises.dto;
 
 import com.didenko.starcruises.entity.SeatClass;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 

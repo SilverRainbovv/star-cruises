@@ -6,7 +6,8 @@ import lombok.*;
 import java.math.BigDecimal;
 
 
-@EqualsAndHashCode(of = {"seatGroup", "number", "price", "seatClass"})
+//@EqualsAndHashCode(of = {"seatGroup", "number", "numberOfPersons", "price", "vacancy", "seatClass"})
+@EqualsAndHashCode(exclude = "id")
 @ToString(exclude = "ship")
 @Data
 @Builder
@@ -38,6 +39,14 @@ public class Seat {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Ship ship;
+
+    /**
+     * used to compare seats of the same ship for ship update
+     * compares only by seat group and seat number
+     */
+    public boolean compareToSameShipSeat(Seat seat){
+        return this.seatGroup.equals(seat.getSeatGroup()) && this.number.equals(seat.getNumber());
+    }
 
     public void setShip(Ship ship) {
         this.ship = ship;

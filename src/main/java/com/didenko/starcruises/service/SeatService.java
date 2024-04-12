@@ -29,4 +29,9 @@ public class SeatService {
     public Optional<Seat> findVacantSeatByShipIdAndSeatGroup(Long shipId, Integer seatGroup) {
         return seatRepository.findFirstByShipIdAndSeatGroup(shipId, seatGroup);
     }
+
+    @Transactional(readOnly = false)
+    public void removeSeatsByIds(List<Long> seatIds){
+        seatRepository.deleteAllByIdInBatch(seatIds);
+    }
 }

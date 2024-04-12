@@ -1,11 +1,13 @@
 package com.didenko.starcruises.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
-
+@NoArgsConstructor
 @Data
 public class CruiseFilter {
 

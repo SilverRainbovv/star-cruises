@@ -45,7 +45,7 @@ public class CruisesController {
                 nights == null ? CruiseSearchDurationOptions.ANY : nights,
                 sortOption);
 
-        List<CruiseReadDto> cruises = cruiseService.findAllCruisesWithFilter(sortOption, cruiseFilter);
+        List<CruiseReadDto> cruises = cruiseService.findCruisesByFilter(cruiseFilter);
 
         model.addAttribute("cruiseFilter", cruiseFilter);
 

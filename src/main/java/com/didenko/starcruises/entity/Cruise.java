@@ -10,7 +10,7 @@ import static jakarta.persistence.CascadeType.*;
 
 
 
-@EqualsAndHashCode(exclude = {"ship", "ports"})
+@EqualsAndHashCode(of = {"description", "image", "duration"})
 @ToString(exclude = {"ship", "ports"})
 @Data
 @Builder

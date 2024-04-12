@@ -36,8 +36,7 @@ public class CruiseService {
     private final ImageService imageService;
 
 
-    public List<CruiseReadDto> findAllCruisesWithFilter(CruiseSortOptions sortOption,
-                                                        CruiseFilter cruiseFilter) {
+    public List<CruiseReadDto> findCruisesByFilter(CruiseFilter cruiseFilter) {
 
         var predicates = QPredicates.builder()
                 .add(cruiseFilter.getDepartureAfter(), cruise.firstPort.visitDate::after)
@@ -53,9 +52,9 @@ public class CruiseService {
 
         List<CruiseReadDto> cruises = cruiseRepository.findAll(builtPredicates).stream().map(mapper::mapFrom).toList();
 
-        sortOption = sortOption == null ? CruiseSortOptions.DEPARTURE_EARLIEST : sortOption;
+        cruiseFilter.setSortOption(cruiseFilter.getSortOption() == null ? CruiseSortOptions.DEPARTURE_EARLIEST : cruiseFilter.getSortOption());
 
-        return sortCruises(cruises, sortOption);
+        return sortCruises(cruises, cruiseFilter.getSortOption());
     }
 
     private List<CruiseReadDto> sortCruises(List<CruiseReadDto> unsortedCruises, CruiseSortOptions cruiseSortOptions){
@@ -80,7 +79,7 @@ public class CruiseService {
     }
 
     @Transactional(readOnly = false)
-    public void save(CruiseCreateEditDto cruiseDto) {
+    public Long save(CruiseCreateEditDto cruiseDto) {
 
         Cruise cruise = cruiseDto.getId() == null
                 ? new Cruise()
@@ -89,12 +88,15 @@ public class CruiseService {
 
         cruise.setShip(updatedCruise.getShip());
         cruise.setDescription(updatedCruise.getDescription());
-        cruise.setImage(updatedCruise.getImage() == null ? cruise.getImage() : updatedCruise.getImage());
         comparePorts(cruise.getPorts(), updatedCruise.getPorts(), cruise);
+        cruise.setFirstPort(updatedCruise.getFirstPort());
+        cruise.setLastPort(updatedCruise.getLastPort());
+        cruise.setDuration(updatedCruise.getDuration());
+        cruise.setImage(updatedCruise.getImage() == null ? cruise.getImage() : updatedCruise.getImage());
 
         uploadImage(cruiseDto.getImage());
 
-        cruiseRepository.save(cruise);
+        return cruiseRepository.save(cruise).getId();
     }
 
     public Optional<byte[]> findCruiseImage(Long id){
@@ -117,7 +119,6 @@ public class CruiseService {
     public Optional<CruiseReadDto> findReadDtoById(Long cruiseId){
         Optional<Cruise> cruise = cruiseRepository.findById(cruiseId);
         return cruise.map(mapper::mapFrom);
-
     }
 
     public void comparePorts(List<Port> oldPorts, List<Port> newPorts, Cruise cruise) {

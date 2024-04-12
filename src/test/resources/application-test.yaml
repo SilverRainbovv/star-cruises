@@ -1,4 +1,3 @@
-#spring:
-#  datasource:
-#    username: test
-#    password: test
+spring:
+  jpa:
+    show-sql: true

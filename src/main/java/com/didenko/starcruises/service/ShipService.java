@@ -1,9 +1,7 @@
 package com.didenko.starcruises.service;
 
-import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.dto.ShipReadDto;
-import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.Ship;
 import com.didenko.starcruises.mapper.ShipCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.ShipReadDtoMapper;
@@ -17,9 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

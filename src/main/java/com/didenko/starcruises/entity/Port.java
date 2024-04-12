@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@EqualsAndHashCode(exclude = "cruise")
+@EqualsAndHashCode(of = {"name", "visitDate"})
 @ToString(exclude = "cruise")
 @Data
 @Builder

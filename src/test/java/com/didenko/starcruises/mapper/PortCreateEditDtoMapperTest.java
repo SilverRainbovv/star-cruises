@@ -17,6 +17,7 @@ class PortCreateEditDtoMapperTest {
             .build();
 
     private static final PortCreateEditDto MAPPED_PORT_DTO = PortCreateEditDto.builder()
+            .id(1L)
             .visitDate(LocalDate.of(2026,12,1).toString())
             .name("Venice")
             .build();

@@ -2,7 +2,6 @@ package com.didenko.starcruises.dto;
 
 import com.didenko.starcruises.validator.ShipCreateDto;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

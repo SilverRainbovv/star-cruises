@@ -12,6 +12,7 @@ public class PortCreateEditDtoMapper implements Mapper<PortCreateEditDto, Port> 
     @Override
     public Port mapFrom(PortCreateEditDto object) {
         return Port.builder()
+                .id(object.getId())
                 .name(object.getName())
                 .visitDate(LocalDate.parse(object.getVisitDate()))
                 .build();
@@ -19,9 +20,8 @@ public class PortCreateEditDtoMapper implements Mapper<PortCreateEditDto, Port> 
 
     public PortCreateEditDto mapFrom(Port object) {
 
-        var a = object.getVisitDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
         return PortCreateEditDto.builder()
+                .id(object.getId())
                 .name(object.getName())
                 .visitDate(object.getVisitDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();

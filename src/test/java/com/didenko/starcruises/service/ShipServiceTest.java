@@ -4,8 +4,6 @@ import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.integration.BaseIntegrationTest;
-import com.didenko.starcruises.mapper.SeatCreateEditDtoMapper;
-import com.didenko.starcruises.mapper.ShipCreateEditDtoMapper;
 import com.didenko.starcruises.repository.ShipRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +49,6 @@ class ShipServiceTest extends BaseIntegrationTest {
     private ShipService shipService;
     @Autowired
     private ShipRepository shipRepository;
-    @Autowired
-    private ShipCreateEditDtoMapper shipCreateEditDtoMapper;
 
     @Test
     void findById() {

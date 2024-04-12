@@ -8,7 +8,7 @@ import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
 
-@EqualsAndHashCode(exclude = {"seats", "cruises"})
+@EqualsAndHashCode(of = "name")
 @ToString(exclude = {"seats", "cruises"})
 @Data
 @Builder

@@ -1,0 +1,26 @@
+@import url(header.css);
+
+form {
+    margin: 5%;
+    width: 70%;
+}
+
+button, input, select {
+    font-size: 1.1em;
+}
+
+.input-el {
+    margin: 1%;
+}
+
+table {
+    width: 80%;
+}
+
+table input {
+    width: 80%;
+}
+
+tbody td{
+    text-align: center;
+}

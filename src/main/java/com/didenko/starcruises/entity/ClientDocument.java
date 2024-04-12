@@ -5,7 +5,7 @@ import lombok.*;
 
 import static jakarta.persistence.GenerationType.*;
 
-@EqualsAndHashCode(exclude = "client")
+@EqualsAndHashCode(of = {"name", "state"})
 @ToString(exclude = "client")
 @Data
 @Builder

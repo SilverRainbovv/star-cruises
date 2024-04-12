@@ -10,7 +10,7 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.*;
 
 @ToString(exclude = {"documents", "tickets"})
-@EqualsAndHashCode(exclude = {"documents", "tickets"})
+@EqualsAndHashCode(of = {"firstname", "lastname", "birthdate"})
 @Builder
 @Data
 @NoArgsConstructor

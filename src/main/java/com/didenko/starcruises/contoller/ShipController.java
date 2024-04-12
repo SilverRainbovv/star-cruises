@@ -42,7 +42,7 @@ public class ShipController {
         model.addAttribute("shipCreateEditDto", ship.get());
         model.addAttribute("seatClasses", SeatClass.values());
 
-        return "/ship";
+        return "/shipEdit";
     }
 
     @GetMapping("/ship")

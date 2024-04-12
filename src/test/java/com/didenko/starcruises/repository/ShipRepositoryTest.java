@@ -3,7 +3,6 @@ package com.didenko.starcruises.repository;
 import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.integration.BaseIntegrationTest;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

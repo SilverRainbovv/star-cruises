@@ -1,5 +1,6 @@
 package com.didenko.starcruises.service;
 
+import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.dto.ShipReadDto;
 import com.didenko.starcruises.entity.Seat;
@@ -16,7 +17,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,27 +29,13 @@ public class ShipService {
     private final ShipCreateEditDtoMapper createEditDoMapper;
     private final ShipReadDtoMapper readDtoMapper;
     private final ShipRepository shipRepository;
-    private final SeatRepository seatRepository;
+    private final SeatService seatService;
     private final ImageService imageService;
+    private final SeatRepository seatRepository;
 
     public Optional<ShipCreateEditDto> findById(Long id){
         Optional<Ship> ship = shipRepository.findById(id);
         return ship.map(createEditDoMapper::mapFrom);
-    }
-
-    @Transactional(readOnly = false)
-    public void save(ShipCreateEditDto shipCreateEditDto){
-        Ship ship = shipRepository.findByName(shipCreateEditDto.getPreviousName()).orElse(new Ship());
-        Ship updatedShip = createEditDoMapper.mapFrom(shipCreateEditDto);
-        ship.setName(ship.getName());
-        compareSeats(ship.getSeats(), updatedShip.getSeats(), ship);
-        ship.setCruises(updatedShip.getCruises());
-        ship.setName(updatedShip.getName());
-        ship.setImage(updatedShip.getImage() == null ? ship.getImage() : updatedShip.getImage());
-
-        uploadImage(shipCreateEditDto.getImage());
-
-        shipRepository.save(ship);
     }
 
     public List<ShipReadDto> findAll() {
@@ -54,14 +43,28 @@ public class ShipService {
         return ships.stream().map(readDtoMapper::mapFrom).toList();
     }
 
-    public void compareSeats (List<Seat> oldSeats, List<Seat> newSeats, Ship ship){
-        List<Seat> toBeRemoved = oldSeats.stream().filter(seat -> !newSeats.contains(seat)).toList();
-        List<Seat> toBeInserted = newSeats.stream().filter(seat -> !oldSeats.contains(seat)).toList();
-
-        seatRepository.deleteAll(toBeRemoved);
-        ship.removeSeats(toBeRemoved);
-        toBeInserted.forEach(seat -> seat.setShip(ship));
+    @Transactional(readOnly = false)
+    public Ship save(ShipCreateEditDto shipCreateEditDto){
+        Ship ship;
+        Optional<Ship> maybeShip = shipRepository.findByName(shipCreateEditDto.getPreviousName());
+        Ship updatedShip = createEditDoMapper.mapFrom(shipCreateEditDto);
+        if (maybeShip.isEmpty()){
+            ship = Ship.builder()
+                    .name(updatedShip.getName())
+                    .build();
+            updatedShip.getSeats().forEach(seat -> seat.setShip(ship));
+            ship.setImage(updatedShip.getImage() == null ? ship.getImage() : updatedShip.getImage());
+            uploadImage(shipCreateEditDto.getImage());
+            return shipRepository.save(ship);
+        } else {
+            ship = maybeShip.get();
+            ship.setName(updatedShip.getName());
+            ship.setImage(updatedShip.getImage() == null ? ship.getImage() : updatedShip.getImage());
+            uploadImage(shipCreateEditDto.getImage());
+            return shipRepository.save(ship);
+        }
     }
+
 
     public Optional<byte[]> findShipImage(Long id){
         return shipRepository.findById(id)

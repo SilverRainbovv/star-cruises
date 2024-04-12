@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Ship</title>
-    <link th:href="@{/css/ship-create-page.css}" rel="stylesheet">
+    <link th:href="@{/css/ship-edit-page.css}" rel="stylesheet">
 </head>
 <body>
 <div th:insert="~{header :: admin-header}"></div>
@@ -32,39 +32,33 @@
                 <th>First Seat Number</th>
                 <th>Last Seat Number</th>
                 <th>Cabin Capacity</th>
-                <th>
-                    <button type="submit" name="addSeat">Add seat</button>
-                </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="seat,rowStat : ${shipCreateEditDto.seats}">
                 <td>
-                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatGroup}">
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatGroup}"
+                           th:value="${seat.seatGroup}" readonly>
                 </td>
                 <td>
-                    <select th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}">
-                        <option th:each="seatClass: ${seatClasses}"
-                                th:value="${seatClass}"
-                                th:text="${seatClass.name}"></option>
-                    </select>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatClass}"
+                           th:value="${seat.seatClass}" readonly>
                 </td>
                 <td>
-                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}" required>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].seatPrice}"
+                           th:value="${seat.seatPrice}" readonly>
                 </td>
                 <td>
-                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}" required>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].firstSeatNumber}"
+                           th:value="${seat.firstSeatNumber}" readonly>
                 </td>
                 <td>
-                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}" required>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].lastSeatNumber}"
+                           th:value="${seat.lastSeatNumber}" readonly>
                 </td>
                 <td>
-                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}" required>
-                </td>
-                <td>
-                    <div th:if="${shipCreateEditDto.seats.size > 1}">
-                        <button type="submit" name="removeSeats" th:value="${rowStat.index}">Remove Seat Group</button>
-                    </div>
+                    <input th:field="${shipCreateEditDto.seats[__${rowStat.index}__].numberOfPersons}"
+                           th:value="${seat.numberOfPersons}" readonly>
                 </td>
             </tr>
             </tbody>

@@ -1,6 +1,5 @@
 package com.didenko.starcruises.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

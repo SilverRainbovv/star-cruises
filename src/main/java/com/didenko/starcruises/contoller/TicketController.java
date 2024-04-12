@@ -28,6 +28,6 @@ public class TicketController {
     @GetMapping("/pay/{ticketId}")
     public PaymentOrder createPayment(
             @PathVariable("ticketId") Long ticketId) {
-        return payPalService.createPayment(ticketService.findTicketsById(ticketId));
+        return payPalService.createPayment(ticketService.findTicketById(ticketId));
     }
 }

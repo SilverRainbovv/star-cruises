@@ -26,7 +26,6 @@ public class CruisesController {
     private final CruiseService cruiseService;
     private final ShipService shipService;
     private final SeatService seatService;
-    private final TicketService ticketService;
 
     @GetMapping
     public String cruisesPage(Model model, @RequestParam(value = "ship_name", required = false) String shipName,

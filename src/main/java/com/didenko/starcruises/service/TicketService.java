@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class TicketService {
+public class  TicketService {
 
     private final ClientService clientService;
     private final CruiseService cruiseService;
@@ -60,17 +60,17 @@ public class TicketService {
     }
     @Transactional(readOnly = false)
 
-    public void cancelTicket(Long ticketId){
+    public Ticket cancelTicket(Long ticketId){
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ticket.getSeat().setVacancy(SeatVacancy.VACANT);
         ticket.setState(TicketState.CANCELLED);
 
-        ticketRepository.save(ticket);
+        return ticketRepository.save(ticket);
     }
 
-    public Ticket findTicketsById(Long ticketId) {
+    public Ticket findTicketById(Long ticketId) {
         return ticketRepository.findById(ticketId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

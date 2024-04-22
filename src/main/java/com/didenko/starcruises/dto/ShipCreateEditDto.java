@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @Builder
 @ShipCreateDto
-public class ShipCreateEditDto {
+public class ShipCreateEditDto implements Serializable {
 
     private Long id;
 

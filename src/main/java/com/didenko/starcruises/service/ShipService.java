@@ -9,6 +9,7 @@ import com.didenko.starcruises.repository.SeatRepository;
 import com.didenko.starcruises.repository.ShipRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -29,11 +30,13 @@ public class ShipService {
     private final ImageService imageService;
     private final SeatRepository seatRepository;
 
+    @Cacheable(value = "ships", key = "id")
     public Optional<ShipCreateEditDto> findById(Long id){
         Optional<Ship> ship = shipRepository.findById(id);
         return ship.map(createEditDoMapper::mapFrom);
     }
 
+@Cacheable("ships")
     public List<ShipReadDto> findAll() {
         List<Ship> ships = shipRepository.findAll();
         return ships.stream().map(readDtoMapper::mapFrom).toList();

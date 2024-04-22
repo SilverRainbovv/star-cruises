@@ -12,6 +12,19 @@ spring:
   messages:
     basename: localization
     encoding: UTF-8
+  data:
+    redis:
+      host: localhost
+      port: 6379
 paypal:
   clientId: 84yhrnqqnstxhwws
   clientSecret: 1ed3b2fcc2f8883d6fe8155c2a71b682
+logging:
+  level:
+    redis: trace
+    org:
+      hibernate:
+        sql: debug
+        type:
+          descriptor:
+            sql: trace

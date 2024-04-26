@@ -57,29 +57,29 @@ public class CruiseServiceIT extends BaseIntegrationTest {
             .build();
 
     private static final CruiseFilter FILTER_BY_SHIP_NAME =
-            new CruiseFilter("Sidonia", null, null, null, null);
+            new CruiseFilter("Sidonia", null, null, null, null, null);
     private static final Integer FILTER_BY_SHIP_NAME_RESULT = 3;
 
     private static final CruiseFilter FILTER_BY_FIRST_PORT =
-            new CruiseFilter(null, "Captain's Cove Port", null, null, null);
+            new CruiseFilter(null, "Captain's Cove Port", null, null, null, null);
     private static final Integer FILTER_BY_FIRST_PORT_REUSLT = 2;
 
     private static final CruiseFilter FILTER_BY_DEPARTURE_DATE =
-            new CruiseFilter(null, null, LocalDate.of(2025, 1, 30), null, null);
+            new CruiseFilter(null, null, LocalDate.of(2025, 1, 30), null, null, null);
     private static final Integer FILTER_BY_DEPARTURE_DATE_RESULT = 3;
 
     private static final CruiseFilter FILTER_BY_DURATION =
             new CruiseFilter(null, null, null,
-                    CruiseSearchDurationOptions.SHORT, null);
+                    CruiseSearchDurationOptions.SHORT, null, null);
     private static final Integer FILTER_BY_DURATION_RESULT = 1;
 
     private static final CruiseFilter FILTER_BY_NON_EXISTING_SHIP =
             new CruiseFilter("no such ship", null, null,
-                    null, null);
+                    null, null, null);
 
     private static final CruiseFilter FILTER_BY_SHIP_NAME_AND_FIRST_PORT =
             new CruiseFilter("Sidonia", null, LocalDate.of(2025, 1, 5),
-                    null, null);
+                    null, null, null);
     private static final Integer FILTER_BY_SHIP_NAME_AND_FIRST_PORT_RESULT = 2;
 
     private static final PortCreateEditDto PORT_TO_SAVE_1 = PortCreateEditDto.builder()
@@ -177,7 +177,7 @@ public class CruiseServiceIT extends BaseIntegrationTest {
     @Test
     void findByFilterAndSorting() {
         var cruises = cruiseService.findCruisesByFilter(new CruiseFilter(
-                null, null, null, null, CruiseSortOptions.DURATION_ASCENDING
+                null, null, null, null, CruiseSortOptions.DURATION_ASCENDING, null
         ));
 
         assertFalse(cruises.isEmpty());
@@ -192,7 +192,7 @@ public class CruiseServiceIT extends BaseIntegrationTest {
     void findByFilterShipNameAndFirstPort() {
         var cruises = cruiseService.findCruisesByFilter(FILTER_BY_SHIP_NAME_AND_FIRST_PORT);
 
-        assertEquals(FILTER_BY_SHIP_NAME_AND_FIRST_PORT_RESULT, cruises.size());
+        assertEquals(FILTER_BY_SHIP_NAME_AND_FIRST_PORT_RESULT, cruises.getContent().size());
     }
 
     @Test
@@ -206,14 +206,14 @@ public class CruiseServiceIT extends BaseIntegrationTest {
     void findByFilterDuration() {
         var cruises = cruiseService.findCruisesByFilter(FILTER_BY_DURATION);
 
-        assertEquals(FILTER_BY_DURATION_RESULT, cruises.size());
+        assertEquals(FILTER_BY_DURATION_RESULT, cruises.getContent().size());
     }
 
     @Test
     void findByFilterDepartureDate() {
         var cruises = cruiseService.findCruisesByFilter(FILTER_BY_DEPARTURE_DATE);
 
-        assertEquals(FILTER_BY_DEPARTURE_DATE_RESULT, cruises.size());
+        assertEquals(FILTER_BY_DEPARTURE_DATE_RESULT, cruises.getContent().size());
     }
 
     @Test
@@ -221,7 +221,7 @@ public class CruiseServiceIT extends BaseIntegrationTest {
         var cruises = cruiseService.findCruisesByFilter(FILTER_BY_SHIP_NAME);
 
         assertFalse(cruises.isEmpty());
-        assertEquals(FILTER_BY_SHIP_NAME_RESULT, cruises.size());
+        assertEquals(FILTER_BY_SHIP_NAME_RESULT, cruises.getContent().size());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class CruiseServiceIT extends BaseIntegrationTest {
         var cruises = cruiseService.findCruisesByFilter(FILTER_BY_FIRST_PORT);
 
         assertFalse(cruises.isEmpty());
-        assertEquals(FILTER_BY_FIRST_PORT_REUSLT, cruises.size());
+        assertEquals(FILTER_BY_FIRST_PORT_REUSLT, cruises.getContent().size());
     }
 
     @Test

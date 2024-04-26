@@ -1,9 +1,10 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.SeatReadDto;
 import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.entity.SeatVacancy;
+import com.didenko.starcruises.mapper.SeatReadDtoMapper;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

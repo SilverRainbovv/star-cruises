@@ -5,7 +5,7 @@ import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -33,18 +33,21 @@ public class CruisesController {
                               @RequestParam(value = "departure_after", required = false) LocalDate departureAfter,
                               @RequestParam(value = "nights", required = false) CruiseSearchDurationOptions nights,
                               @RequestParam(value = "sortBy", required = false) CruiseSortOptions sortOption,
-                              Pageable pageable){
+                              @RequestParam(value = "pageSize", required = false) PageSizeOption pageSize,
+                              @RequestParam(value = "page", required = false) Integer page){
 
         List<ShipReadDto> shipReadDtos = shipService.findAll();
 
         CruiseFilter cruiseFilter =  new CruiseFilter(
                 shipName == null || shipName.isEmpty() || shipName.equals("ANY") ? "" : shipName,
-                departurePort == null || departurePort.isEmpty() ? "" : departurePort,
+                departurePort,
                 departureAfter,
-                nights == null ? CruiseSearchDurationOptions.ANY : nights,
-                sortOption);
+                nights,
+                sortOption,
+                pageSize,
+                page);
 
-        List<CruiseReadDto> cruises = cruiseService.findCruisesByFilter(cruiseFilter);
+        Page<CruiseReadDto> cruises = cruiseService.findCruisesByFilter(cruiseFilter);
 
         model.addAttribute("cruiseFilter", cruiseFilter);
 
@@ -52,6 +55,7 @@ public class CruisesController {
         model.addAttribute("ships", shipReadDtos);
         model.addAttribute("cruiseSearchDurationOptions", CruiseSearchDurationOptions.values());
         model.addAttribute("cruiseSortOptions", CruiseSortOptions.values());
+        model.addAttribute("pageSizeOptions", PageSizeOption.values());
 
         return "cruises";
     }

@@ -1,10 +1,11 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.CruiseReadDto;
 import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.Ship;
+import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

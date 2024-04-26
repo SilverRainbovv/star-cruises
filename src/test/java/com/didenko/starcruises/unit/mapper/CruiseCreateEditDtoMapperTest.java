@@ -1,10 +1,12 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.PortCreateEditDto;
 import com.didenko.starcruises.entity.Cruise;
 import com.didenko.starcruises.entity.Port;
 import com.didenko.starcruises.entity.Ship;
+import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
+import com.didenko.starcruises.mapper.PortCreateEditDtoMapper;
 import com.didenko.starcruises.repository.ShipRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

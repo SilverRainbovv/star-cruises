@@ -17,14 +17,17 @@ public class CruiseFilter {
                         String departurePort,
                         LocalDate departureAfter,
                         CruiseSearchDurationOptions nights,
-                        CruiseSortOptions sortOption){
+                        CruiseSortOptions sortOption,
+                        PageSizeOption pageSize,
+                        Integer pageNumber){
         this.departurePort = departurePort == null ? "": departurePort;
         this.departureAfter = departureAfter == null ? LocalDate.now() : departureAfter;
-        this.nights = nights;
+        this.nights = nights == null ? CruiseSearchDurationOptions.ANY : nights;
         this.shipName = shipName == null ? "" : shipName;
-        this.sortOption = sortOption;
+        this.sortOption = sortOption == null ? CruiseSortOptions.DEPARTURE_EARLIEST : sortOption;
+        this.pageSize = pageSize == null ? PageSizeOption.FIVE : pageSize;
+        this.pageNumber = pageNumber == null ? 0 : pageNumber;
     }
-
     private String shipName;
 
     private String departurePort;
@@ -35,4 +38,7 @@ public class CruiseFilter {
 
     private CruiseSortOptions sortOption;
 
+    private PageSizeOption pageSize;
+
+    private Integer pageNumber;
 }

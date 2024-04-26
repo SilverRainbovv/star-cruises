@@ -1,30 +1,18 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.SeatCreateEditDto;
-import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.Seat;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.entity.SeatVacancy;
-import com.didenko.starcruises.entity.Ship;
+import com.didenko.starcruises.mapper.SeatCreateEditDtoMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
-class ShipCreateEditDtoMapperTest {
-
-    @Mock
-    private SeatCreateEditDtoMapper seatMapper;
-    @InjectMocks
-    private ShipCreateEditDtoMapper mapper;
+class SeatCreateEditDtoMapperTest {
 
     private static final Seat SEAT_ENTITY_1 = Seat.builder()
             .id(1L)
@@ -71,12 +59,6 @@ class ShipCreateEditDtoMapperTest {
             .vacancy(SeatVacancy.VACANT)
             .seatClass(SeatClass.INTERIOR)
             .build();
-    private static final Ship SHIP = Ship.builder()
-            .id(1L)
-            .name("ship")
-            .image("image_url")
-            .seats(List.of(SEAT_ENTITY_1, SEAT_ENTITY_2, SEAT_ENTITY_3, SEAT_ENTITY_4, SEAT_ENTITY_5))
-            .build();
 
     private static final SeatCreateEditDto MAPPED_SEAT_DTO_GROUP_1 = SeatCreateEditDto.builder()
             .seatGroup(1)
@@ -86,28 +68,68 @@ class ShipCreateEditDtoMapperTest {
             .lastSeatNumber(2)
             .numberOfPersons(2)
             .build();
-    private static final SeatCreateEditDto MAPPED_SEAT_DTO_GROUP_2 = SeatCreateEditDto.builder()
-            .seatGroup(2)
-            .seatClass(SeatClass.INTERIOR)
-            .seatPrice("1500")
-            .firstSeatNumber(3)
-            .lastSeatNumber(5)
-            .numberOfPersons(3)
+  private static final SeatCreateEditDto MAPPED_SEAT_DTO_GROUP_2 = SeatCreateEditDto.builder()
+          .seatGroup(2)
+          .seatClass(SeatClass.INTERIOR)
+          .seatPrice("1500")
+          .firstSeatNumber(3)
+          .lastSeatNumber(5)
+          .numberOfPersons(3)
+          .build();
+
+  private static final SeatCreateEditDto SEAT_DTO = SeatCreateEditDto.builder()
+          .seatGroup(1)
+          .seatClass(SeatClass.SUITE)
+          .seatPrice("3000")
+          .firstSeatNumber(5)
+          .lastSeatNumber(7)
+          .numberOfPersons(5)
+          .build();
+
+  private static final Seat MAPPED_SEAT_ENTITY_5 = Seat.builder()
+          .seatGroup(1)
+          .number(5)
+          .numberOfPersons(5)
+          .price(new BigDecimal(3000))
+          .vacancy(SeatVacancy.VACANT)
+          .seatClass(SeatClass.SUITE)
+          .build();
+    private static final Seat MAPPED_SEAT_ENTITY_6 = Seat.builder()
+            .seatGroup(1)
+            .number(6)
+            .numberOfPersons(5)
+            .price(new BigDecimal(3000))
+            .vacancy(SeatVacancy.VACANT)
+            .seatClass(SeatClass.SUITE)
             .build();
-    private static final ShipCreateEditDto MAPPED_SHIP_DTO = ShipCreateEditDto.builder()
-            .id(1L)
-            .name("ship")
-            .previousName("ship")
-            .seats(List.of(MAPPED_SEAT_DTO_GROUP_1, MAPPED_SEAT_DTO_GROUP_2))
+    private static final Seat MAPPED_SEAT_ENTITY_7 = Seat.builder()
+            .seatGroup(1)
+            .number(7)
+            .numberOfPersons(5)
+            .price(new BigDecimal(3000))
+            .vacancy(SeatVacancy.VACANT)
+            .seatClass(SeatClass.SUITE)
             .build();
+
+    private final SeatCreateEditDtoMapper mapper = new SeatCreateEditDtoMapper();
     @Test
     void mapFromEntity() {
-        Mockito.doReturn(List.of(MAPPED_SEAT_DTO_GROUP_1, MAPPED_SEAT_DTO_GROUP_2)).when(seatMapper).mapFrom(SHIP.getSeats(), SeatClass.INTERIOR);
 
-        assertEquals(MAPPED_SHIP_DTO, mapper.mapFrom(SHIP));
+        List<Seat> seatList = List.of(SEAT_ENTITY_1, SEAT_ENTITY_2, SEAT_ENTITY_3, SEAT_ENTITY_4, SEAT_ENTITY_5);
+
+        assertEquals(List.of(MAPPED_SEAT_DTO_GROUP_1, MAPPED_SEAT_DTO_GROUP_2),
+                mapper.mapFrom(seatList, SeatClass.INTERIOR));
     }
 
     @Test
     void mapFromDto() {
+        List<Seat> expectedSeats = List.of(MAPPED_SEAT_ENTITY_5, MAPPED_SEAT_ENTITY_6, MAPPED_SEAT_ENTITY_7);
+        List<Seat> mappingResult = List.of(
+                mapper.mapFrom(SEAT_DTO, 5),
+                mapper.mapFrom(SEAT_DTO, 6),
+                mapper.mapFrom(SEAT_DTO, 7)
+        );
+
+        assertEquals(expectedSeats, mappingResult);
     }
 }

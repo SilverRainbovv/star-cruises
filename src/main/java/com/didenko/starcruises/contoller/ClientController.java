@@ -10,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/client")
 @RequiredArgsConstructor
@@ -43,4 +46,29 @@ public class ClientController {
 
         return "redirect:/client";
     }
+
+    @GetMapping("/change-password")
+    public String changePasswordPage(@AuthenticationPrincipal User user, Model model){
+        model.addAttribute("userId", user.getId());
+
+        return "change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@AuthenticationPrincipal User user,
+                                 @Validated PasswordChangeDto passwordChangeDto,
+                                 BindingResult  bindingResult,
+                                 RedirectAttributes redirectAttributes
+                                 ){
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/client/change-password";
+        }
+
+        clientService.tryChangePassword(user, passwordChangeDto);
+
+        return "redirect:/client";
+    }
+
 }

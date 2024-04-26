@@ -2,33 +2,30 @@ package com.didenko.starcruises.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
+import java.time.Duration;
 
 @Configuration
 public class RedisConfiguration {
 
-//    @Bean
-//    public JedisConnectionFactory jedisConnectionFactory(){
-//
-//        return new JedisConnectionFactory();
-//    }
-//
-//    @Bean
-//    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory){
-//
-//        RedisTemplate<String, Object> template = new RedisTemplate<>();
-//        template.setConnectionFactory(jedisConnectionFactory());
-//        return template;
-//    }
+    @Bean
+    JedisConnectionFactory connectionFactory (){
+        return new JedisConnectionFactory(new RedisStandaloneConfiguration());
+    }
 
-//    @Bean
-//    public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory){
-//        return RedisCacheManager.create(connectionFactory);
-//    }
+    @Bean
+    RedisCacheManager cacheManager(JedisConnectionFactory connectionFactory){
+        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(1))
+                .enableTimeToIdle();
 
+        return RedisCacheManager.builder(connectionFactory)
+                .cacheDefaults(configuration)
+                .build();
+    }
 
 }

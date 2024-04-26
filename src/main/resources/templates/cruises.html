@@ -47,23 +47,36 @@
         </div>
     </div>
     <div class="middle-line">
-        <div>Search Results:</div>
+        <div>Elements per page
+            <select name="pageSize">
+                <option th:each="pageSize : ${pageSizeOptions}"
+                        th:value="${pageSize}"
+                        th:text="${pageSize.size}"
+                        th:selected="${pageSize} == ${cruiseFilter.pageSize}"></option>
+            </select>
+        </div>
         <div class="sort-section">
             <span>Sort By:</span>
             <select class="search-el" name="sortBy">
                 <option th:each="sortOption : ${cruiseSortOptions}"
                         th:value="${sortOption}"
                         th:text="${sortOption.option}"
-                th:selected="${sortOption} == ${cruiseFilter.sortOption}"></option>
+                        th:selected="${sortOption} == ${cruiseFilter.sortOption}"></option>
             </select>
         </div>
     </div>
+    <div th:if="${cruises.getTotalPages() > 1}">
+        <div th:each="page: ${#numbers.sequence(1, cruises.getTotalPages())}">
+            <button th:name="page" th:value="${page - 1}" th:text="${page}"></button>
+        </div>
+    </div>
 </form>
-<div class="data-area" th:each="cruise : ${cruises}">
+<div class="data-area" th:each="cruise : ${cruises.content}">
     <div class="data-el">
         <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
         <div class="description">
-            <span class="text-medium-bold" th:text="|${cruise.duration} Nights    Departure Date: ${cruise.firstPortDate}|"></span>
+                <span class="text-medium-bold"
+                      th:text="|${cruise.duration} Nights    Departure Date: ${cruise.firstPortDate}|"></span>
             <span class="text-big" th:text="${cruise.description}"></span>
             <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
                 <span class="text-medium" th:text="${cruise.shipName}"></span></span>
@@ -84,5 +97,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

@@ -1,10 +1,10 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.ShipReadDto;
 import com.didenko.starcruises.entity.*;
+import com.didenko.starcruises.mapper.ShipReadDtoMapper;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -5,7 +5,6 @@ import com.didenko.starcruises.dto.ShipReadDto;
 import com.didenko.starcruises.entity.Ship;
 import com.didenko.starcruises.mapper.ShipCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.ShipReadDtoMapper;
-import com.didenko.starcruises.repository.SeatRepository;
 import com.didenko.starcruises.repository.ShipRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,11 +25,9 @@ public class ShipService {
     private final ShipCreateEditDtoMapper createEditDoMapper;
     private final ShipReadDtoMapper readDtoMapper;
     private final ShipRepository shipRepository;
-    private final SeatService seatService;
     private final ImageService imageService;
-    private final SeatRepository seatRepository;
 
-    @Cacheable(value = "ships", key = "id")
+    @Cacheable(value = "ship_entities", key = "#id")
     public Optional<ShipCreateEditDto> findById(Long id){
         Optional<Ship> ship = shipRepository.findById(id);
         return ship.map(createEditDoMapper::mapFrom);

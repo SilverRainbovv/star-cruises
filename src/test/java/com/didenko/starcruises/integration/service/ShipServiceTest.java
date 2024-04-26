@@ -1,11 +1,13 @@
-package com.didenko.starcruises.service;
+package com.didenko.starcruises.integration.service;
 
 import com.didenko.starcruises.dto.SeatCreateEditDto;
 import com.didenko.starcruises.dto.ShipCreateEditDto;
 import com.didenko.starcruises.entity.SeatClass;
 import com.didenko.starcruises.integration.BaseIntegrationTest;
 import com.didenko.starcruises.repository.ShipRepository;
+import com.didenko.starcruises.service.ShipService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

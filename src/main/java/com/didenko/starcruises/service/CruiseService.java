@@ -2,10 +2,7 @@ package com.didenko.starcruises.service;
 
 import com.didenko.starcruises.dto.CruiseCreateEditDto;
 import com.didenko.starcruises.dto.CruiseReadDto;
-import com.didenko.starcruises.entity.Cruise;
-import com.didenko.starcruises.entity.CruiseSortOptions;
-import com.didenko.starcruises.entity.Port;
-import com.didenko.starcruises.entity.CruiseFilter;
+import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.mapper.CruiseCreateEditDtoMapper;
 import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
 import com.didenko.starcruises.querydsl.QPredicates;
@@ -13,6 +10,10 @@ import com.didenko.starcruises.repository.CruiseRepository;
 import com.didenko.starcruises.repository.PortRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -36,7 +37,7 @@ public class CruiseService {
     private final ImageService imageService;
 
 
-    public List<CruiseReadDto> findCruisesByFilter(CruiseFilter cruiseFilter) {
+    public Page<CruiseReadDto> findCruisesByFilter(CruiseFilter cruiseFilter) {
 
         var predicates = QPredicates.builder()
                 .add(cruiseFilter.getDepartureAfter(), cruise.firstPort.visitDate::after)
@@ -48,29 +49,23 @@ public class CruiseService {
         if (!cruiseFilter.getDeparturePort().isBlank())
             predicates.add(cruiseFilter.getDeparturePort(), cruise.firstPort.name::containsIgnoreCase);
 
-       var builtPredicates = predicates.build();
+        var builtPredicates = predicates.build();
 
-        List<CruiseReadDto> cruises = cruiseRepository.findAll(builtPredicates).stream().map(mapper::mapFrom).toList();
+        QPageRequest qPageRequest = QPageRequest.of(cruiseFilter.getPageNumber(),
+                cruiseFilter.getPageSize().getSize(),
+                sort(cruiseFilter.getSortOption()));
 
-        cruiseFilter.setSortOption(cruiseFilter.getSortOption() == null ? CruiseSortOptions.DEPARTURE_EARLIEST : cruiseFilter.getSortOption());
-
-        return sortCruises(cruises, cruiseFilter.getSortOption());
+        return cruiseRepository.findAll(builtPredicates, qPageRequest)
+                .map(mapper::mapFrom);
     }
 
-    private List<CruiseReadDto> sortCruises(List<CruiseReadDto> unsortedCruises, CruiseSortOptions cruiseSortOptions){
-        return switch (cruiseSortOptions) {
-            case DEPARTURE_EARLIEST ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate)).toList();
-            case DEPARTURE_LATEST ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getFirstPortDate).reversed()).toList();
-            case PRICE_ASCENDING ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice)).toList();
-            case PRICE_DESCENDING ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getStartingPrice).reversed()).toList();
-            case DURATION_ASCENDING ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration)).toList();
-            case DURATION_DESCENDING ->
-                    unsortedCruises.stream().sorted(Comparator.comparing(CruiseReadDto::getDuration).reversed()).toList();
+    private QSort sort(CruiseSortOptions sortOption) {
+        return switch (sortOption) {
+            case DEPARTURE_EARLIEST -> QSort.by(cruise.firstPort.visitDate.asc());
+            case DEPARTURE_LATEST -> QSort.by(cruise.firstPort.visitDate.desc());
+            case DURATION_ASCENDING -> QSort.by(cruise.duration.asc());
+            case DURATION_DESCENDING -> QSort.by(cruise.duration.desc());
+            default -> QSort.unsorted();
         };
     }
 
@@ -99,7 +94,7 @@ public class CruiseService {
         return cruiseRepository.save(cruise).getId();
     }
 
-    public Optional<byte[]> findCruiseImage(Long id){
+    public Optional<byte[]> findCruiseImage(Long id) {
         return cruiseRepository.findById(id)
                 .map(Cruise::getImage)
                 .filter(StringUtils::hasText)
@@ -116,7 +111,7 @@ public class CruiseService {
         return cruiseRepository.findById(cruiseId).map(cruiseCreateEditDtoMapper::mapFrom);
     }
 
-    public Optional<CruiseReadDto> findReadDtoById(Long cruiseId){
+    public Optional<CruiseReadDto> findReadDtoById(Long cruiseId) {
         Optional<Cruise> cruise = cruiseRepository.findById(cruiseId);
         return cruise.map(mapper::mapFrom);
     }

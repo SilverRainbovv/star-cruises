@@ -1,7 +1,8 @@
-package com.didenko.starcruises.repository;
+package com.didenko.starcruises.integration.repository;
 
 import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.integration.BaseIntegrationTest;
+import com.didenko.starcruises.repository.ShipRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

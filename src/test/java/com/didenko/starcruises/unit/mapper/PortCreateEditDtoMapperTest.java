@@ -1,7 +1,8 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.PortCreateEditDto;
 import com.didenko.starcruises.entity.Port;
+import com.didenko.starcruises.mapper.PortCreateEditDtoMapper;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

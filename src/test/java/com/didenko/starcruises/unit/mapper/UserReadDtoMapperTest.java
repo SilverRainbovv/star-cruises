@@ -1,8 +1,9 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.UserReadDto;
 import com.didenko.starcruises.entity.Role;
 import com.didenko.starcruises.entity.User;
+import com.didenko.starcruises.mapper.UserReadDtoMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

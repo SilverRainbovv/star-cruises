@@ -1,11 +1,14 @@
 package com.didenko.starcruises.service;
 
 import com.didenko.starcruises.dto.ClientReadDto;
+import com.didenko.starcruises.dto.PasswordChangeDto;
 import com.didenko.starcruises.entity.Client;
 import com.didenko.starcruises.entity.ClientDocument;
 import com.didenko.starcruises.entity.ClientDocumentState;
+import com.didenko.starcruises.entity.User;
 import com.didenko.starcruises.mapper.ClientReadDtoMapper;
 import com.didenko.starcruises.repository.ClientRepository;
+import com.didenko.starcruises.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientReadDtoMapper clientReadDtoMapper;
     private final ImageService imageService;
+    private final UserRepository userRepository;
 
     public Optional<ClientReadDto> findClientReadDtoById(Long clientId) {
         return clientRepository.findById(clientId).map(clientReadDtoMapper::mapFrom);
@@ -33,7 +37,7 @@ public class ClientService {
      * Returns Client entity
      * Used by TicketService to bind ticket to the existing client
      */
-    public Optional<Client> findClientEntityById(Long clientId){
+    public Optional<Client> findClientEntityById(Long clientId) {
         return clientRepository.findById(clientId);
     }
 
@@ -57,14 +61,20 @@ public class ClientService {
                 uploadDocument(newDocument);
             }
 
-             clientRepository.save(client);
+            clientRepository.save(client);
         }
     }
 
     @SneakyThrows
-    public void uploadDocument(MultipartFile document){
+    public void uploadDocument(MultipartFile document) {
         if (!document.isEmpty()) {
             imageService.uploadClientDocument(document.getOriginalFilename(), document.getInputStream());
         }
+    }
+
+    @Transactional(readOnly = false)
+    public void tryChangePassword(User user, PasswordChangeDto passwordChangeDto) {
+        user.setPassword("{noop}" + passwordChangeDto.getNewPassword());
+        userRepository.save(user);
     }
 }

@@ -1,6 +1,7 @@
-package com.didenko.starcruises.repository;
+package com.didenko.starcruises.integration.repository;
 
 import com.didenko.starcruises.integration.BaseIntegrationTest;
+import com.didenko.starcruises.repository.CruiseRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

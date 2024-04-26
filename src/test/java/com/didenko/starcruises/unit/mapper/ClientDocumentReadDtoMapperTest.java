@@ -1,8 +1,9 @@
-package com.didenko.starcruises.mapper;
+package com.didenko.starcruises.unit.mapper;
 
 import com.didenko.starcruises.dto.ClientDocumentDto;
 import com.didenko.starcruises.entity.ClientDocument;
 import com.didenko.starcruises.entity.ClientDocumentState;
+import com.didenko.starcruises.mapper.ClientDocumentReadDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 

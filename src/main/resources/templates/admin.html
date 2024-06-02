@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Admin</title>
     <link th:href="@{/css/admin.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/admin.js}"></script>
 </head>
 <body>
     <div th:insert="~{header :: admin-header}"></div>
@@ -17,6 +18,9 @@
         <th>Intermediate Ports</th>
         <th>Last Port</th>
         <th>Last Port Date</th>
+<!--        EMPTY FOR EDIT BUTTON-->
+        <th></th>
+<!--        EMPTY FOR CANCEL BUTTON-->
         <th></th>
     </tr>
     </thead>
@@ -30,6 +34,21 @@
         <td th:value="${cruise.lastPortDate}" th:text="${cruise.lastPortDate}"></td>
         <td>
             <button><a th:href="@{|/cruises/cruise/${cruise.id}|}">Edit</a></button>
+        </td>
+        <td>
+            <div class="popup" id="popup">
+                <div class="overlay">
+                    <div class="content">
+                        <p>If you submit, the cruise will be canceled</p>
+                        <p>This action can not be undone</p>
+                        <div class="button-line">
+                            <button onclick="togglePopup()">Go Back</button>
+                            <button class="cancel-cruise-btn"><a th:href="@{|/cruises/cruise/cancel/${cruise.id}|}">Cancel Cruise</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="togglePopup()">Cancel</button>
         </td>
     </tr>
     </tbody>

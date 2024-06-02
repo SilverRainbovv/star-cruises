@@ -36,6 +36,8 @@ public class CruiseCreateEditDto {
 
     private MultipartFile image;
 
+    private String cruiseState;
+
     public void addPort(PortCreateEditDto portCreateEditDto){
         ports.add(portCreateEditDto);
     }

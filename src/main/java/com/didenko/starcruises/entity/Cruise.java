@@ -42,6 +42,9 @@ public class Cruise {
 
     private Integer duration;
 
+    @Enumerated(EnumType.STRING)
+    private CrusieState state;
+
     public void setShip(Ship ship) {
         this.ship = ship;
         ship.addCruise(this);

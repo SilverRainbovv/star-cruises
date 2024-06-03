@@ -8,10 +8,10 @@ import com.didenko.starcruises.mapper.CruiseReadDtoMapper;
 import com.didenko.starcruises.querydsl.QPredicates;
 import com.didenko.starcruises.repository.CruiseRepository;
 import com.didenko.starcruises.repository.PortRepository;
+import com.didenko.starcruises.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +34,7 @@ public class CruiseService {
     private final CruiseReadDtoMapper mapper;
     private final CruiseCreateEditDtoMapper cruiseCreateEditDtoMapper;
     private final ImageService imageService;
+    private final TicketRepository ticketRepository;
 
 
     public Page<CruiseReadDto> findCruisesByFilter(CruiseFilter cruiseFilter) {
@@ -127,5 +127,10 @@ public class CruiseService {
 
     public Optional<Cruise> findCruiseEntityById(Long cruiseId) {
         return cruiseRepository.findById(cruiseId);
+    }
+
+    public void changeCruiseStateByCruiseId(Long cruiseId, CrusieState crusieState) {
+
+        cruiseRepository.setStateByCruiseId(cruiseId, crusieState);
     }
 }

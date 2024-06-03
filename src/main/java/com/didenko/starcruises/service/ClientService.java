@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -76,5 +78,11 @@ public class ClientService {
     public void tryChangePassword(User user, PasswordChangeDto passwordChangeDto) {
         user.setPassword("{noop}" + passwordChangeDto.getNewPassword());
         userRepository.save(user);
+    }
+
+    public Set<Client> findAllClientEmailByCruiseId(Long cruiseId) {
+
+        return clientRepository.findAllByTicketsWhereCruiseId(cruiseId);
+
     }
 }

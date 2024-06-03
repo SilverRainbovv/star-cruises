@@ -26,6 +26,7 @@ public class CruisesController {
     private final CruiseService cruiseService;
     private final ShipService shipService;
     private final SeatService seatService;
+    private final EmailService emailService;
 
     @GetMapping
     public String cruisesPage(Model model, @RequestParam(value = "ship_name", required = false) String shipName,
@@ -140,6 +141,15 @@ public class CruisesController {
                          @AuthenticationPrincipal User curentUser){
 
         return "redirect:/user";
+    }
+
+    @GetMapping(value = "/cruise/cancel/{cruiseId}")
+    public String cancelCruise(@PathVariable("cruiseId") Long cruiseId){
+
+        emailService.notifyUsersOnCruiseCancel(cruiseId);
+        cruiseService.changeCruiseStateByCruiseId(cruiseId, CrusieState.CANCELED);
+
+        return "redirect:/admin";
     }
 
 }

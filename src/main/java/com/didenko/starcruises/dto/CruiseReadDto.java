@@ -30,4 +30,6 @@ public class CruiseReadDto {
     private String startingPrice;
 
     private String image;
+
+    private String state;
 }

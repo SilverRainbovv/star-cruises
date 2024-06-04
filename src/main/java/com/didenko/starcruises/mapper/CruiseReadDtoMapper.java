@@ -41,6 +41,7 @@ public class CruiseReadDtoMapper implements Mapper<Cruise, CruiseReadDto> {
                         .collect(Collectors.joining(", ")))
                 .startingPrice(lowestPrice.get().toString())
                 .image(object.getImage())
+                .state(object.getState().getStateValue())
                 .build();
     }
 }

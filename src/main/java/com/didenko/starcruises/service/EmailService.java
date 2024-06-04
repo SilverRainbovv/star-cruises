@@ -36,12 +36,6 @@ public class EmailService {
         Cruise cruise = cruiseService.findCruiseEntityById(cruiseId).get();
 
         String emailSubject = "Cruise cancellation notification";
-//        String emailText = String.format("""
-//                Good day Dear %s,\s
-//                We are sorry to inform you that cruise %s starting on %s has been canceled.\s
-//                Shortly our manager will contact you if you have already payed for your ticket.\s""",
-//
-//                cruise.getDescription(), cruise.getFirstPort().getVisitDate());
 
         clientSet.forEach(client -> sendTextOnlyMessage(client.getUser().getEmail(),
                 COMPANY_EMAIL,

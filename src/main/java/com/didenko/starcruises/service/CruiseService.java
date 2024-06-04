@@ -129,6 +129,7 @@ public class CruiseService {
         return cruiseRepository.findById(cruiseId);
     }
 
+    @Transactional(readOnly = false)
     public void changeCruiseStateByCruiseId(Long cruiseId, CrusieState crusieState) {
 
         cruiseRepository.setStateByCruiseId(cruiseId, crusieState);

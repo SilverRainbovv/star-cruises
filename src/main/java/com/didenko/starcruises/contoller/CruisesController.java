@@ -5,8 +5,10 @@ import com.didenko.starcruises.entity.*;
 import com.didenko.starcruises.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static java.rmi.server.LogStream.log;
+
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("cruises")
 @Controller
@@ -146,7 +151,11 @@ public class CruisesController {
     @GetMapping(value = "/cruise/cancel/{cruiseId}")
     public String cancelCruise(@PathVariable("cruiseId") Long cruiseId){
 
-        emailService.notifyUsersOnCruiseCancel(cruiseId);
+        try {
+            emailService.notifyUsersOnCruiseCancel(cruiseId);
+        } catch (MailException e) {
+            log(e.getCause().getMessage());
+        }
         cruiseService.changeCruiseStateByCruiseId(cruiseId, CrusieState.CANCELED);
 
         return "redirect:/admin";

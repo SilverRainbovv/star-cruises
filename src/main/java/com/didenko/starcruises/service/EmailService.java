@@ -5,7 +5,9 @@ import com.didenko.starcruises.entity.Cruise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -30,6 +32,8 @@ public class EmailService {
         emailSender.send(message);
     }
 
+    @Transactional
+    @Async("taskExecutor")
     public void notifyUsersOnCruiseCancel(Long cruiseId) {
 
         Set<Client> clientSet = clientService.findAllClientEmailByCruiseId(cruiseId);

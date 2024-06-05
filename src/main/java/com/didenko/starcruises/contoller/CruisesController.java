@@ -32,6 +32,7 @@ public class CruisesController {
     private final ShipService shipService;
     private final SeatService seatService;
     private final EmailService emailService;
+    private final TicketService ticketService;
 
     @GetMapping
     public String cruisesPage(Model model, @RequestParam(value = "ship_name", required = false) String shipName,
@@ -144,6 +145,8 @@ public class CruisesController {
     @GetMapping(value = "/{cruiseId}/book/{seatGroup}")
     public String bookSeat(@PathVariable("cruiseId") Long cruiseId, @PathVariable("seatGroup") Integer seatGroup,
                          @AuthenticationPrincipal User curentUser){
+
+        ticketService.createTicket(curentUser.getId(), cruiseId, seatGroup);
 
         return "redirect:/user";
     }

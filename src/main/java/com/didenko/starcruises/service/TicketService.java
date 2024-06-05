@@ -23,6 +23,7 @@ public class  TicketService {
     private final SeatService seatService;
     private final TicketRepository ticketRepository;
     private final TicketReadDtoMapper ticketReadDtoMapper;
+    private final EmailService emailService;
 
     @Transactional(readOnly = false)
     public Ticket createTicket(Long userId,Long cruiseId, Integer seatGroup){
@@ -43,6 +44,8 @@ public class  TicketService {
         ticket.setClient(client);
         ticket.setCruise(cruise);
         ticket.setSeat(seat);
+
+        emailService.sendTicketEmail(ticket);
 
         seat.setVacancy(SeatVacancy.BOOKED);
 

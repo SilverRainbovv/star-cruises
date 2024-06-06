@@ -5,14 +5,17 @@ import lombok.Getter;
 @Getter
 public enum CrusieState {
 
-    UPCOMING("Upcoming"),
-    CANCELED("Canceled"),
-    STARTED("Started"),
-    COMPLETED("Completed");
+    UPCOMING("Upcoming", 2),
+    CANCELED("Canceled", 4),
+    STARTED("Started", 1),
+    COMPLETED("Completed", 3);
 
     private final String stateValue;
 
-    CrusieState (String cruiseState){
+    private final Integer priority;
+
+    CrusieState (String cruiseState, Integer priority){
         stateValue = cruiseState;
+        this.priority = priority;
     }
 }

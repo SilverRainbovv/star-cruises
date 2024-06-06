@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +71,10 @@ public class CruiseService {
     }
 
     public List<CruiseReadDto> findAllCruises() {
-        return cruiseRepository.findAll().stream().map(mapper::mapFrom).toList();
+        return cruiseRepository.findAll().stream()
+                .sorted(Comparator.comparing(c -> c.getState().getPriority()))
+                .map(mapper::mapFrom)
+                .toList();
     }
 
     @Transactional(readOnly = false)

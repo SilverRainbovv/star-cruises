@@ -4,7 +4,7 @@ input, select, button {
     font-size: 1em;
 }
 
-form {
+.sort-filter-area {
     font-size: 1.2em;
     display: flex;
     flex-direction: column;
@@ -41,3 +41,12 @@ form {
     width: 30%;
     justify-content: flex-end;
 }
+
+.page-buttons-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1.5%;
+}
+
+.page-button { margin-left: .3%}

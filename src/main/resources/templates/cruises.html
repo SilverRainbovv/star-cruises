@@ -9,6 +9,7 @@
 <body>
 <div th:insert="~{header :: client-header}"></div>
 <form th:action="@{'/cruises'}" method="get">
+    <div class="sort-filter-area">
     <div class="search_row">
         <div class="search-el">Ship</div>
         <div class="search-el">Departure Port</div>
@@ -65,38 +66,38 @@
             </select>
         </div>
     </div>
-    <div th:if="${cruises.getTotalPages() > 1}">
-        <div th:each="page: ${#numbers.sequence(1, cruises.getTotalPages())}">
+    </div>
+    <div class="data-area" th:each="cruise : ${cruises.content}">
+        <div class="data-el">
+            <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
+            <div class="description">
+                <span class="text-medium-bold"
+                      th:text="|${cruise.duration} Nights    Departure Date: ${cruise.firstPortDate}|"></span>
+                <span class="text-big" th:text="${cruise.description}"></span>
+                <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
+                <span class="text-medium" th:text="${cruise.shipName}"></span></span>
+                <span><span class="text-medium-bold">Trip from:</span> <span class="text-normal"
+                                                                             th:text="${cruise.firstPort}"></span></span>
+                <span><span class="text-medium-bold">Visiting: </span><span class="text-normal"
+                                                                            th:text="${cruise.intermediatePorts}"></span></span>
+            </div>
+            <div class="price">
+                <div class="price-data">
+                    <div class="text-med-big">Starting from</div>
+                    <div class="large-bold" th:text="${cruise.startingPrice}"></div>
+                    <div class="text-mid-align">Per person</div>
+                    <a th:href="@{|/cruises/${cruise.id}/book|}">
+                        <button>Book</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-buttons-area" th:if="${cruises.getTotalPages() > 1}">
+        <div class="page-button" th:each="page: ${#numbers.sequence(1, cruises.getTotalPages())}">
             <button th:name="page" th:value="${page - 1}" th:text="${page}"></button>
         </div>
     </div>
 </form>
-<div class="data-area" th:each="cruise : ${cruises.content}">
-    <div class="data-el">
-        <img class="cruise-image" th:src="@{|/api/v1/cruises/image/${cruise.id}|}" alt="Cruise Image">
-        <div class="description">
-                <span class="text-medium-bold"
-                      th:text="|${cruise.duration} Nights    Departure Date: ${cruise.firstPortDate}|"></span>
-            <span class="text-big" th:text="${cruise.description}"></span>
-            <span><img class="ship-logo" th:src="@{images/ship.png}" alt="">
-                <span class="text-medium" th:text="${cruise.shipName}"></span></span>
-            <span><span class="text-medium-bold">Trip from:</span> <span class="text-normal"
-                                                                         th:text="${cruise.firstPort}"></span></span>
-            <span><span class="text-medium-bold">Visiting: </span><span class="text-normal"
-                                                                        th:text="${cruise.intermediatePorts}"></span></span>
-        </div>
-        <div class="price">
-            <div class="price-data">
-                <div class="text-med-big">Starting from</div>
-                <div class="large-bold" th:text="${cruise.startingPrice}"></div>
-                <div class="text-mid-align">Per person</div>
-                <a th:href="@{|/cruises/${cruise.id}/book|}">
-                    <button>Book</button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>

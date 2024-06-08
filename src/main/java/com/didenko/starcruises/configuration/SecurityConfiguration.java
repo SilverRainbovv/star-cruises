@@ -1,6 +1,7 @@
 package com.didenko.starcruises.configuration;
 
 
+import com.didenko.starcruises.entity.Role;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,17 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(urlConfig -> urlConfig.requestMatchers("/login",
+                        "/cruises", "/registration", "/logout", "/css/**", "/js/**", "/images/**",
+                                "/api/v1/**", "/ships/**", "/user/**", "/admin/**")
+                        .permitAll()
+                        .requestMatchers( "/cruises/cruise/**",
+                                "/cruises/cruise/cancel/**", "/document/**",
+                                "/ships/ship/**")
+                        .hasAuthority(Role.ADMIN.getAuthority())
+                        .requestMatchers("/client/**", "/cruises/{cruiseId}/book/**",
+                                "/ticket/**")
+                        .hasAuthority(Role.CLIENT.getAuthority()))
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/user"))

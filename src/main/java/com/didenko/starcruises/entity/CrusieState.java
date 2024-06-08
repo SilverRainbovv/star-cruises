@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public enum CrusieState {
 
-    UPCOMING("Upcoming", 2),
-    CANCELED("Canceled", 4),
     STARTED("Started", 1),
-    COMPLETED("Completed", 3);
+    UPCOMING("Upcoming", 2),
+    COMPLETED("Completed", 3),
+    CANCELED("Canceled", 4);
 
     private final String stateValue;
 

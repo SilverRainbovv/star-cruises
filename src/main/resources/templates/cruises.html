@@ -10,62 +10,62 @@
 <div th:insert="~{header :: client-header}"></div>
 <form th:action="@{'/cruises'}" method="get">
     <div class="sort-filter-area">
-    <div class="search_row">
-        <div class="search-el">Ship</div>
-        <div class="search-el">Departure Port</div>
-        <div class="search-el">Departure After</div>
-        <div class="search-el">Nights</div>
-        <div class="search-el"><!-- EMPTY SPACE TO BE EQUAL TO THE NEXT ROW --></div>
-    </div>
-    <div class="search_row">
-        <div class="search-el">
-            <select class="search-el" id="ship_name" name="ship_name">
-                <option value="">Any Ship</option>
-                <option th:each="ship : ${ships}"
-                        th:value="${ship.name}"
-                        th:text="${ship.name}"
-                        th:selected="${ship.name} == ${cruiseFilter.shipName}"></option>
-            </select>
+        <div class="search_row">
+            <div class="search-el">Ship</div>
+            <div class="search-el">Departure Port</div>
+            <div class="search-el">Departure After</div>
+            <div class="search-el">Nights</div>
+            <div class="search-el"><!-- EMPTY SPACE TO BE EQUAL TO THE NEXT ROW --></div>
         </div>
-        <div class="search-el">
-            <input class="search-el" type="text" id="departure_port" name="departure_port"
-                   th:value="${cruiseFilter.departurePort}" placeholder="Departure port">
+        <div class="search_row">
+            <div class="search-el">
+                <select class="search-el" id="ship_name" name="ship_name">
+                    <option value="">Any Ship</option>
+                    <option th:each="ship : ${ships}"
+                            th:value="${ship.name}"
+                            th:text="${ship.name}"
+                            th:selected="${ship.name} == ${cruiseFilter.shipName}"></option>
+                </select>
+            </div>
+            <div class="search-el">
+                <input class="search-el" type="text" id="departure_port" name="departure_port"
+                       th:value="${cruiseFilter.departurePort}" placeholder="Departure port">
+            </div>
+            <div class="search-el">
+                <input class="search-el" type="date" name="departure_after" id="departure_after"
+                       th:value="${cruiseFilter.departureAfter}">
+            </div>
+            <div class="search-el">
+                <select class="search-el" name="nights" id="nights">
+                    <option th:each="option : ${cruiseSearchDurationOptions}"
+                            th:value="${option}"
+                            th:text="${option.nights}"
+                            th:selected="${option} == ${cruiseFilter.nights}"></option>
+                </select>
+            </div>
+            <div class="search-el">
+                <button class="search-el">Search</button>
+            </div>
         </div>
-        <div class="search-el">
-            <input class="search-el" type="date" name="departure_after" id="departure_after"
-                   th:value="${cruiseFilter.departureAfter}">
+        <div class="middle-line">
+            <div>Elements per page
+                <select name="pageSize">
+                    <option th:each="pageSize : ${pageSizeOptions}"
+                            th:value="${pageSize}"
+                            th:text="${pageSize.size}"
+                            th:selected="${pageSize} == ${cruiseFilter.pageSize}"></option>
+                </select>
+            </div>
+            <div class="sort-section">
+                <span>Sort By:</span>
+                <select class="search-el" name="sortBy">
+                    <option th:each="sortOption : ${cruiseSortOptions}"
+                            th:value="${sortOption}"
+                            th:text="${sortOption.option}"
+                            th:selected="${sortOption} == ${cruiseFilter.sortOption}"></option>
+                </select>
+            </div>
         </div>
-        <div class="search-el">
-            <select class="search-el" name="nights" id="nights">
-                <option th:each="option : ${cruiseSearchDurationOptions}"
-                        th:value="${option}"
-                        th:text="${option.nights}"
-                        th:selected="${option} == ${cruiseFilter.nights}"></option>
-            </select>
-        </div>
-        <div class="search-el">
-            <button class="search-el">Search</button>
-        </div>
-    </div>
-    <div class="middle-line">
-        <div>Elements per page
-            <select name="pageSize">
-                <option th:each="pageSize : ${pageSizeOptions}"
-                        th:value="${pageSize}"
-                        th:text="${pageSize.size}"
-                        th:selected="${pageSize} == ${cruiseFilter.pageSize}"></option>
-            </select>
-        </div>
-        <div class="sort-section">
-            <span>Sort By:</span>
-            <select class="search-el" name="sortBy">
-                <option th:each="sortOption : ${cruiseSortOptions}"
-                        th:value="${sortOption}"
-                        th:text="${sortOption.option}"
-                        th:selected="${sortOption} == ${cruiseFilter.sortOption}"></option>
-            </select>
-        </div>
-    </div>
     </div>
     <div class="data-area" th:each="cruise : ${cruises.content}">
         <div class="data-el">
@@ -86,9 +86,7 @@
                     <div class="text-med-big">Starting from</div>
                     <div class="large-bold" th:text="${cruise.startingPrice}"></div>
                     <div class="text-mid-align">Per person</div>
-                    <a th:href="@{|/cruises/${cruise.id}/book|}">
-                        <button>Book</button>
-                    </a>
+                    <button><a th:href="@{|/cruises/${cruise.id}/book|}">Book </a></button>
                 </div>
             </div>
         </div>

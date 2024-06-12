@@ -133,7 +133,7 @@ public class CruisesController {
         return "/cruise";
     }
 
-    @PostMapping(value = "cruise")
+    @PostMapping(value = "/cruise")
     public String saveCruise(@ModelAttribute CruiseCreateEditDto cruiseCreateEditDto){
 
         cruiseService.save(cruiseCreateEditDto);

@@ -35,7 +35,6 @@ public class CruiseService {
     private final CruiseReadDtoMapper mapper;
     private final CruiseCreateEditDtoMapper cruiseCreateEditDtoMapper;
     private final ImageService imageService;
-    private final TicketRepository ticketRepository;
 
 
     public Page<CruiseReadDto> findCruisesByFilter(CruiseFilter cruiseFilter) {
@@ -92,6 +91,9 @@ public class CruiseService {
         cruise.setLastPort(updatedCruise.getLastPort());
         cruise.setDuration(updatedCruise.getDuration());
         cruise.setImage(updatedCruise.getImage() == null ? cruise.getImage() : updatedCruise.getImage());
+
+        cruise.getFirstPort().setCruise(cruise);
+        cruise.getLastPort().setCruise(cruise);
 
         uploadImage(cruiseDto.getImage());
 

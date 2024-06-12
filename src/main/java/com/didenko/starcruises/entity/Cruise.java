@@ -25,7 +25,7 @@ public class Cruise {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
     private Ship ship;
 
     @OneToMany(mappedBy = "cruise",  fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
@@ -34,10 +34,10 @@ public class Cruise {
 
     private String image;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
     private Port firstPort;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = {PERSIST, MERGE, REFRESH})
     private Port lastPort;
 
     private Integer duration;

@@ -5,6 +5,7 @@ import com.didenko.starcruises.entity.Role;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -32,8 +33,9 @@ public class SecurityConfiguration {
                         .hasAuthority(Role.CLIENT.getAuthority()))
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/user"))
+                        .defaultSuccessUrl("/user", true))
                 .logout(logout -> logout.logoutSuccessUrl("/cruises"))
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 

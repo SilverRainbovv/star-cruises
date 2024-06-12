@@ -18,7 +18,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminPage(Model model, @AuthenticationPrincipal User user){
 
-        if (!user.getRole().equals(Role.ADMIN)){
+        if (user == null || !user.getRole().equals(Role.ADMIN)){
             return "redirect:/cruises";
         }
 
